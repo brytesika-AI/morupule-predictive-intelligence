@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Morupule Predictive Intelligence Platform</title>
+    <style>
+      :root {
+        --bg: #f4f6f5;
+        --ink: #18211f;
+        --muted: #5c6a65;
+        --line: #d7dedb;
+        --panel: #ffffff;
+        --accent: #1d6f62;
+        --accent-2: #b35a24;
+        --danger: #b42318;
+        --warn: #b7791f;
+        --good: #16845c;
+        --coal: #252b2a;
+        --steel: #60717a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      .shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+      }
+
+      aside {
+        background: var(--coal);
+        color: #f8faf9;
+        padding: 24px 20px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .brand strong {
+        font-size: 19px;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      .brand span {
+        color: #bac8c2;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      .nav button {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #eaf0ed;
+        background: transparent;
+        padding: 11px 12px;
+        border-radius: 6px;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .nav button.active {
+        background: #f8faf9;
+        color: var(--coal);
+      }
+
+      .sidebar-note {
+        margin-top: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        padding-top: 16px;
+        color: #c7d3cf;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      main {
+        min-width: 0;
+      }
+
+      header {
+        background: #ffffff;
+        border-bottom: 1px solid var(--line);
+        padding: 22px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 26px;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        margin: 7px 0 0;
+        color: var(--muted);
+        max-width: 900px;
+        line-height: 1.45;
+      }
+
+      .status-pill {
+        white-space: nowrap;
+        border: 1px solid #b9d9cf;
+        color: #0f5f4f;
+        background: #eefaf6;
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .content {
+        padding: 24px 28px 36px;
+        display: grid;
+        gap: 22px;
+      }
+
+      .notice {
+        background: #fff8ed;
+        border: 1px solid #ecd1a3;
+        color: #5f3b04;
+        border-radius: 6px;
+        padding: 13px 16px;
+        line-height: 1.45;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .metric,
+      .panel,
+      .asset-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .metric {
+        padding: 16px;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 27px;
+        line-height: 1;
+      }
+
+      .metric small {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.35fr 0.9fr;
+        gap: 18px;
+      }
+
+      .panel {
+        overflow: hidden;
+      }
+
+      .panel-head {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 17px;
+      }
+
+      .panel-body {
+        padding: 18px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: middle;
+      }
+
+      th {
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 5px 9px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .tag.critical {
+        background: #fdecec;
+        color: var(--danger);
+      }
+
+      .tag.watch {
+        background: #fff5db;
+        color: #805400;
+      }
+
+      .tag.good {
+        background: #eaf8f1;
+        color: var(--good);
+      }
+
+      .bar {
+        height: 9px;
+        background: #e5ebe8;
+        border-radius: 999px;
+        overflow: hidden;
+        min-width: 95px;
+      }
+
+      .bar span {
+        display: block;
+        height: 100%;
+        background: var(--accent);
+      }
+
+      .bar span.warn {
+        background: var(--warn);
+      }
+
+      .bar span.danger {
+        background: var(--danger);
+      }
+
+      .asset-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .asset-card {
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .asset-card strong {
+        font-size: 15px;
+      }
+
+      .asset-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.4;
+        font-size: 13px;
+      }
+
+      .signal {
+        display: grid;
+        grid-template-columns: 110px 1fr 54px;
+        gap: 10px;
+        align-items: center;
+        margin: 13px 0;
+        font-size: 13px;
+      }
+
+      .roadmap {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .step {
+        background: #f9fbfa;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 13px;
+        min-height: 124px;
+      }
+
+      .step b {
+        display: block;
+        color: var(--accent);
+        margin-bottom: 7px;
+      }
+
+      .step span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .mini {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfc;
+        padding: 15px;
+      }
+
+      .mini h3 {
+        margin: 0 0 8px;
+        font-size: 15px;
+      }
+
+      .mini p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 980px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          position: static;
+          height: auto;
+        }
+
+        .nav {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .metrics,
+        .grid,
+        .cards,
+        .roadmap {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside>
+        <div class="brand">
+          <strong>Morupule Predictive Intelligence</strong>
+          <span>PoC command layer for asset reliability, ESG baselines, and maintenance decision support.</span>
+        </div>
+        <nav class="nav" aria-label="Dashboard sections">
+          <button class="active" data-view="overview">Executive View</button>
+          <button data-view="assets">Asset Risk</button>
+          <button data-view="analytics">ML Analytics</button>
+          <button data-view="esg">ESG Baseline</button>
+          <button data-view="roadmap">Deployment Plan</button>
+        </nav>
+        <div class="sidebar-note">
+          Public proxy data is used for this PoC. Production integration would require MCM-approved access to OT/IT systems.
+        </div>
+      </aside>
+
+      <main>
+        <header>
+          <div>
+            <h1 id="page-title">Executive View</h1>
+            <p class="subtitle" id="page-subtitle">A premium proof-of-concept for mine-wide predictive analytics across fixed assets, mobile assets, energy, and ESG performance.</p>
+          </div>
+          <div class="status-pill">PoC Ready for Vercel</div>
+        </header>
+
+        <section class="content">
+          <div class="notice">
+            This demonstrator uses public predictive-maintenance datasets and realistic mine asset mapping. It is designed to prove the analytics, workflow, dashboard, and governance approach before any confidential MCM data is connected.
+          </div>
+
+          <div class="view" id="overview">
+            <div class="metrics">
+              <div class="metric"><span>Assets Monitored</span><strong>48</strong><small>Fixed, mobile, services</small></div>
+              <div class="metric"><span>Critical Risk Assets</span><strong>7</strong><small>Prioritized by health and criticality</small></div>
+              <div class="metric"><span>Estimated Warning Window</span><strong>11d</strong><small>Median lead time for intervention</small></div>
+              <div class="metric"><span>ESG Baseline Coverage</span><strong>76%</strong><small>Energy, emissions proxy, utilities</small></div>
+            </div>
+
+            <div class="grid">
+              <div class="panel">
+                <div class="panel-head"><h2>Highest-Risk Assets</h2><span class="tag critical">Action Required</span></div>
+                <div class="panel-body">
+                  <table>
+                    <thead><tr><th>Asset</th><th>Area</th><th>Health</th><th>Failure Risk</th><th>Recommendation</th></tr></thead>
+                    <tbody id="risk-table"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>Executive Signals</h2><span class="tag watch">Pilot</span></div>
+                <div class="panel-body">
+                  <div class="signal"><span>Pipeline reliability</span><div class="bar"><span style="width: 94%"></span></div><b>94%</b></div>
+                  <div class="signal"><span>Alert precision</span><div class="bar"><span class="warn" style="width: 72%"></span></div><b>72%</b></div>
+                  <div class="signal"><span>Asset coverage</span><div class="bar"><span style="width: 64%"></span></div><b>64%</b></div>
+                  <div class="signal"><span>Data quality</span><div class="bar"><span class="warn" style="width: 81%"></span></div><b>81%</b></div>
+                  <div class="signal"><span>Adoption readiness</span><div class="bar"><span style="width: 88%"></span></div><b>88%</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="assets">
+            <div class="grid">
+              <div class="panel">
+                <div class="panel-head"><h2>Asset Health Register</h2><span class="tag good">Multi-Asset</span></div>
+                <div class="panel-body">
+                  <table>
+                    <thead><tr><th>Asset</th><th>Class</th><th>RUL</th><th>Health</th><th>Status</th></tr></thead>
+                    <tbody id="asset-table"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>Decision Support</h2><span class="tag watch">ERP Ready</span></div>
+                <div class="panel-body asset-list" id="decision-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="analytics">
+            <div class="cards">
+              <div class="mini"><h3>Baseline Analytics</h3><p>Normal operating envelopes are created per asset class using temperature, vibration, load, pressure, utilization, and energy signatures.</p></div>
+              <div class="mini"><h3>Anomaly Detection</h3><p>Hybrid rules and ML detect abnormal drift, trend deviation, and repeated operating patterns associated with failure precursors.</p></div>
+              <div class="mini"><h3>Model Governance</h3><p>Each model has documented training data, validation metrics, version history, drift monitoring, retraining cadence, and explainability notes.</p></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Model Pack</h2><span class="tag good">Proposal Artifact</span></div>
+              <div class="panel-body">
+                <table>
+                  <thead><tr><th>Model</th><th>Purpose</th><th>PoC Data</th><th>Production Source</th></tr></thead>
+                  <tbody>
+                    <tr><td>Failure likelihood</td><td>Rank assets by failure risk</td><td>Public sensor classification data</td><td>ERP failure history, historian tags</td></tr>
+                    <tr><td>Remaining useful life</td><td>Estimate intervention window</td><td>NASA C-MAPSS degradation proxy</td><td>Asset operating cycles and condition monitoring</td></tr>
+                    <tr><td>Energy baseline</td><td>Detect avoidable energy loss</td><td>Proxy energy profiles</td><td>Power meters and production context</td></tr>
+                    <tr><td>Alert rationalization</td><td>Reduce nuisance alerts</td><td>Derived event history</td><td>SCADA alarms, maintenance outcomes</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="esg">
+            <div class="metrics">
+              <div class="metric"><span>Energy Intensity Baseline</span><strong>18.4</strong><small>kWh per proxy tonne</small></div>
+              <div class="metric"><span>Avoidable Energy Loss</span><strong>9.8%</strong><small>From drift and inefficient operation</small></div>
+              <div class="metric"><span>Emissions Proxy</span><strong>42.1</strong><small>tCO2e indexed estimate</small></div>
+              <div class="metric"><span>Improvement Items</span><strong>14</strong><small>Ranked by value and risk</small></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Improvement Opportunity Tracker</h2><span class="tag watch">ESG</span></div>
+              <div class="panel-body">
+                <table>
+                  <thead><tr><th>Opportunity</th><th>Linked Asset</th><th>Impact</th><th>Next Step</th></tr></thead>
+                  <tbody>
+                    <tr><td>Reduce conveyor idling during shift change</td><td>CV-04</td><td>Energy and maintenance cost</td><td>Operations rule review</td></tr>
+                    <tr><td>Fan load optimization during low activity window</td><td>FAN-UG-02</td><td>Energy intensity</td><td>Validate ventilation constraints</td></tr>
+                    <tr><td>Pump vibration and pressure imbalance</td><td>PMP-SF-11</td><td>Failure risk and energy loss</td><td>Inspect bearings and alignment</td></tr>
+                    <tr><td>Loader overheating pattern</td><td>LHD-07</td><td>Downtime and emissions proxy</td><td>Cooling system inspection</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="roadmap">
+            <div class="roadmap">
+              <div class="step"><b>0. PoC</b><span>Live public-data demo, model pack, proposal story, and GitHub/Vercel deployment.</span></div>
+              <div class="step"><b>1. Discovery</b><span>Asset register, data source register, network readiness, pilot asset selection.</span></div>
+              <div class="step"><b>2. Design</b><span>Integration architecture, cyber controls, database design, SAT/UAT criteria.</span></div>
+              <div class="step"><b>3. Pilot Build</b><span>Connector setup, dashboards, baselines, anomaly detection, RUL models.</span></div>
+              <div class="step"><b>4. Handover</b><span>Commissioning, training, documentation, gap report, expansion roadmap.</span></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Commercial Scale Model</h2><span class="tag good">Mandatory</span></div>
+              <div class="panel-body">
+                <table>
+                  <thead><tr><th>Basis</th><th>How It Scales</th><th>Proposal Treatment</th></tr></thead>
+                  <tbody>
+                    <tr><td>Asset count</td><td>Fixed/mobile assets onboarded</td><td>Tiered bands for pilot, department, full-mine</td></tr>
+                    <tr><td>Tag count</td><td>Historian/sensor data points</td><td>Transparent cost curve by data-point volume</td></tr>
+                    <tr><td>Usage</td><td>Compute, storage, API throughput</td><td>Measured monthly with agreed guardrails</td></tr>
+                    <tr><td>User seats</td><td>Admin, analyst, viewer roles</td><td>Role-based access and expansion pricing</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const assets = [
+        { id: "CV-04", name: "Main Trunk Conveyor CV-04", area: "Underground", cls: "Conveyor", health: 38, risk: 82, rul: "6 days", status: "critical", action: "Inspect drive-end vibration and pulley alignment" },
+        { id: "PMP-SF-11", name: "Surface Dewatering Pump 11", area: "Surface", cls: "Pump", health: 44, risk: 76, rul: "9 days", status: "critical", action: "Plan bearing inspection and pressure test" },
+        { id: "FAN-UG-02", name: "Underground Ventilation Fan 02", area: "Underground", cls: "Fan", health: 51, risk: 69, rul: "13 days", status: "watch", action: "Review motor current drift and blade fouling" },
+        { id: "LHD-07", name: "Load Haul Dumper LHD-07", area: "Mobile Fleet", cls: "Mobile", health: 57, risk: 63, rul: "17 days", status: "watch", action: "Inspect cooling loop and hydraulic temperature trend" },
+        { id: "CR-01", name: "Primary Crusher CR-01", area: "Processing", cls: "Crusher", health: 66, risk: 41, rul: "31 days", status: "good", action: "Continue monitoring wear-rate baseline" },
+        { id: "SUB-03", name: "Substation Transformer SUB-03", area: "Services", cls: "Electrical", health: 72, risk: 32, rul: "45 days", status: "good", action: "Routine thermography at next planned window" }
+      ];
+
+      const statusLabel = { critical: "Critical", watch: "Watch", good: "Stable" };
+
+      function riskTag(status) {
+        return `<span class="tag ${status}">${statusLabel[status]}</span>`;
+      }
+
+      function healthBar(value) {
+        const cls = value < 45 ? "danger" : value < 62 ? "warn" : "";
+        return `<div class="bar"><span class="${cls}" style="width:${value}%"></span></div>`;
+      }
+
+      document.getElementById("risk-table").innerHTML = assets.slice(0, 5).map(asset => `
+        <tr>
+          <td><b>${asset.id}</b><br><small>${asset.name}</small></td>
+          <td>${asset.area}</td>
+          <td>${healthBar(asset.health)}</td>
+          <td>${asset.risk}%</td>
+          <td>${asset.action}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("asset-table").innerHTML = assets.map(asset => `
+        <tr>
+          <td><b>${asset.id}</b><br><small>${asset.name}</small></td>
+          <td>${asset.cls}</td>
+          <td>${asset.rul}</td>
+          <td>${healthBar(asset.health)}</td>
+          <td>${riskTag(asset.status)}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("decision-list").innerHTML = assets.slice(0, 4).map(asset => `
+        <div class="asset-card">
+          <strong>${asset.id} - ${asset.rul} warning window</strong>
+          <p>${asset.action}. Recommended workflow: validate signal, inspect asset, create planned work order, monitor post-maintenance response.</p>
+          ${riskTag(asset.status)}
+        </div>
+      `).join("");
+
+      const titles = {
+        overview: ["Executive View", "Mine-wide risk, reliability, ESG, and readiness summary for leadership."],
+        assets: ["Asset Risk", "Asset health, remaining useful life, and maintenance decision support."],
+        analytics: ["ML Analytics", "Model pack, anomaly detection, governance, drift monitoring, and explainability."],
+        esg: ["ESG Baseline", "Energy, emissions proxy, utility baselines, and improvement opportunity tracking."],
+        roadmap: ["Deployment Plan", "PoC-to-enterprise rollout aligned to MCM deliverables and tender scoring."]
+      };
+
+      document.querySelectorAll(".nav button").forEach(button => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".view").forEach(view => view.classList.add("hidden"));
+          button.classList.add("active");
+          const view = button.dataset.view;
+          document.getElementById(view).classList.remove("hidden");
+          document.getElementById("page-title").textContent = titles[view][0];
+          document.getElementById("page-subtitle").textContent = titles[view][1];
+        });
+      });
+    </script>
+  </body>
+</html>
