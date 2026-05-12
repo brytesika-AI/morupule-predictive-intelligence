@@ -9,7 +9,8 @@ Premium PoC and proposal workspace for the Morupule Coal Mine Predictive Analyti
 - `BUSINESS_DOCUMENTATION.md` - executive business case, operating model, commercial model, proposal pack structure, and tender scoring alignment.
 - `index.html` - static live-demo dashboard ready for Vercel deployment, with Morupule Coal Mine-facing branding and visual mine-map views.
 - GenAI and scenario planning are represented in the live demo through the **AI Scenarios** view, with governed advisor outputs and what-if filters.
-- The **Open LLM** view loads the real open-source Hugging Face model `Xenova/distilgpt2` via Transformers.js and runs browser-side text generation.
+- The **Open LLM** view loads a real open-source Hugging Face model via Transformers.js and runs browser-side text generation, with CDN/model fallback handling.
+- The **Proposal Fit** view maps the demo and documentation to the SOW requirements so tender coverage is visible during walkthroughs.
 
 ## Demo Positioning
 
@@ -21,7 +22,7 @@ The map visuals are proposal-grade schematic views for executive storytelling. P
 
 The GenAI advisor in the demo is a proposal-grade simulation. In production, it should use approved MCM knowledge sources, retrieval-augmented generation, audit logs, role-based controls, and human approval for operational actions.
 
-The Open LLM view is a working technical demonstrator. It downloads model weights from Hugging Face/CDN in the browser, so first load depends on internet access and browser support.
+The Open LLM view is a working technical demonstrator. It downloads model weights from Hugging Face/CDN in the browser, so first load depends on internet access and browser support. If the larger model cannot load, the app attempts a smaller Hugging Face fallback and keeps the rest of the dashboard usable.
 
 ## Local Preview
 

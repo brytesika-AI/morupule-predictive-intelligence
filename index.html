@@ -321,6 +321,12 @@
         gap: 12px;
       }
 
+      .filter-bar {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
       .brand-tile {
         padding: 14px;
         border: 1px solid var(--line);
@@ -609,6 +615,12 @@
         line-height: 1.5;
       }
 
+      .coverage-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+      }
+
       .mini {
         border: 1px solid var(--line);
         border-radius: 8px;
@@ -656,6 +668,8 @@
         .hero-grid,
         .scenario-layout,
         .scenario-results,
+        .filter-bar,
+        .coverage-grid,
         .cards,
         .roadmap,
         .brand-strip {
@@ -683,6 +697,7 @@
           <button data-view="map">Mine Map</button>
           <button data-view="scenarios">AI Scenarios</button>
           <button data-view="llm">Open LLM</button>
+          <button data-view="proposal">Proposal Fit</button>
           <button data-view="assets">Asset Risk</button>
           <button data-view="analytics">ML Analytics</button>
           <button data-view="esg">ESG Baseline</button>
@@ -708,11 +723,54 @@
           </div>
 
           <div class="view" id="overview">
+            <div class="panel">
+              <div class="panel-head"><h2>Interactive Control Tower</h2><span class="tag good">Live filters</span></div>
+              <div class="panel-body filter-bar">
+                <div class="control">
+                  <label for="global-area">Operating area</label>
+                  <select id="global-area">
+                    <option value="all">All areas</option>
+                    <option value="Underground">Underground</option>
+                    <option value="Surface">Surface</option>
+                    <option value="Mobile Fleet">Mobile fleet</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Services">Services</option>
+                  </select>
+                </div>
+                <div class="control">
+                  <label for="global-class">Asset class</label>
+                  <select id="global-class">
+                    <option value="all">All classes</option>
+                    <option value="Conveyor">Conveyors</option>
+                    <option value="Pump">Pumps</option>
+                    <option value="Fan">Ventilation fans</option>
+                    <option value="Mobile">Mobile fleet</option>
+                    <option value="Crusher">Crushers</option>
+                    <option value="Electrical">Electrical services</option>
+                  </select>
+                </div>
+                <div class="control">
+                  <label for="global-scenario">Operating scenario</label>
+                  <select id="global-scenario">
+                    <option value="baseline">Baseline</option>
+                    <option value="highload">High production pressure</option>
+                    <option value="energy">Energy cost escalation</option>
+                    <option value="shutdown">Shutdown planning</option>
+                    <option value="weather">Hot weather stress</option>
+                  </select>
+                </div>
+                <div class="control">
+                  <label for="global-risk">Minimum risk</label>
+                  <div class="range-row"><input id="global-risk" type="range" min="0" max="90" value="0" /><output id="global-risk-value">0%</output></div>
+                </div>
+              </div>
+            </div>
+
             <div class="metrics">
-              <div class="metric"><span>Assets Monitored</span><strong>48</strong><small>Fixed, mobile, services</small></div>
-              <div class="metric"><span>Critical Risk Assets</span><strong>7</strong><small>Prioritized by health and criticality</small></div>
-              <div class="metric"><span>Estimated Warning Window</span><strong>11d</strong><small>Median lead time for intervention</small></div>
-              <div class="metric"><span>ESG Baseline Coverage</span><strong>76%</strong><small>Energy, emissions proxy, utilities</small></div>
+              <div class="metric"><span>Assets Monitored</span><strong id="metric-assets">48</strong><small id="metric-assets-note">Fixed, mobile, services</small></div>
+              <div class="metric"><span>Critical Risk Assets</span><strong id="metric-critical">7</strong><small>Risk-adjusted by selected scenario</small></div>
+              <div class="metric"><span>Estimated Warning Window</span><strong id="metric-rul">11d</strong><small>Median lead time for intervention</small></div>
+              <div class="metric"><span>ESG Baseline Coverage</span><strong id="metric-esg">76%</strong><small>Energy, emissions proxy, utilities</small></div>
             </div>
 
             <div class="hero-grid">
@@ -906,14 +964,14 @@
                 <div class="panel-head"><h2>Open-Source LLM Lab</h2><span class="tag good">Hugging Face</span></div>
                 <div class="panel-body llm-console">
                   <p class="source-note">
-                    This view loads the real open-source Hugging Face model <b>Xenova/distilgpt2</b> through Transformers.js and runs text generation in the browser. First load may take time because model weights are downloaded by the browser.
+                    This view loads a real open-source Hugging Face model through Transformers.js and runs text generation in the browser. It tries <b>Xenova/distilgpt2</b> first, then a smaller Hugging Face fallback if the browser cannot load the larger model.
                   </p>
                   <textarea id="llm-prompt">Draft a concise maintenance planning note for Morupule Coal Mine. Asset CV-04 has elevated vibration, 82% failure risk, and a 6 day intervention window.</textarea>
                   <div class="button-row">
                     <button class="primary-button" id="load-llm">Load model</button>
                     <button class="secondary-button" id="run-llm">Generate brief</button>
                   </div>
-                  <div class="llm-output" id="llm-output">Model not loaded yet. Click "Load model" to download Xenova/distilgpt2 from Hugging Face, then generate a brief.</div>
+                  <div class="llm-output" id="llm-output">Model not loaded yet. Click "Load model" to download an open-source model from Hugging Face, then generate a brief.</div>
                 </div>
               </div>
               <div class="panel">
@@ -923,6 +981,25 @@
                   <div class="asset-card"><strong>Enterprise mode</strong><p>Use a hosted open model or private deployment with RAG over approved MCM documents, work orders, manuals, and model explanations.</p><span class="tag watch">RAG ready</span></div>
                   <div class="asset-card"><strong>Safety boundary</strong><p>The LLM drafts and explains. It should not directly control equipment, override alarms, or create work orders without human approval.</p><span class="tag critical">Guardrail</span></div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="proposal">
+            <div class="coverage-grid">
+              <div class="metric"><span>SOW Coverage</span><strong>13/13</strong><small>Mapped to proposal artifacts</small></div>
+              <div class="metric"><span>Dashboards</span><strong>5</strong><small>Reliability, Ops, ESG, Exec, IT/OT</small></div>
+              <div class="metric"><span>Integrations</span><strong>7</strong><small>SCADA, ERP, MIS, meters, ESG, IoT</small></div>
+              <div class="metric"><span>Governance</span><strong>9</strong><small>Security, audit, model controls</small></div>
+              <div class="metric"><span>Handover Pack</span><strong>8</strong><small>SAT, UAT, training, support</small></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Proposal Requirement Coverage</h2><span class="tag good">Tender aligned</span></div>
+              <div class="panel-body">
+                <table>
+                  <thead><tr><th>SOW / Proposal Area</th><th>How The Platform Covers It</th><th>Demo Evidence</th><th>Status</th></tr></thead>
+                  <tbody id="proposal-table"></tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -1018,15 +1095,39 @@
     </div>
 
     <script type="module">
-      import { pipeline } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2";
-
       const assets = [
-        { id: "CV-04", name: "Main Trunk Conveyor CV-04", area: "Underground", cls: "Conveyor", health: 38, risk: 82, rul: "6 days", status: "critical", action: "Inspect drive-end vibration and pulley alignment" },
-        { id: "PMP-SF-11", name: "Surface Dewatering Pump 11", area: "Surface", cls: "Pump", health: 44, risk: 76, rul: "9 days", status: "critical", action: "Plan bearing inspection and pressure test" },
-        { id: "FAN-UG-02", name: "Underground Ventilation Fan 02", area: "Underground", cls: "Fan", health: 51, risk: 69, rul: "13 days", status: "watch", action: "Review motor current drift and blade fouling" },
-        { id: "LHD-07", name: "Load Haul Dumper LHD-07", area: "Mobile Fleet", cls: "Mobile", health: 57, risk: 63, rul: "17 days", status: "watch", action: "Inspect cooling loop and hydraulic temperature trend" },
-        { id: "CR-01", name: "Primary Crusher CR-01", area: "Processing", cls: "Crusher", health: 66, risk: 41, rul: "31 days", status: "good", action: "Continue monitoring wear-rate baseline" },
-        { id: "SUB-03", name: "Substation Transformer SUB-03", area: "Services", cls: "Electrical", health: 72, risk: 32, rul: "45 days", status: "good", action: "Routine thermography at next planned window" }
+        { id: "CV-04", name: "Main Trunk Conveyor CV-04", area: "Underground", cls: "Conveyor", health: 38, risk: 82, rul: 6, esg: 62, status: "critical", action: "Inspect drive-end vibration and pulley alignment" },
+        { id: "PMP-SF-11", name: "Surface Dewatering Pump 11", area: "Surface", cls: "Pump", health: 44, risk: 76, rul: 9, esg: 74, status: "critical", action: "Plan bearing inspection and pressure test" },
+        { id: "FAN-UG-02", name: "Underground Ventilation Fan 02", area: "Underground", cls: "Fan", health: 51, risk: 69, rul: 13, esg: 82, status: "watch", action: "Review motor current drift and blade fouling" },
+        { id: "LHD-07", name: "Load Haul Dumper LHD-07", area: "Mobile Fleet", cls: "Mobile", health: 57, risk: 63, rul: 17, esg: 58, status: "watch", action: "Inspect cooling loop and hydraulic temperature trend" },
+        { id: "CR-01", name: "Primary Crusher CR-01", area: "Processing", cls: "Crusher", health: 66, risk: 41, rul: 31, esg: 79, status: "good", action: "Continue monitoring wear-rate baseline" },
+        { id: "SUB-03", name: "Substation Transformer SUB-03", area: "Services", cls: "Electrical", health: 72, risk: 32, rul: 45, esg: 86, status: "good", action: "Routine thermography at next planned window" },
+        { id: "EMS-02", name: "Environmental Monitor EMS-02", area: "Services", cls: "Electrical", health: 78, risk: 28, rul: 52, esg: 91, status: "good", action: "Validate calibration and data availability trend" },
+        { id: "CHP-02", name: "Coal Handling Plant Transfer CHP-02", area: "Processing", cls: "Conveyor", health: 49, risk: 67, rul: 14, esg: 69, status: "watch", action: "Inspect chute blockage trend and motor current spikes" }
+      ];
+
+      const scenarioMultiplier = {
+        baseline: 1,
+        highload: 1.22,
+        energy: 1.08,
+        shutdown: 0.86,
+        weather: 1.16
+      };
+
+      const proposalCoverage = [
+        ["Inception and discovery", "Workshops, asset/data register, network readiness and data quality assessment.", "Proposal docs + Proposal Fit view", "Covered"],
+        ["Solution architecture", "Layered architecture for ingestion, storage, analytics, dashboards, cyber and scale.", "ENTERPRISE_ARCHITECTURE.md", "Covered"],
+        ["Data integration", "SCADA/PLC/DCS, historians, ERP, MIS, environmental systems, energy meters and IoT.", "Proposal Fit + architecture", "Covered"],
+        ["Predictive analytics", "Baseline analytics, anomaly detection, failure likelihood, RUL and alert rationalization.", "Asset Risk + ML Analytics", "Covered"],
+        ["ESG analytics", "Energy intensity, emissions proxy, avoidable energy loss and opportunity tracker.", "ESG Baseline view", "Covered"],
+        ["Role dashboards", "Executive, Reliability, Maintenance, Operations, Engineering, ESG and IT/OT roles.", "Dashboard tabs and docs", "Covered"],
+        ["GenAI", "Governed advisor, RAG pattern, scenario briefs, work-order draft support and guardrails.", "AI Scenarios + Open LLM", "Covered"],
+        ["Scenario planning", "Filters for area, asset class, load, budget, energy, weather and alert sensitivity.", "AI Scenarios", "Covered"],
+        ["Cybersecurity", "RBAC, audit, secure access, backup, DR and no direct OT control by default.", "Architecture docs", "Covered"],
+        ["Commercial clarity", "Asset/tag/user/usage expansion model and cost-curve approach.", "Business docs + Roadmap", "Covered"],
+        ["SHE and compliance", "SHE file, risk assessment, FRCS, LOTO, site controls and zero-incident KPI.", "Business docs", "Covered"],
+        ["Training and handover", "Role-based training, admin training, manuals, attendance and competency evidence.", "Roadmap + docs", "Covered"],
+        ["Acceptance KPIs", "SAT/UAT, data reliability, alert precision, predictive lead time and adoption.", "Proposal docs", "Covered"]
       ];
 
       const statusLabel = { critical: "Critical", watch: "Watch", good: "Stable" };
@@ -1040,33 +1141,63 @@
         return `<div class="bar"><span class="${cls}" style="width:${value}%"></span></div>`;
       }
 
-      document.getElementById("risk-table").innerHTML = assets.slice(0, 5).map(asset => `
-        <tr>
-          <td><b>${asset.id}</b><br><small>${asset.name}</small></td>
-          <td>${asset.area}</td>
-          <td>${healthBar(asset.health)}</td>
-          <td>${asset.risk}%</td>
-          <td>${asset.action}</td>
-        </tr>
-      `).join("");
+      function applyScenarioRisk(asset, scenario) {
+        return Math.min(98, Math.round(asset.risk * scenarioMultiplier[scenario]));
+      }
 
-      document.getElementById("asset-table").innerHTML = assets.map(asset => `
-        <tr>
-          <td><b>${asset.id}</b><br><small>${asset.name}</small></td>
-          <td>${asset.cls}</td>
-          <td>${asset.rul}</td>
-          <td>${healthBar(asset.health)}</td>
-          <td>${riskTag(asset.status)}</td>
-        </tr>
-      `).join("");
+      function filteredAssets() {
+        const area = document.getElementById("global-area").value;
+        const cls = document.getElementById("global-class").value;
+        const scenario = document.getElementById("global-scenario").value;
+        const minRisk = Number(document.getElementById("global-risk").value);
+        return assets
+          .map(asset => ({ ...asset, adjustedRisk: applyScenarioRisk(asset, scenario) }))
+          .filter(asset => (area === "all" || asset.area === area) && (cls === "all" || asset.cls === cls) && asset.adjustedRisk >= minRisk)
+          .sort((a, b) => b.adjustedRisk - a.adjustedRisk);
+      }
 
-      document.getElementById("decision-list").innerHTML = assets.slice(0, 4).map(asset => `
-        <div class="asset-card">
-          <strong>${asset.id} - ${asset.rul} warning window</strong>
-          <p>${asset.action}. Recommended workflow: validate signal, inspect asset, create planned work order, monitor post-maintenance response.</p>
-          ${riskTag(asset.status)}
-        </div>
-      `).join("");
+      function renderDashboard() {
+        const selected = filteredAssets();
+        const critical = selected.filter(asset => asset.adjustedRisk >= 70).length;
+        const medianRul = selected.length ? [...selected].sort((a, b) => a.rul - b.rul)[Math.floor(selected.length / 2)].rul : 0;
+        const esg = selected.length ? Math.round(selected.reduce((sum, asset) => sum + asset.esg, 0) / selected.length) : 0;
+        const minRisk = document.getElementById("global-risk").value;
+
+        document.getElementById("global-risk-value").textContent = `${minRisk}%`;
+        document.getElementById("metric-assets").textContent = selected.length;
+        document.getElementById("metric-assets-note").textContent = `${document.getElementById("global-area").value} / ${document.getElementById("global-class").value}`;
+        document.getElementById("metric-critical").textContent = critical;
+        document.getElementById("metric-rul").textContent = selected.length ? `${medianRul}d` : "-";
+        document.getElementById("metric-esg").textContent = selected.length ? `${esg}%` : "-";
+
+        document.getElementById("risk-table").innerHTML = selected.slice(0, 6).map(asset => `
+          <tr>
+            <td><b>${asset.id}</b><br><small>${asset.name}</small></td>
+            <td>${asset.area}</td>
+            <td>${healthBar(asset.health)}</td>
+            <td>${asset.adjustedRisk}%</td>
+            <td>${asset.action}</td>
+          </tr>
+        `).join("");
+
+        document.getElementById("asset-table").innerHTML = selected.map(asset => `
+          <tr>
+            <td><b>${asset.id}</b><br><small>${asset.name}</small></td>
+            <td>${asset.cls}</td>
+            <td>${asset.rul} days</td>
+            <td>${healthBar(asset.health)}</td>
+            <td>${riskTag(asset.adjustedRisk >= 70 ? "critical" : asset.adjustedRisk >= 50 ? "watch" : "good")}</td>
+          </tr>
+        `).join("");
+
+        document.getElementById("decision-list").innerHTML = selected.slice(0, 4).map(asset => `
+          <div class="asset-card">
+            <strong>${asset.id} - ${asset.rul} day warning window</strong>
+            <p>${asset.action}. Recommended workflow: validate signal, inspect asset, create planned work order, monitor post-maintenance response.</p>
+            ${riskTag(asset.adjustedRisk >= 70 ? "critical" : asset.adjustedRisk >= 50 ? "watch" : "good")}
+          </div>
+        `).join("");
+      }
 
       const scenarioControls = {
         type: document.getElementById("scenario-type"),
@@ -1105,16 +1236,8 @@
           (cls === "all" || asset.cls === cls)
         );
 
-        const scenarioMultiplier = {
-          baseline: 1,
-          highload: 1.22,
-          energy: 1.08,
-          shutdown: 0.86,
-          weather: 1.16
-        }[scenario];
-
         const adjusted = scoped.map(asset => {
-          const risk = Math.min(98, Math.round(asset.risk * scenarioMultiplier + (load - 95) * 0.35 + (100 - budget) * 0.22 + (sensitivity - 70) * 0.15));
+          const risk = Math.min(98, Math.round(asset.risk * scenarioMultiplier[scenario] + (load - 95) * 0.35 + (100 - budget) * 0.22 + (sensitivity - 70) * 0.15));
           const energyLoss = Math.max(4, Math.round((100 - asset.health) * 0.22 + (energy - 100) * 0.08 + (load - 90) * 0.05));
           return { ...asset, adjustedRisk: risk, energyLoss };
         }).sort((a, b) => b.adjustedRisk - a.adjustedRisk);
@@ -1131,7 +1254,7 @@
         const leading = adjusted[0];
         const scopeText = `${area === "all" ? "all operating areas" : area} and ${cls === "all" ? "all asset classes" : cls}`;
         document.getElementById("ai-brief").textContent = leading
-          ? `Under the ${scenarioCopy[scenario].toLowerCase()} scenario for ${scopeText}, the highest decision priority is ${leading.id}. The model indicates ${leading.adjustedRisk}% adjusted failure risk, with ${leading.rul} as the current intervention window.`
+          ? `Under the ${scenarioCopy[scenario].toLowerCase()} scenario for ${scopeText}, the highest decision priority is ${leading.id}. The model indicates ${leading.adjustedRisk}% adjusted failure risk, with ${leading.rul} days as the current intervention window.`
           : `No assets match the current filters. Broaden the operating area or asset-class selection to generate a scenario brief.`;
 
         document.getElementById("ai-actions").textContent = leading
@@ -1154,21 +1277,69 @@
       });
       updateScenario();
 
+      ["global-area", "global-class", "global-scenario", "global-risk"].forEach(id => {
+        const control = document.getElementById(id);
+        control.addEventListener("input", renderDashboard);
+        control.addEventListener("change", renderDashboard);
+      });
+      renderDashboard();
+
+      document.getElementById("proposal-table").innerHTML = proposalCoverage.map(row => `
+        <tr>
+          <td><b>${row[0]}</b></td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td><span class="tag good">${row[3]}</span></td>
+        </tr>
+      `).join("");
+
       let llmGenerator = null;
+      let llmModelId = "";
       const llmOutput = document.getElementById("llm-output");
       const loadLlmButton = document.getElementById("load-llm");
       const runLlmButton = document.getElementById("run-llm");
       const llmPrompt = document.getElementById("llm-prompt");
 
+      async function loadTransformersPipeline() {
+        const cdns = [
+          "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2",
+          "https://unpkg.com/@xenova/transformers@2.17.2"
+        ];
+        let lastError;
+        for (const url of cdns) {
+          try {
+            const mod = await import(url);
+            mod.env.allowLocalModels = false;
+            mod.env.useBrowserCache = true;
+            return mod.pipeline;
+          } catch (error) {
+            lastError = error;
+          }
+        }
+        throw lastError;
+      }
+
       loadLlmButton.addEventListener("click", async () => {
         try {
           loadLlmButton.disabled = true;
-          llmOutput.textContent = "Loading Xenova/distilgpt2 from Hugging Face. The first load can take a moment...";
-          llmGenerator = await pipeline("text-generation", "Xenova/distilgpt2");
-          llmOutput.textContent = "Model loaded. Enter a prompt and click Generate brief.";
+          const pipeline = await loadTransformersPipeline();
+          const models = ["Xenova/distilgpt2", "Xenova/tiny-random-gpt2"];
+          let lastError;
+          for (const model of models) {
+            try {
+              llmOutput.textContent = `Loading ${model} from Hugging Face. First load can take a moment...`;
+              llmGenerator = await pipeline("text-generation", model);
+              llmModelId = model;
+              llmOutput.textContent = `Model loaded: ${model}. Enter a prompt and click Generate brief.`;
+              return;
+            } catch (error) {
+              lastError = error;
+            }
+          }
+          throw lastError;
         } catch (error) {
           loadLlmButton.disabled = false;
-          llmOutput.textContent = `Unable to load the model in this browser session. Check network access to Hugging Face/CDN and try again.\n\n${error.message}`;
+          llmOutput.textContent = `Unable to load the browser model in this session. This usually means Hugging Face/CDN model files are blocked, slow, or unsupported by the browser.\n\nThe rest of the dashboard still works, including the governed scenario advisor.\n\nTechnical detail: ${error.message}`;
         }
       });
 
@@ -1180,7 +1351,7 @@
 
         try {
           runLlmButton.disabled = true;
-          llmOutput.textContent = "Generating with Xenova/distilgpt2...";
+          llmOutput.textContent = `Generating with ${llmModelId}...`;
           const result = await llmGenerator(llmPrompt.value, {
             max_new_tokens: 90,
             temperature: 0.8,
