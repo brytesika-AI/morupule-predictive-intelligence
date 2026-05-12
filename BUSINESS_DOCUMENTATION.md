@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-The Consultant proposes a premium predictive analytics platform for Morupule Coal Mine that improves reliability, maintenance planning, operational visibility, energy performance, and ESG baseline management.
+This proposal outlines a premium Morupule Coal Mine predictive analytics platform that improves reliability, maintenance planning, operational visibility, energy performance, and ESG baseline management.
 
 The solution is presented in two parts:
 

@@ -7,7 +7,7 @@ Premium PoC and proposal workspace for the Morupule Coal Mine Predictive Analyti
 - `PROPOSAL_PLAN.md` - tender-aligned PoC and enterprise proposal plan.
 - `ENTERPRISE_ARCHITECTURE.md` - target production architecture, integration layers, data/model governance, security, and scale roadmap.
 - `BUSINESS_DOCUMENTATION.md` - executive business case, operating model, commercial model, proposal pack structure, and tender scoring alignment.
-- `index.html` - static live-demo dashboard ready for Vercel deployment, with neutral enterprise branding and visual mine-map views.
+- `index.html` - static live-demo dashboard ready for Vercel deployment, with Morupule Coal Mine-facing branding and visual mine-map views.
 - GenAI and scenario planning are represented in the live demo through the **AI Scenarios** view, with governed advisor outputs and what-if filters.
 
 ## Demo Positioning
