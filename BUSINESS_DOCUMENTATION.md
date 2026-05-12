@@ -6,7 +6,7 @@ This proposal outlines a premium Morupule Coal Mine predictive analytics platfor
 
 The solution is presented in two parts:
 
-1. **A live PoC demonstrator** using public/proxy data, deployed on Vercel and maintained in GitHub.
+1. **A live PoC demonstrator** using real public datasets transformed into a Morupule-style semantic model, deployed on Vercel and maintained in GitHub.
 2. **A production enterprise platform** that connects to MCM-approved OT/IT systems and scales from pilot assets to full-mine deployment.
 
 The business value is not only prediction. The real value is converting asset, energy, environmental, and maintenance signals into trusted decisions that reduce unplanned downtime, improve planning quality, and support measurable ESG improvement.
@@ -93,7 +93,8 @@ Outputs:
 
 - live branded web demo;
 - GitHub repository;
-- proxy data model;
+- repeatable public-data transformation script;
+- processed semantic model with source lineage, measures, and transformed asset metrics;
 - schematic map views;
 - model pack outline;
 - proposal narrative and architecture documentation.

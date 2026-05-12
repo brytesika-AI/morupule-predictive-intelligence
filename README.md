@@ -8,13 +8,32 @@ Premium PoC and proposal workspace for the Morupule Coal Mine Predictive Analyti
 - `ENTERPRISE_ARCHITECTURE.md` - target production architecture, integration layers, data/model governance, security, and scale roadmap.
 - `BUSINESS_DOCUMENTATION.md` - executive business case, operating model, commercial model, proposal pack structure, and tender scoring alignment.
 - `index.html` - static live-demo dashboard ready for Vercel deployment, with Morupule Coal Mine-facing branding and visual mine-map views.
+- `scripts/build_semantic_model.py` - repeatable transformation script that builds the dashboard semantic model from public datasets.
+- `data/processed/semantic_model.json` - dashboard-ready semantic model containing transformed asset metrics, source metadata, measures, and transformation notes.
 - GenAI and scenario planning are represented in the live demo through the **AI Scenarios** view, with governed advisor outputs and what-if filters.
 - The **Open LLM** view loads a real open-source Hugging Face model via Transformers.js and runs browser-side text generation, with CDN/model fallback handling.
 - The **Proposal Fit** view maps the demo and documentation to the SOW requirements so tender coverage is visible during walkthroughs.
 
+## Real Data And Semantic Model
+
+The dashboard now loads a processed semantic model rather than hard-coded demo values. The build script uses:
+
+- [APS Failure at Scania Trucks](https://archive.ics.uci.edu/dataset/421/aps+failure+at+scania+trucks) - 60,000 real heavy-duty vehicle operational records from UCI/Scania, used for failure-risk, missingness, load, and signal-spread features.
+- [Predictive maintenance dataset](https://zenodo.org/records/3653909) - 106,238 public IoT sensor records from Zenodo/Huawei Munich Research Center, used for bearing, humidity, and vibration transformations.
+- [MetroPT-3 Dataset](https://archive-beta.ics.uci.edu/dataset/791/metropt+3+dataset) - referenced as the compressor/APU schema for the next ingestion step.
+- [Refinery Compressor Sensor Data, One-Year Dataset](https://zenodo.org/records/14866092) - referenced as the rotating-equipment DCS schema for compressor, fan, and pump expansion.
+
+The semantic model is proxy-mapped to Morupule asset classes until approved MCM OT/IT data is available. That keeps the PoC real and reproducible while avoiding any claim that public Scania/Huawei records are actual MCM operational data.
+
+Run the transformation pipeline:
+
+```powershell
+python scripts\build_semantic_model.py
+```
+
 ## Demo Positioning
 
-The demo uses public/proxy data to illustrate the production platform experience. It does not use confidential MCM data.
+The demo uses real public datasets that are transformed and proxy-mapped to illustrate the production platform experience. It does not use confidential MCM data.
 
 Production deployment would connect to MCM-approved SCADA, PLC/DCS, historians, ERP, MIS, energy meters, environmental monitoring systems, and future IoT sensors.
 

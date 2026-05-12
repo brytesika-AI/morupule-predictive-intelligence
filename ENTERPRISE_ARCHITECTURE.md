@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the target enterprise architecture for the Morupule Predictive Intelligence Platform. It is written for proposal, solution design, and stakeholder alignment. The PoC currently demonstrates the experience layer using public/proxy data; the enterprise architecture describes how the same concept scales into an MCM-approved production deployment.
+This document defines the target enterprise architecture for the Morupule Predictive Intelligence Platform. It is written for proposal, solution design, and stakeholder alignment. The PoC currently demonstrates the experience layer using real public datasets transformed into a proxy-mapped semantic model; the enterprise architecture describes how the same concept scales into an MCM-approved production deployment.
 
 ## Architecture Principles
 
@@ -194,7 +194,8 @@ GenAI guardrails:
 ### PoC Deployment
 
 - Static dashboard hosted on Vercel.
-- Public/proxy data embedded in the demo.
+- Real public datasets transformed into `data/processed/semantic_model.json`.
+- Repeatable transformation script at `scripts/build_semantic_model.py`.
 - GitHub repository for source control.
 - No confidential MCM data.
 - Proposal-grade schematic maps.

@@ -40,15 +40,15 @@ The PoC proves the operating model before site integration. It shows MCM how pre
 
 ### PoC Data Sources
 
-The PoC will use public and proxy data only:
+The PoC uses public real datasets transformed into a dashboard semantic model:
 
-- NASA C-MAPSS or equivalent public equipment degradation data for remaining useful life modelling.
-- Public predictive-maintenance sensor datasets from Hugging Face/UCI-style sources for classification and anomaly detection.
-- NASA POWER public weather data for Palapye/Botswana operating context.
-- A synthetic but realistic MCM-style asset register covering conveyors, pumps, crushers, ventilation fans, loaders, shuttle cars, substations, and energy meters.
+- **APS Failure at Scania Trucks** from UCI/Scania for real heavy-duty equipment failure classification, missingness, load, and signal-spread features.
+- **Predictive maintenance dataset** from Zenodo/Huawei Munich Research Center for real IoT bearing, humidity, and vibration signals.
+- **MetroPT-3** and **Refinery Compressor Sensor Data** as referenced source schemas for compressor/fan/pump telemetry expansion.
+- A Morupule-style asset semantic layer covering conveyors, pumps, crushers, ventilation fans, mobile fleet, substations, and environmental monitoring points.
 - Derived ESG proxy metrics for energy intensity, emissions factor estimates, avoidable loss, and improvement opportunities.
 
-All demo screens will clearly state: **Public proxy data used for PoC. Production deployment connects only to MCM-approved OT/IT sources.**
+All demo screens will clearly state: **Real public datasets are proxy-mapped for PoC. Production deployment connects only to MCM-approved OT/IT sources.**
 
 ### PoC Modules
 

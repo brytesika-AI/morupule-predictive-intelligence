@@ -789,8 +789,8 @@
         </header>
 
         <section class="content">
-          <div class="notice">
-            This demonstrator uses public predictive-maintenance datasets and realistic mine asset mapping. It is designed to prove the analytics, workflow, dashboard, and governance approach before any confidential MCM data is connected.
+          <div class="notice" id="data-status">
+            Loading real public-data semantic model. The dashboard is designed to prove analytics, workflow, governance, and visual decision support before any confidential MCM data is connected.
           </div>
 
           <div class="view" id="overview">
@@ -1121,11 +1121,11 @@
               <div class="mini"><h3>Anomaly Detection</h3><p>Hybrid rules and ML detect abnormal drift, trend deviation, and repeated operating patterns associated with failure precursors.</p></div>
               <div class="mini"><h3>Model Governance</h3><p>Each model has documented training data, validation metrics, version history, drift monitoring, retraining cadence, and explainability notes.</p></div>
             </div>
-            <div class="panel">
-              <div class="panel-head"><h2>Model Pack</h2><span class="tag good">Proposal Artifact</span></div>
-              <div class="panel-body">
-                <table>
-                  <thead><tr><th>Model</th><th>Purpose</th><th>PoC Data</th><th>Production Source</th></tr></thead>
+              <div class="panel">
+                <div class="panel-head"><h2>Model Pack</h2><span class="tag good">Proposal Artifact</span></div>
+                <div class="panel-body">
+                  <table>
+                    <thead><tr><th>Model</th><th>Purpose</th><th>PoC Data</th><th>Production Source</th></tr></thead>
                   <tbody>
                     <tr><td>Failure likelihood</td><td>Rank assets by failure risk</td><td>Public sensor classification data</td><td>ERP failure history, historian tags</td></tr>
                     <tr><td>Remaining useful life</td><td>Estimate intervention window</td><td>NASA C-MAPSS degradation proxy</td><td>Asset operating cycles and condition monitoring</td></tr>
@@ -1133,6 +1133,16 @@
                     <tr><td>Alert rationalization</td><td>Reduce nuisance alerts</td><td>Derived event history</td><td>SCADA alarms, maintenance outcomes</td></tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Semantic Data Model</h2><span class="tag good">Real public data</span></div>
+              <div class="panel-body">
+                <table>
+                  <thead><tr><th>Dataset</th><th>Publisher</th><th>Rows Used</th><th>Role In Dashboard</th></tr></thead>
+                  <tbody id="source-table"></tbody>
+                </table>
+                <p class="source-note" id="transformation-note" style="margin-top: 12px;"></p>
               </div>
             </div>
           </div>
@@ -1188,7 +1198,8 @@
     </div>
 
     <script type="module">
-      const assets = [
+      let semanticModel = null;
+      let assets = [
         { id: "CV-04", name: "Main Trunk Conveyor CV-04", area: "Underground", cls: "Conveyor", health: 38, risk: 82, rul: 6, esg: 62, status: "critical", x: 180, y: 182, labelX: 205, labelY: 187, action: "Inspect drive-end vibration and pulley alignment" },
         { id: "PMP-SF-11", name: "Surface Dewatering Pump 11", area: "Surface", cls: "Pump", health: 44, risk: 76, rul: 9, esg: 74, status: "critical", x: 430, y: 332, labelX: 455, labelY: 337, action: "Plan bearing inspection and pressure test" },
         { id: "FAN-UG-02", name: "Underground Ventilation Fan 02", area: "Underground", cls: "Fan", health: 51, risk: 69, rul: 13, esg: 82, status: "watch", x: 452, y: 156, labelX: 476, labelY: 161, action: "Review motor current drift and blade fouling" },
@@ -1295,9 +1306,48 @@
           <div class="asset-card">
             <strong>${asset.id} - ${asset.rul} day warning window</strong>
             <p>${asset.action}. Recommended workflow: validate signal, inspect asset, create planned work order, monitor post-maintenance response.</p>
+            ${asset.sourceSignals ? `<p class="source-note">Signals: Scania failure rate ${Math.round(asset.sourceSignals.scaniaFailureRate * 100)}%, load index ${asset.sourceSignals.scaniaLoadIndex}, vibration index ${asset.sourceSignals.huaweiVibrationIndex}.</p>` : ""}
             ${riskTag(asset.adjustedRisk >= 70 ? "critical" : asset.adjustedRisk >= 50 ? "watch" : "good")}
           </div>
         `).join("");
+      }
+
+      function renderSemanticModel() {
+        const table = document.getElementById("source-table");
+        const note = document.getElementById("transformation-note");
+        if (!semanticModel) {
+          table.innerHTML = `<tr><td>Fallback model</td><td>Local demo defaults</td><td>-</td><td>Used only if the processed semantic JSON cannot be loaded.</td></tr>`;
+          note.textContent = "The app will continue to work with fallback data, but production scoring should use the processed semantic JSON.";
+          return;
+        }
+
+        const activeRows = semanticModel.sources.reduce((sum, source) => sum + Number(source.recordsUsed || 0), 0);
+        document.getElementById("data-status").innerHTML = `Real public-data mode: dashboard metrics are loaded from <b>${semanticModel.modelVersion}</b>, built from <b>${activeRows.toLocaleString()}</b> transformed public records. These are proxy-mapped to Morupule asset classes until MCM-approved OT/IT data is connected.`;
+        table.innerHTML = semanticModel.sources.map(source => `
+          <tr>
+            <td><a href="${source.url}" target="_blank" rel="noreferrer">${source.name}</a></td>
+            <td>${source.publisher}</td>
+            <td>${Number(source.recordsUsed || 0).toLocaleString()}</td>
+            <td>${source.role}</td>
+          </tr>
+        `).join("");
+        note.textContent = `Transformations: ${semanticModel.transformations.join(" ")}`;
+      }
+
+      async function loadSemanticModel() {
+        try {
+          const response = await fetch("data/processed/semantic_model.json", { cache: "no-store" });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          semanticModel = await response.json();
+          assets = semanticModel.assets;
+        } catch (error) {
+          document.getElementById("data-status").textContent = `Using fallback dashboard data because the real semantic model could not be loaded: ${error.message}`;
+        } finally {
+          renderDashboard();
+          renderMap();
+          renderSemanticModel();
+          updateScenario();
+        }
       }
 
       function mapFilteredAssets() {
@@ -1438,21 +1488,19 @@
         control.addEventListener("input", updateScenario);
         control.addEventListener("change", updateScenario);
       });
-      updateScenario();
 
       ["global-area", "global-class", "global-scenario", "global-risk"].forEach(id => {
         const control = document.getElementById(id);
         control.addEventListener("input", renderDashboard);
         control.addEventListener("change", renderDashboard);
       });
-      renderDashboard();
 
       ["map-area", "map-class", "map-scenario"].forEach(id => {
         const control = document.getElementById(id);
         control.addEventListener("input", () => renderMap());
         control.addEventListener("change", () => renderMap());
       });
-      renderMap();
+      loadSemanticModel();
 
       document.getElementById("proposal-table").innerHTML = proposalCoverage.map(row => `
         <tr>

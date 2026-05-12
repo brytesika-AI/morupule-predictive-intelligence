@@ -1,0 +1,238 @@
+{
+  "modelVersion": "morupule-semantic-model-v1",
+  "generatedBy": "scripts/build_semantic_model.py",
+  "grain": "asset_day_proxy",
+  "sources": [
+    {
+      "name": "APS Failure at Scania Trucks",
+      "publisher": "UCI Machine Learning Repository / Scania CV AB",
+      "url": "https://archive.ics.uci.edu/dataset/421/aps+failure+at+scania+trucks",
+      "license": "GPL",
+      "recordsUsed": 60000,
+      "role": "Real heavy-duty vehicle operational failure data mapped to mobile/fixed asset risk features."
+    },
+    {
+      "name": "Predictive maintenance dataset",
+      "publisher": "Zenodo / Huawei Munich Research Center",
+      "url": "https://zenodo.org/records/3653909",
+      "license": "Open",
+      "recordsUsed": 106238,
+      "role": "Real IoT sensor stream used for vibration, humidity, and drift transformations."
+    },
+    {
+      "name": "MetroPT-3 Dataset",
+      "publisher": "UCI Machine Learning Repository",
+      "url": "https://archive-beta.ics.uci.edu/dataset/791/metropt+3+dataset",
+      "license": "CC BY 4.0",
+      "recordsUsed": 0,
+      "role": "Referenced production-grade compressor schema for future direct APU sensor ingestion."
+    },
+    {
+      "name": "Refinery Compressor Sensor Data, One-Year Dataset",
+      "publisher": "Zenodo / Motor Oil Greece",
+      "url": "https://zenodo.org/records/14866092",
+      "license": "CC BY 4.0",
+      "recordsUsed": 0,
+      "role": "Referenced rotating-equipment DCS schema for enterprise compressor/fan/pump expansion."
+    }
+  ],
+  "transformations": [
+    "Extracted Scania APS records after source license header; converted 'na' to null.",
+    "Created load, spread, max-signal, missingness and positive-failure aggregates from selected operational counters.",
+    "Parsed Huawei IoT stream with semicolon delimiter and retained ball-bearing, humidity and vibration signals.",
+    "Windowed both datasets into Morupule asset analogues and calculated risk, health, RUL and ESG proxy measures.",
+    "Mapped semantic dimensions: asset, operating area, asset class, scenario, source system and maintenance action."
+  ],
+  "measures": {
+    "risk": "18 + failure_rate*46 + missing_rate*12 + load_index*10 + spread_index*10 + vibration_index*12, capped at 96",
+    "health": "100 - risk + completeness uplift - vibration penalty",
+    "rul": "64 - risk*0.62 - vibration_index*8, floor 3 days",
+    "esg": "88 - vibration_index*8 - load_index*7 + humidity stability uplift"
+  },
+  "assets": [
+    {
+      "id": "CV-04",
+      "name": "Main Trunk Conveyor CV-04",
+      "area": "Underground",
+      "cls": "Conveyor",
+      "health": 12,
+      "risk": 96,
+      "rul": 3,
+      "esg": 76,
+      "status": "critical",
+      "x": 180,
+      "y": 182,
+      "labelX": 205,
+      "labelY": 187,
+      "action": "Prioritise inspection and planned intervention from real failure-risk features",
+      "sourceSignals": {
+        "scaniaFailureRate": 1.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.316,
+        "huaweiHumidityMean": 72.98
+      }
+    },
+    {
+      "id": "PMP-SF-11",
+      "name": "Surface Dewatering Pump 11",
+      "area": "Surface",
+      "cls": "Pump",
+      "health": 13,
+      "risk": 96,
+      "rul": 3,
+      "esg": 75,
+      "status": "critical",
+      "x": 430,
+      "y": 332,
+      "labelX": 455,
+      "labelY": 337,
+      "action": "Prioritise inspection and planned intervention from real failure-risk features",
+      "sourceSignals": {
+        "scaniaFailureRate": 1.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.34,
+        "huaweiHumidityMean": 74.37
+      }
+    },
+    {
+      "id": "LHD-07",
+      "name": "Load Haul Dumper LHD-07",
+      "area": "Mobile Fleet",
+      "cls": "Mobile",
+      "health": 12,
+      "risk": 96,
+      "rul": 3,
+      "esg": 74,
+      "status": "critical",
+      "x": 262,
+      "y": 304,
+      "labelX": 120,
+      "labelY": 307,
+      "action": "Prioritise inspection and planned intervention from real failure-risk features",
+      "sourceSignals": {
+        "scaniaFailureRate": 1.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.577,
+        "huaweiHumidityMean": 75.23
+      }
+    },
+    {
+      "id": "FAN-UG-02",
+      "name": "Underground Ventilation Fan 02",
+      "area": "Underground",
+      "cls": "Fan",
+      "health": 14,
+      "risk": 95,
+      "rul": 3,
+      "esg": 76,
+      "status": "critical",
+      "x": 452,
+      "y": 156,
+      "labelX": 476,
+      "labelY": 161,
+      "action": "Prioritise inspection and planned intervention from real failure-risk features",
+      "sourceSignals": {
+        "scaniaFailureRate": 1.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.278,
+        "huaweiHumidityMean": 74.74
+      }
+    },
+    {
+      "id": "SUB-03",
+      "name": "Substation Transformer SUB-03",
+      "area": "Services",
+      "cls": "Electrical",
+      "health": 55,
+      "risk": 53,
+      "rul": 27,
+      "esg": 74,
+      "status": "watch",
+      "x": 514,
+      "y": 318,
+      "labelX": 536,
+      "labelY": 323,
+      "action": "Monitor drift and prepare conditional maintenance package",
+      "sourceSignals": {
+        "scaniaFailureRate": 0.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.554,
+        "huaweiHumidityMean": 74.11
+      }
+    },
+    {
+      "id": "CR-01",
+      "name": "Primary Crusher CR-01",
+      "area": "Processing",
+      "cls": "Crusher",
+      "health": 56,
+      "risk": 52,
+      "rul": 28,
+      "esg": 75,
+      "status": "watch",
+      "x": 496,
+      "y": 296,
+      "labelX": 518,
+      "labelY": 301,
+      "action": "Monitor drift and prepare conditional maintenance package",
+      "sourceSignals": {
+        "scaniaFailureRate": 0.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.457,
+        "huaweiHumidityMean": 74.33
+      }
+    },
+    {
+      "id": "EMS-02",
+      "name": "Environmental Monitor EMS-02",
+      "area": "Services",
+      "cls": "Electrical",
+      "health": 59,
+      "risk": 50,
+      "rul": 30,
+      "esg": 75,
+      "status": "watch",
+      "x": 560,
+      "y": 182,
+      "labelX": 582,
+      "labelY": 187,
+      "action": "Monitor drift and prepare conditional maintenance package",
+      "sourceSignals": {
+        "scaniaFailureRate": 0.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.364,
+        "huaweiHumidityMean": 74.27
+      }
+    },
+    {
+      "id": "CHP-02",
+      "name": "Coal Handling Plant Transfer CHP-02",
+      "area": "Processing",
+      "cls": "Conveyor",
+      "health": 59,
+      "risk": 50,
+      "rul": 30,
+      "esg": 75,
+      "status": "watch",
+      "x": 388,
+      "y": 248,
+      "labelX": 410,
+      "labelY": 253,
+      "action": "Monitor drift and prepare conditional maintenance package",
+      "sourceSignals": {
+        "scaniaFailureRate": 0.0,
+        "scaniaLoadIndex": 1.4,
+        "scaniaSignalSpread": 1.4,
+        "huaweiVibrationIndex": 0.361,
+        "huaweiHumidityMean": 73.72
+      }
+    }
+  ]
+}
