@@ -6,18 +6,20 @@
     <title>Morupule Predictive Intelligence Platform</title>
     <style>
       :root {
-        --bg: #f4f6f5;
-        --ink: #18211f;
-        --muted: #5c6a65;
-        --line: #d7dedb;
+        --bg: #f5f7f6;
+        --ink: #14201e;
+        --muted: #5a6864;
+        --line: #d8dfdc;
         --panel: #ffffff;
-        --accent: #1d6f62;
-        --accent-2: #b35a24;
+        --accent: #008a7a;
+        --accent-2: #c5662a;
+        --brand-blue: #234b73;
+        --brand-gold: #d39a2f;
         --danger: #b42318;
         --warn: #b7791f;
         --good: #16845c;
-        --coal: #252b2a;
-        --steel: #60717a;
+        --coal: #17211f;
+        --steel: #5d717a;
       }
 
       * {
@@ -44,7 +46,9 @@
       }
 
       aside {
-        background: var(--coal);
+        background:
+          linear-gradient(180deg, rgba(35, 75, 115, 0.28), rgba(0, 138, 122, 0.12)),
+          var(--coal);
         color: #f8faf9;
         padding: 24px 20px;
         position: sticky;
@@ -57,8 +61,45 @@
 
       .brand {
         display: flex;
+        align-items: flex-start;
         flex-direction: column;
-        gap: 8px;
+        gap: 12px;
+      }
+
+      .brand-lockup {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+
+      .logo-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        background:
+          linear-gradient(135deg, var(--accent), var(--brand-blue));
+        color: white;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        box-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.16);
+      }
+
+      .brand-name {
+        display: grid;
+        gap: 2px;
+      }
+
+      .brand-name b {
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      .brand-name small {
+        color: #cdd9d5;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
       }
 
       .brand strong {
@@ -107,7 +148,9 @@
       }
 
       header {
-        background: #ffffff;
+        background:
+          linear-gradient(90deg, rgba(0, 138, 122, 0.08), rgba(211, 154, 47, 0.06)),
+          #ffffff;
         border-bottom: 1px solid var(--line);
         padding: 22px 28px;
         display: flex;
@@ -197,6 +240,12 @@
         gap: 18px;
       }
 
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 1.2fr;
+        gap: 18px;
+      }
+
       .panel {
         overflow: hidden;
       }
@@ -217,6 +266,78 @@
 
       .panel-body {
         padding: 18px;
+      }
+
+      .map-wrap {
+        position: relative;
+        min-height: 390px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
+          radial-gradient(circle at 22% 30%, rgba(0, 138, 122, 0.16), transparent 26%),
+          radial-gradient(circle at 74% 68%, rgba(211, 154, 47, 0.18), transparent 24%),
+          #edf3f1;
+        overflow: hidden;
+      }
+
+      .map-wrap svg {
+        width: 100%;
+        height: 100%;
+        min-height: 390px;
+        display: block;
+      }
+
+      .map-label {
+        font-size: 13px;
+        fill: #20302d;
+        font-weight: 700;
+      }
+
+      .map-muted {
+        font-size: 11px;
+        fill: #61726e;
+      }
+
+      .map-chip {
+        position: absolute;
+        left: 18px;
+        bottom: 18px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .map-chip span {
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .brand-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .brand-tile {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfc;
+      }
+
+      .brand-tile b {
+        display: block;
+        color: var(--brand-blue);
+        margin-bottom: 6px;
+      }
+
+      .brand-tile span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
       }
 
       table {
@@ -396,8 +517,10 @@
 
         .metrics,
         .grid,
+        .hero-grid,
         .cards,
-        .roadmap {
+        .roadmap,
+        .brand-strip {
           grid-template-columns: 1fr;
         }
       }
@@ -407,11 +530,19 @@
     <div class="shell">
       <aside>
         <div class="brand">
+          <div class="brand-lockup">
+            <div class="logo-mark">BS</div>
+            <div class="brand-name">
+              <b>BryteSika AI</b>
+              <small>Mining Intelligence</small>
+            </div>
+          </div>
           <strong>Morupule Predictive Intelligence</strong>
-          <span>PoC command layer for asset reliability, ESG baselines, and maintenance decision support.</span>
+          <span>Premium PoC command layer for asset reliability, geospatial risk, ESG baselines, and maintenance decision support.</span>
         </div>
         <nav class="nav" aria-label="Dashboard sections">
           <button class="active" data-view="overview">Executive View</button>
+          <button data-view="map">Mine Map</button>
           <button data-view="assets">Asset Risk</button>
           <button data-view="analytics">ML Analytics</button>
           <button data-view="esg">ESG Baseline</button>
@@ -428,7 +559,7 @@
             <h1 id="page-title">Executive View</h1>
             <p class="subtitle" id="page-subtitle">A premium proof-of-concept for mine-wide predictive analytics across fixed assets, mobile assets, energy, and ESG performance.</p>
           </div>
-          <div class="status-pill">PoC Ready for Vercel</div>
+          <div class="status-pill">BryteSika AI PoC</div>
         </header>
 
         <section class="content">
@@ -444,7 +575,43 @@
               <div class="metric"><span>ESG Baseline Coverage</span><strong>76%</strong><small>Energy, emissions proxy, utilities</small></div>
             </div>
 
-            <div class="grid">
+            <div class="hero-grid">
+              <div class="panel">
+                <div class="panel-head"><h2>Geospatial Risk Context</h2><span class="tag watch">Palapye Corridor</span></div>
+                <div class="map-wrap">
+                  <svg viewBox="0 0 620 420" role="img" aria-label="Botswana and Morupule Coal Mine risk map">
+                    <defs>
+                      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#17211f" flood-opacity="0.16"/>
+                      </filter>
+                    </defs>
+                    <rect x="0" y="0" width="620" height="420" fill="transparent"/>
+                    <path d="M172 54 L393 42 L472 112 L458 226 L498 318 L420 378 L286 360 L188 392 L115 310 L132 202 L96 118 Z" fill="#dbe8e3" stroke="#8aa29c" stroke-width="3" filter="url(#shadow)"/>
+                    <path d="M126 300 C190 276 246 238 314 206 C380 176 426 140 466 104" fill="none" stroke="#d39a2f" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 10"/>
+                    <path d="M170 318 C225 284 306 250 380 226 C432 208 468 178 494 142" fill="none" stroke="#234b73" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="378" cy="210" r="58" fill="rgba(0,138,122,0.12)" stroke="#008a7a" stroke-width="2"/>
+                    <circle cx="378" cy="210" r="12" fill="#008a7a"/>
+                    <circle cx="378" cy="210" r="22" fill="none" stroke="#008a7a" stroke-width="3" opacity="0.45"/>
+                    <circle cx="342" cy="184" r="9" fill="#b42318"/>
+                    <circle cx="410" cy="226" r="9" fill="#b7791f"/>
+                    <circle cx="388" cy="172" r="8" fill="#b42318"/>
+                    <circle cx="440" cy="250" r="8" fill="#16845c"/>
+                    <circle cx="320" cy="242" r="8" fill="#b7791f"/>
+                    <text x="210" y="90" class="map-label">Botswana</text>
+                    <text x="394" y="205" class="map-label">Morupule Coal Mine</text>
+                    <text x="398" y="222" class="map-muted">7 km NW of Palapye</text>
+                    <text x="492" y="137" class="map-label">Palapye</text>
+                    <text x="112" y="326" class="map-muted">Gaborone corridor</text>
+                    <text x="350" y="158" class="map-muted">Underground</text>
+                    <text x="418" y="270" class="map-muted">Surface plant</text>
+                  </svg>
+                  <div class="map-chip">
+                    <span>Red: critical assets</span>
+                    <span>Gold: watchlist</span>
+                    <span>Green: stable</span>
+                  </div>
+                </div>
+              </div>
               <div class="panel">
                 <div class="panel-head"><h2>Highest-Risk Assets</h2><span class="tag critical">Action Required</span></div>
                 <div class="panel-body">
@@ -462,6 +629,52 @@
                   <div class="signal"><span>Asset coverage</span><div class="bar"><span style="width: 64%"></span></div><b>64%</b></div>
                   <div class="signal"><span>Data quality</span><div class="bar"><span class="warn" style="width: 81%"></span></div><b>81%</b></div>
                   <div class="signal"><span>Adoption readiness</span><div class="bar"><span style="width: 88%"></span></div><b>88%</b></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="brand-strip">
+              <div class="brand-tile"><b>BryteSika AI Lens</b><span>Executive-grade visual analytics for asset-heavy African mining operations.</span></div>
+              <div class="brand-tile"><b>Premium Delivery</b><span>Proposal, model pack, architecture, deployment, and decision-support workflow in one package.</span></div>
+              <div class="brand-tile"><b>Responsible Data</b><span>Public proxy data for PoC, MCM-approved OT/IT data only for production.</span></div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="map">
+            <div class="grid">
+              <div class="panel">
+                <div class="panel-head"><h2>Mine Geospatial Intelligence Layer</h2><span class="tag good">Map View</span></div>
+                <div class="map-wrap">
+                  <svg viewBox="0 0 700 460" role="img" aria-label="Morupule mine asset risk zones map">
+                    <rect width="700" height="460" fill="#eef4f2"/>
+                    <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="12" stroke-linecap="round" opacity="0.2"/>
+                    <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12"/>
+                    <rect x="92" y="110" width="220" height="150" rx="8" fill="#dcebe6" stroke="#9eb8b0"/>
+                    <rect x="370" y="92" width="214" height="134" rx="8" fill="#e9ede8" stroke="#9eb8b0"/>
+                    <rect x="338" y="280" width="242" height="96" rx="8" fill="#e8efe8" stroke="#9eb8b0"/>
+                    <path d="M170 236 L254 302 L412 326" fill="none" stroke="#234b73" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M210 178 L312 178 L438 158" fill="none" stroke="#008a7a" stroke-width="5" stroke-linecap="round"/>
+                    <g>
+                      <circle cx="180" cy="182" r="16" fill="#b42318"/><text x="205" y="187" class="map-label">CV-04 critical conveyor</text>
+                      <circle cx="452" cy="156" r="15" fill="#b7791f"/><text x="476" y="161" class="map-label">FAN-UG-02 ventilation watch</text>
+                      <circle cx="430" cy="332" r="16" fill="#b42318"/><text x="455" y="337" class="map-label">PMP-SF-11 pump risk</text>
+                      <circle cx="514" cy="318" r="14" fill="#16845c"/><text x="536" y="323" class="map-label">SUB-03 stable</text>
+                      <circle cx="262" cy="304" r="14" fill="#b7791f"/><text x="120" y="307" class="map-label">LHD-07 mobile heat trend</text>
+                    </g>
+                    <text x="112" y="140" class="map-label">Underground Operations</text>
+                    <text x="394" y="120" class="map-label">Ventilation and Services</text>
+                    <text x="358" y="306" class="map-label">Surface Plant and Dewatering</text>
+                    <text x="48" y="352" class="map-muted">Mine road / logistics corridor</text>
+                    <text x="340" y="248" class="map-muted">Telemetry links to predictive platform</text>
+                  </svg>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>Map-Led Decisions</h2><span class="tag watch">Operations</span></div>
+                <div class="panel-body asset-list">
+                  <div class="asset-card"><strong>Risk clustering</strong><p>Critical events are grouped by mine area so maintenance planners can combine inspections, permits, escorts, and spares.</p><span class="tag critical">Underground priority</span></div>
+                  <div class="asset-card"><strong>ESG overlay</strong><p>Energy and emissions proxy layers show where inefficient operating behaviour is linked to condition deterioration.</p><span class="tag watch">Energy drift</span></div>
+                  <div class="asset-card"><strong>Expansion view</strong><p>The same map layer can scale from pilot assets to full-mine sections, surface plants, utilities, and mobile fleet routes.</p><span class="tag good">Scalable</span></div>
                 </div>
               </div>
             </div>
@@ -608,6 +821,7 @@
 
       const titles = {
         overview: ["Executive View", "Mine-wide risk, reliability, ESG, and readiness summary for leadership."],
+        map: ["Mine Map", "Geospatial asset-risk intelligence for Morupule, Palapye, underground operations, and surface services."],
         assets: ["Asset Risk", "Asset health, remaining useful life, and maintenance decision support."],
         analytics: ["ML Analytics", "Model pack, anomaly detection, governance, drift monitoring, and explainability."],
         esg: ["ESG Baseline", "Energy, emissions proxy, utility baselines, and improvement opportunity tracking."],
