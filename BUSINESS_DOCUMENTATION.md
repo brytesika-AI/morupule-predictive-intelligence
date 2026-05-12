@@ -71,6 +71,13 @@ The platform creates value through five channels:
    - Model governance and data-quality framework.
    - Full-mine scale without platform redesign.
 
+6. **GenAI-assisted decision productivity**
+   - Faster interpretation of alerts and trends.
+   - Natural-language access to asset, maintenance, ESG, and operating context.
+   - Draft work-order notes and reliability summaries.
+   - Scenario narratives for executive and planning meetings.
+   - Better knowledge transfer for new users and cross-functional teams.
+
 ## Proposed Business Offer
 
 ### Offer 1: PoC Demonstrator
@@ -119,6 +126,20 @@ Purpose:
 - mature ESG analytics;
 - improve model performance with production history;
 - add more departments, users, tags, and sites/sections.
+
+### Offer 4: GenAI Decision Copilot
+
+Purpose:
+
+- help users interrogate asset health, maintenance history, ESG baselines, and model outputs in natural language;
+- generate scenario briefs for leadership and planners;
+- draft work-order notes and recommended actions for human review;
+- summarize reliability meetings and improvement trackers;
+- support training and adoption.
+
+Important control:
+
+GenAI should act as an advisor and documentation assistant, not an autonomous equipment controller. Operational actions remain subject to MCM approval, maintenance planning, and site procedures.
 
 ## Commercial Model
 
@@ -188,6 +209,45 @@ The final business case should track:
 - alert precision improvement;
 - number of improvement opportunities closed;
 - adoption by role.
+- time saved in preparing reliability and ESG reports;
+- percentage of AI-generated recommendations accepted, edited, or rejected;
+- reduction in time from alert to planned action;
+- scenario-planning decisions supported per month.
+
+## Scenario Planning Capability
+
+The proposal should highlight scenario planning as a premium differentiator. MCM leadership and planners should be able to test "what-if" conditions before committing to a maintenance or operating plan.
+
+Recommended scenario filters:
+
+- asset class;
+- operating area;
+- production/load pressure;
+- maintenance budget availability;
+- energy price pressure;
+- planned shutdown window;
+- hot weather stress;
+- alert sensitivity;
+- criticality threshold;
+- spare availability.
+
+Business questions the platform should answer:
+
+- Which assets become critical if production load increases?
+- Which maintenance actions should be protected if budget is constrained?
+- Which assets should be prioritized during a shutdown?
+- Which risks have the highest downtime exposure?
+- Which condition issues also drive energy/ESG losses?
+- What should be escalated to leadership this week?
+
+Scenario outputs:
+
+- adjusted risk ranking;
+- downtime exposure;
+- energy exposure;
+- recommended intervention package;
+- defer/monitor/act classification;
+- executive-ready GenAI scenario brief.
 
 ## Operating Model
 
@@ -274,4 +334,3 @@ Recommended final tender pack:
 6. Prepare BOQ and pricing bands.
 7. Convert this documentation into a formal proposal document.
 8. Use the live demo during the proposal walkthrough.
-

@@ -473,6 +473,83 @@
         gap: 14px;
       }
 
+      .scenario-layout {
+        display: grid;
+        grid-template-columns: 340px minmax(0, 1fr);
+        gap: 18px;
+      }
+
+      .control-stack {
+        display: grid;
+        gap: 15px;
+      }
+
+      .control {
+        display: grid;
+        gap: 7px;
+      }
+
+      .control label {
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .control select,
+      .control input[type="range"] {
+        width: 100%;
+      }
+
+      .control select {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 10px 11px;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      .range-row {
+        display: grid;
+        grid-template-columns: 1fr 54px;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .range-row output {
+        color: var(--brand-blue);
+        font-weight: 800;
+        text-align: right;
+      }
+
+      .ai-response {
+        border: 1px solid #c8dcd7;
+        background:
+          linear-gradient(135deg, rgba(0, 138, 122, 0.08), rgba(35, 75, 115, 0.06)),
+          #fbfefd;
+        border-radius: 8px;
+        padding: 17px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .ai-response h3 {
+        margin: 0;
+        color: var(--brand-blue);
+      }
+
+      .ai-response p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .scenario-results {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
       .mini {
         border: 1px solid var(--line);
         border-radius: 8px;
@@ -518,6 +595,8 @@
         .metrics,
         .grid,
         .hero-grid,
+        .scenario-layout,
+        .scenario-results,
         .cards,
         .roadmap,
         .brand-strip {
@@ -543,6 +622,7 @@
         <nav class="nav" aria-label="Dashboard sections">
           <button class="active" data-view="overview">Executive View</button>
           <button data-view="map">Mine Map</button>
+          <button data-view="scenarios">AI Scenarios</button>
           <button data-view="assets">Asset Risk</button>
           <button data-view="analytics">ML Analytics</button>
           <button data-view="esg">ESG Baseline</button>
@@ -675,6 +755,86 @@
                   <div class="asset-card"><strong>Risk clustering</strong><p>Critical events are grouped by mine area so maintenance planners can combine inspections, permits, escorts, and spares.</p><span class="tag critical">Underground priority</span></div>
                   <div class="asset-card"><strong>ESG overlay</strong><p>Energy and emissions proxy layers show where inefficient operating behaviour is linked to condition deterioration.</p><span class="tag watch">Energy drift</span></div>
                   <div class="asset-card"><strong>Expansion view</strong><p>The same map layer can scale from pilot assets to full-mine sections, surface plants, utilities, and mobile fleet routes.</p><span class="tag good">Scalable</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="scenarios">
+            <div class="scenario-layout">
+              <div class="panel">
+                <div class="panel-head"><h2>Scenario Filters</h2><span class="tag good">What-if</span></div>
+                <div class="panel-body control-stack">
+                  <div class="control">
+                    <label for="scenario-type">Scenario</label>
+                    <select id="scenario-type">
+                      <option value="baseline">Baseline reliability plan</option>
+                      <option value="highload">High production pressure</option>
+                      <option value="energy">Energy cost escalation</option>
+                      <option value="shutdown">Planned shutdown optimization</option>
+                      <option value="weather">Hot weather stress</option>
+                    </select>
+                  </div>
+                  <div class="control">
+                    <label for="area-filter">Operating Area</label>
+                    <select id="area-filter">
+                      <option value="all">All areas</option>
+                      <option value="Underground">Underground</option>
+                      <option value="Surface">Surface</option>
+                      <option value="Mobile Fleet">Mobile fleet</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Services">Services</option>
+                    </select>
+                  </div>
+                  <div class="control">
+                    <label for="class-filter">Asset Class</label>
+                    <select id="class-filter">
+                      <option value="all">All classes</option>
+                      <option value="Conveyor">Conveyors</option>
+                      <option value="Pump">Pumps</option>
+                      <option value="Fan">Ventilation fans</option>
+                      <option value="Mobile">Mobile fleet</option>
+                      <option value="Crusher">Crushers</option>
+                      <option value="Electrical">Electrical services</option>
+                    </select>
+                  </div>
+                  <div class="control">
+                    <label for="load-range">Production/load pressure</label>
+                    <div class="range-row"><input id="load-range" type="range" min="70" max="125" value="96" /><output id="load-value">96%</output></div>
+                  </div>
+                  <div class="control">
+                    <label for="budget-range">Maintenance budget availability</label>
+                    <div class="range-row"><input id="budget-range" type="range" min="55" max="125" value="84" /><output id="budget-value">84%</output></div>
+                  </div>
+                  <div class="control">
+                    <label for="energy-range">Energy price pressure</label>
+                    <div class="range-row"><input id="energy-range" type="range" min="80" max="160" value="112" /><output id="energy-value">112%</output></div>
+                  </div>
+                  <div class="control">
+                    <label for="sensitivity-range">Alert sensitivity</label>
+                    <div class="range-row"><input id="sensitivity-range" type="range" min="50" max="95" value="72" /><output id="sensitivity-value">72%</output></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>GenAI Decision Advisor</h2><span class="tag watch">Human-in-the-loop</span></div>
+                <div class="panel-body">
+                  <div class="scenario-results">
+                    <div class="metric"><span>Filtered Assets</span><strong id="filtered-assets">6</strong><small>In selected scope</small></div>
+                    <div class="metric"><span>Critical Actions</span><strong id="critical-actions">2</strong><small>Need planning review</small></div>
+                    <div class="metric"><span>Downtime Exposure</span><strong id="downtime-exposure">31h</strong><small>Scenario-adjusted</small></div>
+                    <div class="metric"><span>Energy Exposure</span><strong id="energy-exposure">9.8%</strong><small>Avoidable loss proxy</small></div>
+                  </div>
+                  <div class="ai-response" style="margin-top: 16px;">
+                    <h3>Generated scenario brief</h3>
+                    <p id="ai-brief"></p>
+                    <p id="ai-actions"></p>
+                    <p><b>Governance guardrail:</b> GenAI should recommend, explain, summarize, and draft work-order notes. It should not directly control equipment or create work orders without approved human review.</p>
+                  </div>
+                  <table style="margin-top: 16px;">
+                    <thead><tr><th>Priority</th><th>Asset</th><th>Scenario effect</th><th>Suggested decision</th></tr></thead>
+                    <tbody id="scenario-table"></tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -819,9 +979,96 @@
         </div>
       `).join("");
 
+      const scenarioControls = {
+        type: document.getElementById("scenario-type"),
+        area: document.getElementById("area-filter"),
+        cls: document.getElementById("class-filter"),
+        load: document.getElementById("load-range"),
+        budget: document.getElementById("budget-range"),
+        energy: document.getElementById("energy-range"),
+        sensitivity: document.getElementById("sensitivity-range")
+      };
+
+      const scenarioCopy = {
+        baseline: "Baseline reliability plan",
+        highload: "High production pressure",
+        energy: "Energy cost escalation",
+        shutdown: "Planned shutdown optimization",
+        weather: "Hot weather stress"
+      };
+
+      function updateScenario() {
+        const load = Number(scenarioControls.load.value);
+        const budget = Number(scenarioControls.budget.value);
+        const energy = Number(scenarioControls.energy.value);
+        const sensitivity = Number(scenarioControls.sensitivity.value);
+        const area = scenarioControls.area.value;
+        const cls = scenarioControls.cls.value;
+        const scenario = scenarioControls.type.value;
+
+        document.getElementById("load-value").textContent = `${load}%`;
+        document.getElementById("budget-value").textContent = `${budget}%`;
+        document.getElementById("energy-value").textContent = `${energy}%`;
+        document.getElementById("sensitivity-value").textContent = `${sensitivity}%`;
+
+        const scoped = assets.filter(asset =>
+          (area === "all" || asset.area === area) &&
+          (cls === "all" || asset.cls === cls)
+        );
+
+        const scenarioMultiplier = {
+          baseline: 1,
+          highload: 1.22,
+          energy: 1.08,
+          shutdown: 0.86,
+          weather: 1.16
+        }[scenario];
+
+        const adjusted = scoped.map(asset => {
+          const risk = Math.min(98, Math.round(asset.risk * scenarioMultiplier + (load - 95) * 0.35 + (100 - budget) * 0.22 + (sensitivity - 70) * 0.15));
+          const energyLoss = Math.max(4, Math.round((100 - asset.health) * 0.22 + (energy - 100) * 0.08 + (load - 90) * 0.05));
+          return { ...asset, adjustedRisk: risk, energyLoss };
+        }).sort((a, b) => b.adjustedRisk - a.adjustedRisk);
+
+        const criticalCount = adjusted.filter(asset => asset.adjustedRisk >= 70).length;
+        const downtime = Math.round(adjusted.reduce((sum, asset) => sum + asset.adjustedRisk / 18, 0) * (load / 100));
+        const energyExposure = adjusted.length ? Math.round(adjusted.reduce((sum, asset) => sum + asset.energyLoss, 0) / adjusted.length * 10) / 10 : 0;
+
+        document.getElementById("filtered-assets").textContent = adjusted.length;
+        document.getElementById("critical-actions").textContent = criticalCount;
+        document.getElementById("downtime-exposure").textContent = `${downtime}h`;
+        document.getElementById("energy-exposure").textContent = `${energyExposure}%`;
+
+        const leading = adjusted[0];
+        const scopeText = `${area === "all" ? "all operating areas" : area} and ${cls === "all" ? "all asset classes" : cls}`;
+        document.getElementById("ai-brief").textContent = leading
+          ? `Under the ${scenarioCopy[scenario].toLowerCase()} scenario for ${scopeText}, the highest decision priority is ${leading.id}. The model indicates ${leading.adjustedRisk}% adjusted failure risk, with ${leading.rul} as the current intervention window.`
+          : `No assets match the current filters. Broaden the operating area or asset-class selection to generate a scenario brief.`;
+
+        document.getElementById("ai-actions").textContent = leading
+          ? `Recommended response: protect production by planning ${leading.action.toLowerCase()}, then review related assets in the same area for combined inspection. Budget pressure is ${budget < 75 ? "constrained, so rank only critical interventions." : "sufficient for proactive work packaging."} Energy pressure is ${energy > 125 ? "high, so prioritize inefficient assets with condition deterioration." : "moderate, so keep ESG actions tied to reliability value."}`
+          : "";
+
+        document.getElementById("scenario-table").innerHTML = adjusted.slice(0, 5).map((asset, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td><b>${asset.id}</b><br><small>${asset.name}</small></td>
+            <td>${asset.adjustedRisk}% risk / ${asset.energyLoss}% energy exposure</td>
+            <td>${asset.action}</td>
+          </tr>
+        `).join("");
+      }
+
+      Object.values(scenarioControls).forEach(control => {
+        control.addEventListener("input", updateScenario);
+        control.addEventListener("change", updateScenario);
+      });
+      updateScenario();
+
       const titles = {
         overview: ["Executive View", "Mine-wide risk, reliability, ESG, and readiness summary for leadership."],
         map: ["Mine Map", "Geospatial asset-risk intelligence for Morupule, Palapye, underground operations, and surface services."],
+        scenarios: ["AI Scenarios", "Filter operating conditions and let a governed GenAI advisor summarize risk, action, and business trade-offs."],
         assets: ["Asset Risk", "Asset health, remaining useful life, and maintenance decision support."],
         analytics: ["ML Analytics", "Model pack, anomaly detection, governance, drift monitoring, and explainability."],
         esg: ["ESG Baseline", "Energy, emissions proxy, utility baselines, and improvement opportunity tracking."],

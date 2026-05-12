@@ -13,6 +13,7 @@ This document defines the target enterprise architecture for the Morupule Predic
 - **Explainable decisions:** every alert should show why it fired, what changed, and what action is recommended.
 - **Governed models:** versioning, validation, drift monitoring, retraining cadence, and approval workflow.
 - **Security and auditability:** role-based access, audit logs, secure remote access, backup, restore, and disaster recovery.
+- **GenAI with guardrails:** GenAI can explain, summarize, draft, search, and advise, but cannot directly control equipment or bypass approved maintenance workflows.
 
 ## Logical Architecture
 
@@ -48,6 +49,10 @@ flowchart LR
   P --> R["Alerts and Recommendations"]
   P --> S["ERP/CMMS Work Order Support"]
   P --> T["Reports and KPI Packs"]
+  U["GenAI Advisor<br/>RAG, Summaries, Scenario Briefs"] --> Q
+  G --> U
+  H --> U
+  I --> U
 ```
 
 ## Enterprise Layers
@@ -150,6 +155,33 @@ Role-based views:
 - **S&SD/ESG:** energy intensity, emissions proxy, utilities, environmental baselines, improvement tracker.
 - **IT/OT Admin:** connectors, users, audit logs, backup status, integration health.
 
+### 8. GenAI Advisor Layer
+
+The GenAI layer should sit above the governed analytics layer. It should not replace reliability engineering models or operational approvals. Its role is to make the platform more usable, explainable, and decision-ready.
+
+Recommended GenAI capabilities:
+
+- natural-language question answering over asset health, alerts, maintenance history, SOPs, manuals, and model explanations;
+- retrieval-augmented generation using approved MCM documents and structured data;
+- scenario brief generation for executives and planners;
+- draft work-order notes for human review;
+- alert explanation in plain language;
+- meeting-ready reliability summaries;
+- ESG opportunity narratives;
+- root-cause hypothesis generation using linked evidence;
+- training assistant for platform users.
+
+GenAI guardrails:
+
+- cite or link the data sources used in each answer;
+- show confidence and uncertainty;
+- separate facts, model outputs, and recommendations;
+- require human approval before work-order creation or operational action;
+- block direct OT control;
+- log prompts, responses, user actions, and accepted/rejected recommendations;
+- restrict responses by user role and data permission;
+- use approved knowledge bases only for production responses.
+
 ## Deployment Architecture
 
 ### PoC Deployment
@@ -223,6 +255,47 @@ Every model should have:
 - version history;
 - retirement criteria.
 
+GenAI-specific governance should add:
+
+- approved knowledge-source register;
+- prompt/version register;
+- response evaluation criteria;
+- hallucination and unsupported-claim checks;
+- sensitive-data handling rules;
+- role-specific response boundaries;
+- human approval workflow for generated recommendations;
+- audit trail for generated work-order drafts and scenario briefs.
+
+## Scenario Planning
+
+The platform should support interactive scenario planning for leadership, reliability, maintenance, operations, and ESG teams.
+
+Recommended filters:
+
+- operating area;
+- asset class;
+- asset criticality;
+- production/load pressure;
+- maintenance budget availability;
+- planned shutdown window;
+- energy price pressure;
+- weather/temperature stress;
+- alert sensitivity;
+- spare availability;
+- model confidence threshold;
+- ESG target trajectory.
+
+Scenario outputs:
+
+- revised failure risk ranking;
+- estimated downtime exposure;
+- recommended maintenance package;
+- energy and emissions proxy impact;
+- budget and resource trade-offs;
+- assets to defer, monitor, or intervene;
+- GenAI-generated executive brief;
+- suggested agenda for reliability review meeting.
+
 ## Data Governance
 
 Required registers:
@@ -264,4 +337,3 @@ Enterprise KPIs should include:
 | 4 | Commissioning | SAT, UAT, training, documentation, handover |
 | 5 | Scale-up | Additional assets, tags, departments, ESG metrics |
 | 6 | Optimization | Automated recommendations, improved model performance, deeper ERP integration |
-
