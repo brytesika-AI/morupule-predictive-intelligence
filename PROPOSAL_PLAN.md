@@ -365,3 +365,7 @@ The tender requires explicit licensing clarity. Present a modular model:
    - form of offer details.
 5. Add company profile, CVs, reference letters, incorporation/tax/compliance documents later.
 
+## Supporting Documents
+
+- `ENTERPRISE_ARCHITECTURE.md` expands the production architecture, integration, data platform, ML governance, security, and scale roadmap.
+- `BUSINESS_DOCUMENTATION.md` expands the executive value case, commercial model, operating model, tender scoring response, and final proposal pack structure.
