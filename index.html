@@ -315,6 +315,76 @@
         color: var(--muted);
       }
 
+      .map-controls {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        z-index: 2;
+      }
+
+      .map-controls select {
+        width: 100%;
+        border: 1px solid rgba(216, 223, 220, 0.95);
+        border-radius: 6px;
+        padding: 9px 10px;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+      }
+
+      .map-marker {
+        cursor: pointer;
+      }
+
+      .map-marker circle {
+        stroke: #ffffff;
+        stroke-width: 4;
+        filter: drop-shadow(0 7px 8px rgba(20, 32, 30, 0.22));
+        transition: r 0.18s ease, opacity 0.18s ease;
+      }
+
+      .map-marker text {
+        pointer-events: none;
+      }
+
+      .map-marker:hover circle,
+      .map-marker.active circle {
+        r: 20;
+      }
+
+      .map-marker.dimmed {
+        opacity: 0.2;
+      }
+
+      .map-popup {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        width: min(320px, calc(100% - 36px));
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        box-shadow: 0 16px 35px rgba(20, 32, 30, 0.16);
+        z-index: 2;
+      }
+
+      .map-popup strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--brand-blue);
+      }
+
+      .map-popup p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.45;
+        font-size: 13px;
+      }
+
       .brand-strip {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -668,6 +738,7 @@
         .hero-grid,
         .scenario-layout,
         .scenario-results,
+        .map-controls,
         .filter-bar,
         .coverage-grid,
         .cards,
@@ -843,6 +914,32 @@
               <div class="panel">
                 <div class="panel-head"><h2>Mine Geospatial Intelligence Layer</h2><span class="tag good">Map View</span></div>
                 <div class="map-wrap">
+                  <div class="map-controls">
+                    <select id="map-area" aria-label="Map operating area">
+                      <option value="all">All areas</option>
+                      <option value="Underground">Underground</option>
+                      <option value="Surface">Surface</option>
+                      <option value="Mobile Fleet">Mobile fleet</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Services">Services</option>
+                    </select>
+                    <select id="map-class" aria-label="Map asset class">
+                      <option value="all">All classes</option>
+                      <option value="Conveyor">Conveyors</option>
+                      <option value="Pump">Pumps</option>
+                      <option value="Fan">Ventilation fans</option>
+                      <option value="Mobile">Mobile fleet</option>
+                      <option value="Crusher">Crushers</option>
+                      <option value="Electrical">Electrical services</option>
+                    </select>
+                    <select id="map-scenario" aria-label="Map operating scenario">
+                      <option value="baseline">Baseline</option>
+                      <option value="highload">High production</option>
+                      <option value="energy">Energy escalation</option>
+                      <option value="shutdown">Shutdown planning</option>
+                      <option value="weather">Hot weather</option>
+                    </select>
+                  </div>
                   <svg viewBox="0 0 700 460" role="img" aria-label="Morupule mine asset risk zones map">
                     <rect width="700" height="460" fill="#eef4f2"/>
                     <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="12" stroke-linecap="round" opacity="0.2"/>
@@ -852,27 +949,23 @@
                     <rect x="338" y="280" width="242" height="96" rx="8" fill="#e8efe8" stroke="#9eb8b0"/>
                     <path d="M170 236 L254 302 L412 326" fill="none" stroke="#234b73" stroke-width="5" stroke-linecap="round"/>
                     <path d="M210 178 L312 178 L438 158" fill="none" stroke="#008a7a" stroke-width="5" stroke-linecap="round"/>
-                    <g>
-                      <circle cx="180" cy="182" r="16" fill="#b42318"/><text x="205" y="187" class="map-label">CV-04 critical conveyor</text>
-                      <circle cx="452" cy="156" r="15" fill="#b7791f"/><text x="476" y="161" class="map-label">FAN-UG-02 ventilation watch</text>
-                      <circle cx="430" cy="332" r="16" fill="#b42318"/><text x="455" y="337" class="map-label">PMP-SF-11 pump risk</text>
-                      <circle cx="514" cy="318" r="14" fill="#16845c"/><text x="536" y="323" class="map-label">SUB-03 stable</text>
-                      <circle cx="262" cy="304" r="14" fill="#b7791f"/><text x="120" y="307" class="map-label">LHD-07 mobile heat trend</text>
-                    </g>
+                    <g id="map-marker-layer"></g>
                     <text x="112" y="140" class="map-label">Underground Operations</text>
                     <text x="394" y="120" class="map-label">Ventilation and Services</text>
                     <text x="358" y="306" class="map-label">Surface Plant and Dewatering</text>
                     <text x="48" y="352" class="map-muted">Mine road / logistics corridor</text>
                     <text x="340" y="248" class="map-muted">Telemetry links to predictive platform</text>
                   </svg>
+                  <div class="map-popup" id="map-popup">
+                    <strong>Select a map asset</strong>
+                    <p>Click any marker to inspect risk, remaining useful life, ESG exposure, and recommended maintenance action.</p>
+                  </div>
                 </div>
               </div>
               <div class="panel">
                 <div class="panel-head"><h2>Map-Led Decisions</h2><span class="tag watch">Operations</span></div>
-                <div class="panel-body asset-list">
-                  <div class="asset-card"><strong>Risk clustering</strong><p>Critical events are grouped by mine area so maintenance planners can combine inspections, permits, escorts, and spares.</p><span class="tag critical">Underground priority</span></div>
-                  <div class="asset-card"><strong>ESG overlay</strong><p>Energy and emissions proxy layers show where inefficient operating behaviour is linked to condition deterioration.</p><span class="tag watch">Energy drift</span></div>
-                  <div class="asset-card"><strong>Expansion view</strong><p>The same map layer can scale from pilot assets to full-mine sections, surface plants, utilities, and mobile fleet routes.</p><span class="tag good">Scalable</span></div>
+                <div class="panel-body asset-list" id="map-decision-list">
+                  <div class="asset-card"><strong>Risk clustering</strong><p>Use the map filters to isolate operational areas, asset classes, and stress scenarios.</p><span class="tag good">Interactive</span></div>
                 </div>
               </div>
             </div>
@@ -1096,14 +1189,14 @@
 
     <script type="module">
       const assets = [
-        { id: "CV-04", name: "Main Trunk Conveyor CV-04", area: "Underground", cls: "Conveyor", health: 38, risk: 82, rul: 6, esg: 62, status: "critical", action: "Inspect drive-end vibration and pulley alignment" },
-        { id: "PMP-SF-11", name: "Surface Dewatering Pump 11", area: "Surface", cls: "Pump", health: 44, risk: 76, rul: 9, esg: 74, status: "critical", action: "Plan bearing inspection and pressure test" },
-        { id: "FAN-UG-02", name: "Underground Ventilation Fan 02", area: "Underground", cls: "Fan", health: 51, risk: 69, rul: 13, esg: 82, status: "watch", action: "Review motor current drift and blade fouling" },
-        { id: "LHD-07", name: "Load Haul Dumper LHD-07", area: "Mobile Fleet", cls: "Mobile", health: 57, risk: 63, rul: 17, esg: 58, status: "watch", action: "Inspect cooling loop and hydraulic temperature trend" },
-        { id: "CR-01", name: "Primary Crusher CR-01", area: "Processing", cls: "Crusher", health: 66, risk: 41, rul: 31, esg: 79, status: "good", action: "Continue monitoring wear-rate baseline" },
-        { id: "SUB-03", name: "Substation Transformer SUB-03", area: "Services", cls: "Electrical", health: 72, risk: 32, rul: 45, esg: 86, status: "good", action: "Routine thermography at next planned window" },
-        { id: "EMS-02", name: "Environmental Monitor EMS-02", area: "Services", cls: "Electrical", health: 78, risk: 28, rul: 52, esg: 91, status: "good", action: "Validate calibration and data availability trend" },
-        { id: "CHP-02", name: "Coal Handling Plant Transfer CHP-02", area: "Processing", cls: "Conveyor", health: 49, risk: 67, rul: 14, esg: 69, status: "watch", action: "Inspect chute blockage trend and motor current spikes" }
+        { id: "CV-04", name: "Main Trunk Conveyor CV-04", area: "Underground", cls: "Conveyor", health: 38, risk: 82, rul: 6, esg: 62, status: "critical", x: 180, y: 182, labelX: 205, labelY: 187, action: "Inspect drive-end vibration and pulley alignment" },
+        { id: "PMP-SF-11", name: "Surface Dewatering Pump 11", area: "Surface", cls: "Pump", health: 44, risk: 76, rul: 9, esg: 74, status: "critical", x: 430, y: 332, labelX: 455, labelY: 337, action: "Plan bearing inspection and pressure test" },
+        { id: "FAN-UG-02", name: "Underground Ventilation Fan 02", area: "Underground", cls: "Fan", health: 51, risk: 69, rul: 13, esg: 82, status: "watch", x: 452, y: 156, labelX: 476, labelY: 161, action: "Review motor current drift and blade fouling" },
+        { id: "LHD-07", name: "Load Haul Dumper LHD-07", area: "Mobile Fleet", cls: "Mobile", health: 57, risk: 63, rul: 17, esg: 58, status: "watch", x: 262, y: 304, labelX: 120, labelY: 307, action: "Inspect cooling loop and hydraulic temperature trend" },
+        { id: "CR-01", name: "Primary Crusher CR-01", area: "Processing", cls: "Crusher", health: 66, risk: 41, rul: 31, esg: 79, status: "good", x: 496, y: 296, labelX: 518, labelY: 301, action: "Continue monitoring wear-rate baseline" },
+        { id: "SUB-03", name: "Substation Transformer SUB-03", area: "Services", cls: "Electrical", health: 72, risk: 32, rul: 45, esg: 86, status: "good", x: 514, y: 318, labelX: 536, labelY: 323, action: "Routine thermography at next planned window" },
+        { id: "EMS-02", name: "Environmental Monitor EMS-02", area: "Services", cls: "Electrical", health: 78, risk: 28, rul: 52, esg: 91, status: "good", x: 560, y: 182, labelX: 582, labelY: 187, action: "Validate calibration and data availability trend" },
+        { id: "CHP-02", name: "Coal Handling Plant Transfer CHP-02", area: "Processing", cls: "Conveyor", health: 49, risk: 67, rul: 14, esg: 69, status: "watch", x: 388, y: 248, labelX: 410, labelY: 253, action: "Inspect chute blockage trend and motor current spikes" }
       ];
 
       const scenarioMultiplier = {
@@ -1131,6 +1224,8 @@
       ];
 
       const statusLabel = { critical: "Critical", watch: "Watch", good: "Stable" };
+      const riskColor = { critical: "#b42318", watch: "#b7791f", good: "#16845c" };
+      let selectedMapAssetId = "CV-04";
 
       function riskTag(status) {
         return `<span class="tag ${status}">${statusLabel[status]}</span>`;
@@ -1143,6 +1238,12 @@
 
       function applyScenarioRisk(asset, scenario) {
         return Math.min(98, Math.round(asset.risk * scenarioMultiplier[scenario]));
+      }
+
+      function riskStatus(value) {
+        if (value >= 70) return "critical";
+        if (value >= 50) return "watch";
+        return "good";
       }
 
       function filteredAssets() {
@@ -1197,6 +1298,68 @@
             ${riskTag(asset.adjustedRisk >= 70 ? "critical" : asset.adjustedRisk >= 50 ? "watch" : "good")}
           </div>
         `).join("");
+      }
+
+      function mapFilteredAssets() {
+        const area = document.getElementById("map-area").value;
+        const cls = document.getElementById("map-class").value;
+        const scenario = document.getElementById("map-scenario").value;
+        return assets
+          .map(asset => ({ ...asset, adjustedRisk: applyScenarioRisk(asset, scenario) }))
+          .filter(asset => (area === "all" || asset.area === area) && (cls === "all" || asset.cls === cls))
+          .sort((a, b) => b.adjustedRisk - a.adjustedRisk);
+      }
+
+      function renderMap(selectedId = selectedMapAssetId) {
+        const selected = mapFilteredAssets();
+        if (!selected.some(asset => asset.id === selectedId)) {
+          selectedId = selected[0]?.id || "";
+        }
+        selectedMapAssetId = selectedId;
+
+        const layer = document.getElementById("map-marker-layer");
+        layer.innerHTML = selected.map(asset => {
+          const status = riskStatus(asset.adjustedRisk);
+          const active = asset.id === selectedMapAssetId ? " active" : "";
+          return `
+            <g class="map-marker${active}" data-asset="${asset.id}" tabindex="0" role="button" aria-label="${asset.id} ${asset.name}">
+              <circle cx="${asset.x}" cy="${asset.y}" r="${asset.adjustedRisk >= 70 ? 17 : 14}" fill="${riskColor[status]}"></circle>
+              <text x="${asset.labelX}" y="${asset.labelY}" class="map-label">${asset.id} ${statusLabel[status].toLowerCase()}</text>
+            </g>
+          `;
+        }).join("");
+
+        layer.querySelectorAll(".map-marker").forEach(marker => {
+          const selectMarker = () => renderMap(marker.dataset.asset);
+          marker.addEventListener("click", selectMarker);
+          marker.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              selectMarker();
+            }
+          });
+        });
+
+        const chosen = selected.find(asset => asset.id === selectedMapAssetId);
+        const popup = document.getElementById("map-popup");
+        const decisionList = document.getElementById("map-decision-list");
+        if (!chosen) {
+          popup.innerHTML = `<strong>No assets in this map view</strong><p>Adjust the map filters to show assets for the selected area, class, or scenario.</p>`;
+          decisionList.innerHTML = `<div class="asset-card"><strong>No matching assets</strong><p>Broaden the map filters to restore the operational risk layer.</p><span class="tag watch">Filtered</span></div>`;
+          return;
+        }
+
+        const status = riskStatus(chosen.adjustedRisk);
+        popup.innerHTML = `
+          <strong>${chosen.id} - ${chosen.name}</strong>
+          <p>${chosen.area} / ${chosen.cls}. Scenario risk is ${chosen.adjustedRisk}%, health is ${chosen.health}%, RUL is ${chosen.rul} days, ESG coverage is ${chosen.esg}%.</p>
+        `;
+
+        decisionList.innerHTML = `
+          <div class="asset-card"><strong>${chosen.id} selected</strong><p>${chosen.action}. Use this map point to package inspections by area, access route, spares, and safety permits.</p>${riskTag(status)}</div>
+          <div class="asset-card"><strong>Filtered layer</strong><p>${selected.length} assets shown under ${document.getElementById("map-scenario").selectedOptions[0].text}. Highest current risk: ${selected[0].id} at ${selected[0].adjustedRisk}%.</p><span class="tag watch">Scenario-aware</span></div>
+          <div class="asset-card"><strong>Enterprise expansion</strong><p>This same layer can connect to GIS, CMMS work orders, historian tags, drone survey points, and mobile fleet routes in production.</p><span class="tag good">Scalable</span></div>
+        `;
       }
 
       const scenarioControls = {
@@ -1283,6 +1446,13 @@
         control.addEventListener("change", renderDashboard);
       });
       renderDashboard();
+
+      ["map-area", "map-class", "map-scenario"].forEach(id => {
+        const control = document.getElementById(id);
+        control.addEventListener("input", () => renderMap());
+        control.addEventListener("change", () => renderMap());
+      });
+      renderMap();
 
       document.getElementById("proposal-table").innerHTML = proposalCoverage.map(row => `
         <tr>
