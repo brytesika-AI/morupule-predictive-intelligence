@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-BryteSika AI proposes a premium predictive analytics platform for Morupule Coal Mine that improves reliability, maintenance planning, operational visibility, energy performance, and ESG baseline management.
+The Consultant proposes a premium predictive analytics platform for Morupule Coal Mine that improves reliability, maintenance planning, operational visibility, energy performance, and ESG baseline management.
 
 The solution is presented in two parts:
 
@@ -189,7 +189,7 @@ Options:
 
 ## Business Case Metrics
 
-During discovery, BryteSika AI should work with MCM to quantify:
+During discovery, the Consultant should work with MCM to quantify:
 
 - cost of unplanned downtime by asset class;
 - maintenance labor and overtime impact;
@@ -269,11 +269,11 @@ Scenario outputs:
 | MCM Engineering Lead | Asset and reliability requirements |
 | MCM IT/OT Lead | Access, cybersecurity, infrastructure alignment |
 | MCM S&SD Lead | ESG metrics and compliance alignment |
-| BryteSika AI Project Lead | Delivery accountability |
-| BryteSika AI Data Science Lead | Models, validation, explainability |
-| BryteSika AI Data Engineer | Pipelines, data quality, integration |
-| BryteSika AI BI Lead | Dashboards, reports, user experience |
-| BryteSika AI SHE Lead | Site safety and compliance |
+| Consultant Project Lead | Delivery accountability |
+| Consultant Data Science Lead | Models, validation, explainability |
+| Consultant Data Engineer | Pipelines, data quality, integration |
+| Consultant BI Lead | Dashboards, reports, user experience |
+| Consultant SHE Lead | Site safety and compliance |
 
 ## Proposal Pack Structure
 
