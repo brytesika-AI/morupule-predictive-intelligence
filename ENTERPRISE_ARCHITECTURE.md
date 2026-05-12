@@ -171,6 +171,12 @@ Recommended GenAI capabilities:
 - root-cause hypothesis generation using linked evidence;
 - training assistant for platform users.
 
+PoC implementation note:
+
+- the live demo includes a browser-side open-source text-generation model using `Xenova/distilgpt2` from Hugging Face through Transformers.js;
+- this proves that a real open model can be embedded in the platform experience without exposing private MCM data;
+- production deployment should use an MCM-approved hosted model, private endpoint, or controlled on-prem/private-cloud model runtime.
+
 GenAI guardrails:
 
 - cite or link the data sources used in each answer;

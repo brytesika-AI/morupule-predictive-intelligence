@@ -141,6 +141,8 @@ Important control:
 
 GenAI should act as an advisor and documentation assistant, not an autonomous equipment controller. Operational actions remain subject to MCM approval, maintenance planning, and site procedures.
 
+The PoC includes a working open-source LLM demonstrator using `Xenova/distilgpt2` from Hugging Face via Transformers.js. For production, this should be replaced or supplemented with an approved enterprise model deployment and retrieval-augmented generation over MCM-authorized knowledge sources.
+
 ## Commercial Model
 
 The tender requires explicit commercial clarity. The proposal should present a modular model.
