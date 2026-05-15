@@ -142,7 +142,7 @@ Important control:
 
 GenAI should act as an advisor and documentation assistant, not an autonomous equipment controller. Operational actions remain subject to MCM approval, maintenance planning, and site procedures.
 
-The PoC includes a working open-source LLM demonstrator using Hugging Face models via Transformers.js, with `Xenova/distilgpt2` as the primary model and a smaller browser-compatible fallback. For production, this should be replaced or supplemented with an approved enterprise model deployment and retrieval-augmented generation over MCM-authorized knowledge sources.
+The PoC includes a working Cloudflare Workers AI LLM demonstrator called through a secure Vercel API route. It uses the 5 Layer Decision Stack - State, Time, Causality, Simulation, and Optimization - to generate decision briefs from the current semantic model and scenario filters. For production, this should be supplemented with retrieval-augmented generation over MCM-authorized knowledge sources.
 
 ## Commercial Model
 

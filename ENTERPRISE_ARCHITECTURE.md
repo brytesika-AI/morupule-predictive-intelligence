@@ -174,8 +174,8 @@ Recommended GenAI capabilities:
 PoC implementation note:
 
 - the live demo includes a browser-side open-source text-generation model using `Xenova/distilgpt2` from Hugging Face through Transformers.js;
-- the live demo uses click-time model loading, CDN fallback handling, and a smaller Hugging Face model fallback for browser compatibility;
-- this proves that a real open model can be embedded in the platform experience without exposing private MCM data;
+- the live demo uses a Vercel serverless API route to call Cloudflare Workers AI with keys held in Vercel environment variables;
+- this proves that a real cloud-hosted model can be embedded in the platform experience without exposing private MCM data or API secrets to the browser;
 - production deployment should use an MCM-approved hosted model, private endpoint, or controlled on-prem/private-cloud model runtime.
 
 GenAI guardrails:

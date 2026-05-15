@@ -710,6 +710,31 @@
         line-height: 1.45;
       }
 
+      .stack-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .stack-layer {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfc;
+        padding: 12px;
+      }
+
+      .stack-layer b {
+        display: block;
+        color: var(--brand-blue);
+        margin-bottom: 6px;
+      }
+
+      .stack-layer span {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
       .hidden {
         display: none;
       }
@@ -741,6 +766,7 @@
         .map-controls,
         .filter-bar,
         .coverage-grid,
+        .stack-grid,
         .cards,
         .roadmap,
         .brand-strip {
@@ -1054,24 +1080,31 @@
           <div class="view hidden" id="llm">
             <div class="grid">
               <div class="panel">
-                <div class="panel-head"><h2>Open-Source LLM Lab</h2><span class="tag good">Hugging Face</span></div>
+                <div class="panel-head"><h2>Cloudflare Decision AI</h2><span class="tag good">Workers AI</span></div>
                 <div class="panel-body llm-console">
                   <p class="source-note">
-                    This view loads a real open-source Hugging Face model through Transformers.js and runs text generation in the browser. It tries <b>Xenova/distilgpt2</b> first, then a smaller Hugging Face fallback if the browser cannot load the larger model.
+                    This view calls a real Cloudflare Workers AI LLM through a Vercel serverless route. The API key stays in Vercel environment variables; the browser only sends selected asset facts, scenario context, and the 5 Layer Decision Stack.
                   </p>
-                  <textarea id="llm-prompt">Draft a concise maintenance planning note for Morupule Coal Mine. Asset CV-04 has elevated vibration, 82% failure risk, and a 6 day intervention window.</textarea>
-                  <div class="button-row">
-                    <button class="primary-button" id="load-llm">Load model</button>
-                    <button class="secondary-button" id="run-llm">Generate brief</button>
+                  <div class="stack-grid">
+                    <div class="stack-layer"><b>State</b><span>Asset health, risk, area, class, RUL, ESG signal.</span></div>
+                    <div class="stack-layer"><b>Time</b><span>Warning window, drift, scenario-adjusted urgency.</span></div>
+                    <div class="stack-layer"><b>Causality</b><span>Failure precursors, load, vibration, missingness, energy stress.</span></div>
+                    <div class="stack-layer"><b>Simulation</b><span>What-if impact from operating and constraint filters.</span></div>
+                    <div class="stack-layer"><b>Optimization</b><span>Prioritized action plan across risk, cost, downtime, ESG.</span></div>
                   </div>
-                  <div class="llm-output" id="llm-output">Model not loaded yet. Click "Load model" to download an open-source model from Hugging Face, then generate a brief.</div>
+                  <textarea id="llm-prompt">Generate a Morupule Coal Mine decision brief using the current semantic model, selected scenario filters, and the 5 Layer Decision Stack.</textarea>
+                  <div class="button-row">
+                    <button class="primary-button" id="run-llm">Generate Cloudflare brief</button>
+                    <button class="secondary-button" id="load-llm">Check AI route</button>
+                  </div>
+                  <div class="llm-output" id="llm-output">Cloudflare Workers AI is ready to be called through the secure Vercel API route.</div>
                 </div>
               </div>
               <div class="panel">
-                <div class="panel-head"><h2>Production LLM Pattern</h2><span class="tag watch">Governed</span></div>
+                <div class="panel-head"><h2>Decision Stack Pattern</h2><span class="tag watch">Governed</span></div>
                 <div class="panel-body asset-list">
-                  <div class="asset-card"><strong>PoC mode</strong><p>Browser-side open-source generation using Transformers.js. Useful for showing real model execution without backend secrets.</p><span class="tag good">Client-side</span></div>
-                  <div class="asset-card"><strong>Enterprise mode</strong><p>Use a hosted open model or private deployment with RAG over approved MCM documents, work orders, manuals, and model explanations.</p><span class="tag watch">RAG ready</span></div>
+                  <div class="asset-card"><strong>State to decision</strong><p>The LLM receives current asset state from the semantic model, not loose dashboard text.</p><span class="tag good">Structured</span></div>
+                  <div class="asset-card"><strong>Scenario reasoning</strong><p>Time, causality, simulation, and optimization are included in the prompt so the model explains the tradeoff, not just the alert.</p><span class="tag watch">Decision-ready</span></div>
                   <div class="asset-card"><strong>Safety boundary</strong><p>The LLM drafts and explains. It should not directly control equipment, override alarms, or create work orders without human approval.</p><span class="tag critical">Guardrail</span></div>
                 </div>
               </div>
@@ -1511,72 +1544,73 @@
         </tr>
       `).join("");
 
-      let llmGenerator = null;
-      let llmModelId = "";
       const llmOutput = document.getElementById("llm-output");
       const loadLlmButton = document.getElementById("load-llm");
       const runLlmButton = document.getElementById("run-llm");
       const llmPrompt = document.getElementById("llm-prompt");
 
-      async function loadTransformersPipeline() {
-        const cdns = [
-          "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2",
-          "https://unpkg.com/@xenova/transformers@2.17.2"
-        ];
-        let lastError;
-        for (const url of cdns) {
-          try {
-            const mod = await import(url);
-            mod.env.allowLocalModels = false;
-            mod.env.useBrowserCache = true;
-            return mod.pipeline;
-          } catch (error) {
-            lastError = error;
-          }
-        }
-        throw lastError;
+      function currentScenarioAssets() {
+        const area = scenarioControls.area.value;
+        const cls = scenarioControls.cls.value;
+        const scenario = scenarioControls.type.value;
+        return assets
+          .filter(asset => (area === "all" || asset.area === area) && (cls === "all" || asset.cls === cls))
+          .map(asset => {
+            const adjustedRisk = Math.min(98, Math.round(asset.risk * scenarioMultiplier[scenario]));
+            return { ...asset, adjustedRisk };
+          })
+          .sort((a, b) => b.adjustedRisk - a.adjustedRisk)
+          .slice(0, 6);
       }
 
       loadLlmButton.addEventListener("click", async () => {
         try {
           loadLlmButton.disabled = true;
-          const pipeline = await loadTransformersPipeline();
-          const models = ["Xenova/distilgpt2", "Xenova/tiny-random-gpt2"];
-          let lastError;
-          for (const model of models) {
-            try {
-              llmOutput.textContent = `Loading ${model} from Hugging Face. First load can take a moment...`;
-              llmGenerator = await pipeline("text-generation", model);
-              llmModelId = model;
-              llmOutput.textContent = `Model loaded: ${model}. Enter a prompt and click Generate brief.`;
-              return;
-            } catch (error) {
-              lastError = error;
-            }
+          llmOutput.textContent = "Checking secure Cloudflare Workers AI route...";
+          const response = await fetch("/api/cloudflare-llm");
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || `HTTP ${response.status}`);
           }
-          throw lastError;
+          llmOutput.textContent = `Route ready: ${data.provider}. Model: ${data.model}. Account configured: ${data.accountConfigured}. Token configured: ${data.tokenConfigured}.`;
         } catch (error) {
+          llmOutput.textContent = `Cloudflare route check failed.\n\n${error.message}`;
+        } finally {
           loadLlmButton.disabled = false;
-          llmOutput.textContent = `Unable to load the browser model in this session. This usually means Hugging Face/CDN model files are blocked, slow, or unsupported by the browser.\n\nThe rest of the dashboard still works, including the governed scenario advisor.\n\nTechnical detail: ${error.message}`;
         }
       });
 
       runLlmButton.addEventListener("click", async () => {
-        if (!llmGenerator) {
-          llmOutput.textContent = "Load the open-source model first.";
-          return;
-        }
-
         try {
           runLlmButton.disabled = true;
-          llmOutput.textContent = `Generating with ${llmModelId}...`;
-          const result = await llmGenerator(llmPrompt.value, {
-            max_new_tokens: 90,
-            temperature: 0.8,
-            top_k: 40,
-            do_sample: true
+          llmOutput.textContent = "Calling Cloudflare Workers AI with current decision context...";
+          const response = await fetch("/api/cloudflare-llm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              prompt: llmPrompt.value,
+              scenario: scenarioControls.type.value,
+              assets: currentScenarioAssets(),
+              semanticModel: semanticModel ? {
+                modelVersion: semanticModel.modelVersion,
+                grain: semanticModel.grain,
+                measures: semanticModel.measures,
+                sources: semanticModel.sources
+              } : null,
+              stack: {
+                state: "asset condition, operating area, asset class, current risk, health, RUL, ESG exposure and real public-data source signals",
+                time: "remaining useful life, operating drift and scenario-adjusted urgency",
+                causality: "load, vibration, missingness, failure-rate features and operational dependencies explain risk movement",
+                simulation: "selected scenario filters change risk, downtime exposure and energy exposure before action is taken",
+                optimization: "prioritize the intervention package that balances reliability, cost, downtime, ESG and human approval constraints"
+              }
+            })
           });
-          llmOutput.textContent = result?.[0]?.generated_text || "No generated text returned.";
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || `HTTP ${response.status}`);
+          }
+          llmOutput.textContent = `${data.provider} (${data.model})\n\n${data.response}`;
         } catch (error) {
           llmOutput.textContent = `Generation failed.\n\n${error.message}`;
         } finally {
@@ -1588,7 +1622,7 @@
         overview: ["Executive View", "Mine-wide risk, reliability, ESG, and readiness summary for leadership."],
         map: ["Mine Map", "Geospatial asset-risk intelligence for Morupule, Palapye, underground operations, and surface services."],
         scenarios: ["AI Scenarios", "Filter operating conditions and let a governed GenAI advisor summarize risk, action, and business trade-offs."],
-        llm: ["Open LLM", "Run a real open-source Hugging Face text-generation model in the browser using Transformers.js."],
+        llm: ["Cloudflare Decision AI", "Run a real Cloudflare Workers AI LLM through Vercel using the 5 Layer Decision Stack."],
         proposal: ["Proposal Fit", "Tender-aligned coverage map showing how the PoC, documents, controls, and enterprise architecture satisfy the SOW."],
         assets: ["Asset Risk", "Asset health, remaining useful life, and maintenance decision support."],
         analytics: ["ML Analytics", "Model pack, anomaly detection, governance, drift monitoring, and explainability."],

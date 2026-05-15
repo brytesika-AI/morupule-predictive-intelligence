@@ -11,7 +11,7 @@ Premium PoC and proposal workspace for the Morupule Coal Mine Predictive Analyti
 - `scripts/build_semantic_model.py` - repeatable transformation script that builds the dashboard semantic model from public datasets.
 - `data/processed/semantic_model.json` - dashboard-ready semantic model containing transformed asset metrics, source metadata, measures, and transformation notes.
 - GenAI and scenario planning are represented in the live demo through the **AI Scenarios** view, with governed advisor outputs and what-if filters.
-- The **Open LLM** view loads a real open-source Hugging Face model via Transformers.js and runs browser-side text generation, with CDN/model fallback handling.
+- The **Open LLM** view calls a real Cloudflare Workers AI model through a Vercel serverless API route, using the 5 Layer Decision Stack: State, Time, Causality, Simulation, and Optimization.
 - The **Proposal Fit** view maps the demo and documentation to the SOW requirements so tender coverage is visible during walkthroughs.
 
 ## Real Data And Semantic Model
@@ -41,7 +41,7 @@ The map visuals are proposal-grade schematic views for executive storytelling. P
 
 The GenAI advisor in the demo is a proposal-grade simulation. In production, it should use approved MCM knowledge sources, retrieval-augmented generation, audit logs, role-based controls, and human approval for operational actions.
 
-The Open LLM view is a working technical demonstrator. It downloads model weights from Hugging Face/CDN in the browser, so first load depends on internet access and browser support. If the larger model cannot load, the app attempts a smaller Hugging Face fallback and keeps the rest of the dashboard usable.
+The Open LLM view is a working technical demonstrator. It calls `/api/cloudflare-llm`, which uses Vercel environment variables to call Cloudflare Workers AI without exposing secrets to the browser. Configure `CLOUDFLARE_ACCOUNT_ID` and one of `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_AUTH_TOKEN`, or `CF_API_TOKEN`. Optional: set `CLOUDFLARE_AI_MODEL`; otherwise the app uses `@cf/meta/llama-3.1-8b-instruct-fast` with `@cf/meta/llama-3.1-8b-instruct` fallback.
 
 ## Local Preview
 
