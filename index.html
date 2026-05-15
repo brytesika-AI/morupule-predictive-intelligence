@@ -735,6 +735,39 @@
         line-height: 1.35;
       }
 
+      .consequence-chain {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .chain-step {
+        border-left: 4px solid var(--accent);
+        background: #fbfcfc;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 14px;
+      }
+
+      .chain-step b {
+        display: block;
+        color: var(--brand-blue);
+        margin-bottom: 5px;
+      }
+
+      .chain-step span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .chain-step.critical {
+        border-left-color: var(--danger);
+      }
+
+      .chain-step.watch {
+        border-left-color: var(--warn);
+      }
+
       .hidden {
         display: none;
       }
@@ -1068,6 +1101,7 @@
                     <p id="ai-actions"></p>
                     <p><b>Governance guardrail:</b> GenAI should recommend, explain, summarize, and draft work-order notes. It should not directly control equipment or create work orders without approved human review.</p>
                   </div>
+                  <div class="consequence-chain" id="consequence-chain"></div>
                   <table style="margin-top: 16px;">
                     <thead><tr><th>Priority</th><th>Asset</th><th>Scenario effect</th><th>Suggested decision</th></tr></thead>
                     <tbody id="scenario-table"></tbody>
@@ -1089,7 +1123,7 @@
                     <div class="stack-layer"><b>State</b><span>Asset health, risk, area, class, RUL, ESG signal.</span></div>
                     <div class="stack-layer"><b>Time</b><span>Warning window, drift, scenario-adjusted urgency.</span></div>
                     <div class="stack-layer"><b>Causality</b><span>Failure precursors, load, vibration, missingness, energy stress.</span></div>
-                    <div class="stack-layer"><b>Simulation</b><span>What-if impact from operating and constraint filters.</span></div>
+                    <div class="stack-layer"><b>Consequences</b><span>Do-nothing and intervention paths through operational KPIs.</span></div>
                     <div class="stack-layer"><b>Optimization</b><span>Prioritized action plan across risk, cost, downtime, ESG.</span></div>
                   </div>
                   <textarea id="llm-prompt">Generate a Morupule Coal Mine decision brief using the current semantic model, selected scenario filters, and the 5 Layer Decision Stack.</textarea>
@@ -1104,7 +1138,7 @@
                 <div class="panel-head"><h2>Decision Stack Pattern</h2><span class="tag watch">Governed</span></div>
                 <div class="panel-body asset-list">
                   <div class="asset-card"><strong>State to decision</strong><p>The LLM receives current asset state from the semantic model, not loose dashboard text.</p><span class="tag good">Structured</span></div>
-                  <div class="asset-card"><strong>Scenario reasoning</strong><p>Time, causality, simulation, and optimization are included in the prompt so the model explains the tradeoff, not just the alert.</p><span class="tag watch">Decision-ready</span></div>
+                  <div class="asset-card"><strong>Consequence reasoning</strong><p>Time, causality, intervention options, do-nothing paths, and optimization are included so the model explains downstream effects, not just the alert.</p><span class="tag watch">Decision-ready</span></div>
                   <div class="asset-card"><strong>Safety boundary</strong><p>The LLM drafts and explains. It should not directly control equipment, override alarms, or create work orders without human approval.</p><span class="tag critical">Guardrail</span></div>
                 </div>
               </div>
@@ -1258,8 +1292,9 @@
         ["Predictive analytics", "Baseline analytics, anomaly detection, failure likelihood, RUL and alert rationalization.", "Asset Risk + ML Analytics", "Covered"],
         ["ESG analytics", "Energy intensity, emissions proxy, avoidable energy loss and opportunity tracker.", "ESG Baseline view", "Covered"],
         ["Role dashboards", "Executive, Reliability, Maintenance, Operations, Engineering, ESG and IT/OT roles.", "Dashboard tabs and docs", "Covered"],
-        ["GenAI", "Governed advisor, RAG pattern, scenario briefs, work-order draft support and guardrails.", "AI Scenarios + Open LLM", "Covered"],
+        ["GenAI", "Governed Cloudflare advisor, RAG pattern, scenario briefs, work-order draft support and guardrails.", "Cloudflare Decision AI", "Covered"],
         ["Scenario planning", "Filters for area, asset class, load, budget, energy, weather and alert sensitivity.", "AI Scenarios", "Covered"],
+        ["Consequence models", "Do-nothing and intervention paths show downstream effects across asset, infrastructure, KPI, resource and action layers.", "AI Scenarios + Cloudflare Decision AI", "Covered"],
         ["Cybersecurity", "RBAC, audit, secure access, backup, DR and no direct OT control by default.", "Architecture docs", "Covered"],
         ["Commercial clarity", "Asset/tag/user/usage expansion model and cost-curve approach.", "Business docs + Roadmap", "Covered"],
         ["SHE and compliance", "SHE file, risk assessment, FRCS, LOTO, site controls and zero-incident KPI.", "Business docs", "Covered"],
@@ -1288,6 +1323,45 @@
         if (value >= 70) return "critical";
         if (value >= 50) return "watch";
         return "good";
+      }
+
+      function buildConsequenceModel(assetsInScope, context = {}) {
+        const leading = assetsInScope[0];
+        const load = Number(context.load || scenarioControls?.load?.value || 96);
+        const budget = Number(context.budget || scenarioControls?.budget?.value || 84);
+        const energy = Number(context.energy || scenarioControls?.energy?.value || 112);
+        const scenario = context.scenario || scenarioControls?.type?.value || "baseline";
+
+        if (!leading) {
+          return {
+            intervention: "Broaden filters or ingest more data",
+            doNothing: "No consequence path can be estimated for an empty asset scope.",
+            plannedAction: "Restore asset scope before recommending operational action.",
+            propagation: [],
+            objectives: ["Reliability", "Safety", "ESG", "Cost"],
+            constraints: ["Approved MCM data access", "Human review", "SHE controls"],
+          };
+        }
+
+        const downtimeIfNoAction = Math.round((leading.adjustedRisk || leading.risk) / 9 + load / 18);
+        const downtimeIfAction = Math.max(2, Math.round(downtimeIfNoAction * (budget < 75 ? 0.58 : 0.42)));
+        const energyIfNoAction = Math.round((100 - leading.health) * 0.18 + (energy - 100) * 0.12);
+        const energyIfAction = Math.max(2, Math.round(energyIfNoAction * 0.55));
+
+        return {
+          intervention: `Prioritize ${leading.id} intervention package`,
+          doNothing: `If no action is taken, ${leading.id} can propagate roughly ${downtimeIfNoAction}h downtime exposure and ${energyIfNoAction}% avoidable energy exposure under ${scenario}.`,
+          plannedAction: `If the planned action is approved, expected exposure reduces toward ${downtimeIfAction}h downtime and ${energyIfAction}% energy exposure, subject to spares, access and SHE constraints.`,
+          propagation: [
+            [`${leading.id} condition`, `${leading.cls} degradation increases failure likelihood and maintenance urgency.`],
+            ["Infrastructure dependency", `${leading.area} operations may face constrained availability or combined inspection needs.`],
+            ["Operational KPI", `Downtime exposure changes from ${downtimeIfNoAction}h do-nothing to ${downtimeIfAction}h with intervention.`],
+            ["Resource constraint", budget < 75 ? "Budget constraint requires ranked critical interventions only." : "Budget allows proactive work packaging and related asset checks."],
+            ["Recommended action", `${leading.action}. Human approval remains mandatory before work-order creation or equipment action.`],
+          ],
+          objectives: ["Reduce unplanned downtime", "Protect production continuity", "Reduce avoidable energy loss", "Respect SHE and maintenance constraints"],
+          constraints: ["Budget availability", "Spares and crew availability", "Access route and permit readiness", "Human approval boundary"],
+        };
       }
 
       function filteredAssets() {
@@ -1507,6 +1581,13 @@
           ? `Recommended response: protect production by planning ${leading.action.toLowerCase()}, then review related assets in the same area for combined inspection. Budget pressure is ${budget < 75 ? "constrained, so rank only critical interventions." : "sufficient for proactive work packaging."} Energy pressure is ${energy > 125 ? "high, so prioritize inefficient assets with condition deterioration." : "moderate, so keep ESG actions tied to reliability value."}`
           : "";
 
+        const consequence = buildConsequenceModel(adjusted, { load, budget, energy, scenario });
+        document.getElementById("consequence-chain").innerHTML = `
+          <div class="chain-step critical"><b>Do-nothing consequence</b><span>${consequence.doNothing}</span></div>
+          <div class="chain-step watch"><b>Planned intervention consequence</b><span>${consequence.plannedAction}</span></div>
+          ${consequence.propagation.map(([title, detail]) => `<div class="chain-step"><b>${title}</b><span>${detail}</span></div>`).join("")}
+        `;
+
         document.getElementById("scenario-table").innerHTML = adjusted.slice(0, 5).map((asset, index) => `
           <tr>
             <td>${index + 1}</td>
@@ -1563,6 +1644,15 @@
           .slice(0, 6);
       }
 
+      function currentConsequencePayload() {
+        return buildConsequenceModel(currentScenarioAssets(), {
+          load: scenarioControls.load.value,
+          budget: scenarioControls.budget.value,
+          energy: scenarioControls.energy.value,
+          scenario: scenarioControls.type.value,
+        });
+      }
+
       loadLlmButton.addEventListener("click", async () => {
         try {
           loadLlmButton.disabled = true;
@@ -1602,6 +1692,7 @@
                 time: "remaining useful life, operating drift and scenario-adjusted urgency",
                 causality: "load, vibration, missingness, failure-rate features and operational dependencies explain risk movement",
                 simulation: "selected scenario filters change risk, downtime exposure and energy exposure before action is taken",
+                consequences: currentConsequencePayload(),
                 optimization: "prioritize the intervention package that balances reliability, cost, downtime, ESG and human approval constraints"
               }
             })

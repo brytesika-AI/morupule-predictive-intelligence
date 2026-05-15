@@ -13,6 +13,7 @@ Premium PoC and proposal workspace for the Morupule Coal Mine Predictive Analyti
 - GenAI and scenario planning are represented in the live demo through the **AI Scenarios** view, with governed advisor outputs and what-if filters.
 - The **Open LLM** view calls a real Cloudflare Workers AI model through a Vercel serverless API route, using the 5 Layer Decision Stack: State, Time, Causality, Simulation, and Optimization.
 - The **Proposal Fit** view maps the demo and documentation to the SOW requirements so tender coverage is visible during walkthroughs.
+- The **AI Scenarios** view includes a consequence model that compares do-nothing and planned-intervention paths through asset condition, infrastructure dependency, operational KPI, resource constraint, and recommended action.
 
 ## Real Data And Semantic Model
 

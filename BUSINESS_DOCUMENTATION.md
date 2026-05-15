@@ -144,6 +144,8 @@ GenAI should act as an advisor and documentation assistant, not an autonomous eq
 
 The PoC includes a working Cloudflare Workers AI LLM demonstrator called through a secure Vercel API route. It uses the 5 Layer Decision Stack - State, Time, Causality, Simulation, and Optimization - to generate decision briefs from the current semantic model and scenario filters. For production, this should be supplemented with retrieval-augmented generation over MCM-authorized knowledge sources.
 
+The PoC also introduces a consequence model between prediction and decision. For each scenario it compares the do-nothing path against a planned intervention, then traces the downstream chain from asset condition to infrastructure dependency, operational KPI, resource constraint, and recommended action. This makes the proposal stronger because the system is no longer only forecasting risk; it is explaining what the risk means and what action changes.
+
 ## Commercial Model
 
 The tender requires explicit commercial clarity. The proposal should present a modular model.

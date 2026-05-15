@@ -125,6 +125,7 @@ The platform should support the following model families:
 | Remaining useful life model | Estimate usable intervention window | estimated hours/days to action |
 | Alert rationalization | Reduce nuisance alerts | grouped alert, priority, suppression recommendation |
 | ESG baseline model | Track energy/environmental performance | energy intensity, emissions proxy, avoidable loss |
+| Consequence model | Compare intervention paths and downstream effects | do-nothing impact, planned-action impact, propagation chain, constraint-aware recommendation |
 
 ### 6. Decision Support Layer
 
@@ -173,7 +174,6 @@ Recommended GenAI capabilities:
 
 PoC implementation note:
 
-- the live demo includes a browser-side open-source text-generation model using `Xenova/distilgpt2` from Hugging Face through Transformers.js;
 - the live demo uses a Vercel serverless API route to call Cloudflare Workers AI with keys held in Vercel environment variables;
 - this proves that a real cloud-hosted model can be embedded in the platform experience without exposing private MCM data or API secrets to the browser;
 - production deployment should use an MCM-approved hosted model, private endpoint, or controlled on-prem/private-cloud model runtime.

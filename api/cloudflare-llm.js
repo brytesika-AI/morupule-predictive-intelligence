@@ -11,6 +11,7 @@ function envValue(...names) {
 function buildDecisionPrompt(body) {
   const assets = Array.isArray(body.assets) ? body.assets.slice(0, 6) : [];
   const stack = body.stack || {};
+  const consequences = stack.consequences || body.consequences || {};
   const scenario = body.scenario || "baseline";
   const assetLines = assets.map((asset, index) => (
     `${index + 1}. ${asset.id} ${asset.name}: area=${asset.area}, class=${asset.cls}, risk=${asset.adjustedRisk ?? asset.risk}%, health=${asset.health}%, rul=${asset.rul}d, esg=${asset.esg}%, action=${asset.action}`
@@ -23,20 +24,28 @@ Decision stack:
 - Time: ${stack.time || "trend and intervention window based on remaining useful life and scenario pressure"}
 - Causality: ${stack.causality || "failure precursors, operating load, vibration, missingness and energy stress explain risk movement"}
 - Simulation: ${stack.simulation || "what-if scenario filters adjust risk, downtime and energy exposure"}
+- Consequence model: ${consequences.intervention || "compare do-nothing and intervention paths through operational KPIs"}
 - Optimization: ${stack.optimization || "prioritize actions that reduce downtime, risk and avoidable energy loss within constraints"}
 
 Scenario: ${scenario}
 Current asset facts:
 ${assetLines || "No filtered assets were provided."}
 
+Consequence reasoning:
+- Do nothing: ${consequences.doNothing || "Estimate the downstream effect of inaction from the asset facts."}
+- Planned action: ${consequences.plannedAction || "Estimate the downstream effect of the recommended intervention."}
+- Propagation chain: ${Array.isArray(consequences.propagation) ? consequences.propagation.map(([title, detail]) => `${title}: ${detail}`).join(" | ") : "asset condition -> infrastructure dependency -> operational KPI -> resource constraint -> recommended action"}
+- Objectives: ${Array.isArray(consequences.objectives) ? consequences.objectives.join(", ") : "reliability, safety, cost, ESG, resilience"}
+- Constraints: ${Array.isArray(consequences.constraints) ? consequences.constraints.join(", ") : "budget, spares, crew, access, SHE controls, human approval"}
+
 Return exactly these sections:
 1. Decision summary
 2. Why it is happening
-3. Simulated future
+3. Consequence comparison
 4. Optimized action plan
 5. Human approval boundary
 
-Be specific to Morupule Coal Mine. Do not claim this is actual MCM confidential data; say it is real public data proxy-mapped for PoC when needed.`;
+Be specific to Morupule Coal Mine. Compare the do-nothing path against the planned intervention. Do not claim this is actual MCM confidential data; say it is real public data proxy-mapped for PoC when needed.`;
 }
 
 async function runCloudflare(model, accountId, token, prompt) {
