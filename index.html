@@ -270,6 +270,17 @@
 
       .map-wrap {
         position: relative;
+        min-height: 390px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
+          radial-gradient(circle at 22% 30%, rgba(0, 138, 122, 0.16), transparent 26%),
+          radial-gradient(circle at 74% 68%, rgba(211, 154, 47, 0.18), transparent 24%),
+          #edf3f1;
+        overflow: hidden;
+      }
+
+      .map-wrap-tab {
+        position: relative;
         min-height: 480px;
         background: #edf3f1;
         overflow: hidden;
@@ -280,21 +291,21 @@
         transition: all 0.3s ease;
       }
 
-      .map-wrap.layout-split {
+      .map-wrap-tab.layout-split {
         grid-template-columns: 1fr 1.1fr;
       }
 
-      .map-wrap.layout-satellite {
+      .map-wrap-tab.layout-satellite {
         grid-template-columns: 1fr;
       }
-      .map-wrap.layout-satellite #schematic-map-container {
+      .map-wrap-tab.layout-satellite #schematic-map-container {
         display: none !important;
       }
 
-      .map-wrap.layout-schematic {
+      .map-wrap-tab.layout-schematic {
         grid-template-columns: 1fr;
       }
-      .map-wrap.layout-schematic #satellite-map-container {
+      .map-wrap-tab.layout-schematic #satellite-map-container {
         display: none !important;
       }
 
@@ -461,6 +472,13 @@
       }
 
       .map-wrap svg {
+        width: 100%;
+        height: 100%;
+        min-height: 390px;
+        display: block;
+      }
+
+      .map-wrap-tab svg {
         width: 100%;
         height: auto;
         max-height: 400px;
@@ -1267,6 +1285,66 @@
             </div>
 
             <div class="hero-grid">
+              <!-- 1. Live Satellite Geographic Context (Now at the top left) -->
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>Satellite Geographic Context</h2>
+                  <span class="tag good">Morupule Botswana</span>
+                </div>
+                <div class="panel-body" style="padding: 0; position: relative; height: 420px;">
+                  <!-- Fallback HUD -->
+                  <div class="map-fallback-hud" style="padding: 20px;">
+                    <div class="hud-grid-lines"></div>
+                    <div class="hud-target-ring" style="width: 140px; height: 140px;"></div>
+                    <div class="hud-readout" style="padding: 10px;">
+                      <span class="hud-coordinate" style="font-size: 11px;">22.5120° S, 27.0270° E</span>
+                      <span class="hud-title" style="font-size: 9px; margin-bottom: 4px;">LIVE GEO-TELEMETRY FEED</span>
+                      <span class="hud-desc" style="font-size: 9px; line-height: 1.35;">Geospatial telemetry stream online. If live satellite feed fails to stream due to proxy filters, local schematics remain active.</span>
+                    </div>
+                  </div>
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    style="border: 0; display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;" 
+                    allowfullscreen 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps?q=-22.51,27.03&t=k&z=14&output=embed">
+                  </iframe>
+                  <!-- Overlay Panel -->
+                  <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(14, 22, 20, 0.96); border: 1px solid rgba(0, 138, 122, 0.4); border-radius: 6px; padding: 12px; color: #e2ede8; font-size: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 10;">
+                    <div style="display: flex; align-items: center; margin-bottom: 6px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">
+                      <span class="pulse-dot" style="margin-right: 6px; width: 6px; height: 6px; background-color: #10b981; border-radius: 50%; display: inline-block;"></span>
+                      Geospatial Telemetry
+                    </div>
+                    <div style="margin-bottom: 4px;">📍 <b>Sector 4:</b> Micro-seismic activity nominal</div>
+                    <div>🛣️ <b>Primary Haul Road:</b> Traffic flow optimal</div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>Highest-Risk Assets</h2><span class="tag critical">Action Required</span></div>
+                <div class="panel-body">
+                  <table>
+                    <thead><tr><th>Asset</th><th>Area</th><th>Health</th><th>Failure Risk</th><th>Recommendation</th></tr></thead>
+                    <tbody id="risk-table"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>Executive Signals</h2><span class="tag watch">Pilot</span></div>
+                <div class="panel-body">
+                  <div class="signal"><span>Pipeline reliability</span><div class="bar"><span style="width: 94%"></span></div><b>94%</b></div>
+                  <div class="signal"><span>Alert precision</span><div class="bar"><span class="warn" style="width: 72%"></span></div><b>72%</b></div>
+                  <div class="signal"><span>Asset coverage</span><div class="bar"><span style="width: 64%"></span></div><b>64%</b></div>
+                  <div class="signal"><span>Data quality</span><div class="bar"><span class="warn" style="width: 81%"></span></div><b>81%</b></div>
+                  <div class="signal"><span>Adoption readiness</span><div class="bar"><span style="width: 88%"></span></div><b>88%</b></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accenture Upgrade - Executive Geographic, Scenario, and IoT Panels -->
+            <div class="grid" style="margin-top: 18px; grid-template-columns: 1.1fr 0.9fr; gap: 18px;">
+              <!-- 1. Regional Vector Map (Moved down) -->
               <div class="panel">
                 <div class="panel-head"><h2>Geospatial Risk Context</h2><span class="tag watch">Palapye Corridor</span></div>
                 <div class="map-wrap">
@@ -1300,55 +1378,6 @@
                     <span>Red: critical assets</span>
                     <span>Gold: watchlist</span>
                     <span>Green: stable</span>
-                  </div>
-                </div>
-              </div>
-              <div class="panel">
-                <div class="panel-head"><h2>Highest-Risk Assets</h2><span class="tag critical">Action Required</span></div>
-                <div class="panel-body">
-                  <table>
-                    <thead><tr><th>Asset</th><th>Area</th><th>Health</th><th>Failure Risk</th><th>Recommendation</th></tr></thead>
-                    <tbody id="risk-table"></tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="panel">
-                <div class="panel-head"><h2>Executive Signals</h2><span class="tag watch">Pilot</span></div>
-                <div class="panel-body">
-                  <div class="signal"><span>Pipeline reliability</span><div class="bar"><span style="width: 94%"></span></div><b>94%</b></div>
-                  <div class="signal"><span>Alert precision</span><div class="bar"><span class="warn" style="width: 72%"></span></div><b>72%</b></div>
-                  <div class="signal"><span>Asset coverage</span><div class="bar"><span style="width: 64%"></span></div><b>64%</b></div>
-                  <div class="signal"><span>Data quality</span><div class="bar"><span class="warn" style="width: 81%"></span></div><b>81%</b></div>
-                  <div class="signal"><span>Adoption readiness</span><div class="bar"><span style="width: 88%"></span></div><b>88%</b></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Accenture Upgrade - Executive Geographic, Scenario, and IoT Panels -->
-            <div class="grid" style="margin-top: 18px; grid-template-columns: 1.1fr 0.9fr; gap: 18px;">
-              <!-- 1. Authentic Geographic Context -->
-              <div class="panel">
-                <div class="panel-head">
-                  <h2>Satellite Geographic Context</h2>
-                  <span class="tag good">Morupule Botswana</span>
-                </div>
-                <div class="panel-body" style="padding: 0; position: relative; height: 350px;">
-                  <iframe 
-                    width="100%" 
-                    height="100%" 
-                    style="border:0; display: block;" 
-                    allowfullscreen 
-                    referrerpolicy="no-referrer-when-downgrade"
-                    src="https://www.google.com/maps?q=-22.51,27.03&t=k&z=14&output=embed">
-                  </iframe>
-                  <!-- Overlay Panel -->
-                  <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(14, 22, 20, 0.96); border: 1px solid rgba(0, 138, 122, 0.4); border-radius: 6px; padding: 12px; color: #e2ede8; font-size: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
-                    <div style="display: flex; align-items: center; margin-bottom: 6px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">
-                      <span class="pulse-dot" style="margin-right: 6px; width: 6px; height: 6px;"></span>
-                      Geospatial Telemetry
-                    </div>
-                    <div style="margin-bottom: 4px;">📍 <b>Sector 4:</b> Micro-seismic activity nominal</div>
-                    <div>🛣️ <b>Primary Haul Road:</b> Traffic flow optimal</div>
                   </div>
                 </div>
               </div>
@@ -1426,7 +1455,7 @@
                     <span class="tag good" id="map-view-status">Split View</span>
                   </div>
                 </div>
-                <div class="map-wrap layout-split" id="map-grid-wrapper">
+                <div class="map-wrap-tab layout-split" id="map-grid-wrapper">
                   <!-- Unified Map Controls (Floating) -->
                   <div class="map-controls">
                     <select id="map-area" aria-label="Map operating area">
@@ -2889,7 +2918,7 @@
             btnSplit.classList.add("active");
             btnSchematic.classList.remove("active");
             btnSatellite.classList.remove("active");
-            mapWrapper.className = "map-wrap layout-split";
+            mapWrapper.className = "map-wrap-tab layout-split";
             mapStatus.textContent = "Split View";
             mapStatus.className = "tag good";
           });
@@ -2898,7 +2927,7 @@
             btnSchematic.classList.add("active");
             btnSplit.classList.remove("active");
             btnSatellite.classList.remove("active");
-            mapWrapper.className = "map-wrap layout-schematic";
+            mapWrapper.className = "map-wrap-tab layout-schematic";
             mapStatus.textContent = "Schematic View";
             mapStatus.className = "tag good";
           });
@@ -2907,7 +2936,7 @@
             btnSatellite.classList.add("active");
             btnSplit.classList.remove("active");
             btnSchematic.classList.remove("active");
-            mapWrapper.className = "map-wrap layout-satellite";
+            mapWrapper.className = "map-wrap-tab layout-satellite";
             mapStatus.textContent = "Satellite View";
             mapStatus.className = "tag watch";
           });
