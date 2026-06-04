@@ -85,7 +85,13 @@ All demo screens will clearly state: **Real public datasets are proxy-mapped for
    - Environmental compliance indicator placeholders.
    - Improvement opportunity tracker.
 
-6. **Readiness and Scale Roadmap**
+6. **Digital Twins (Detective Graph)**
+   - Interactive SVG entity-relationship graph mapping physical, electrical, ventilation, and dewatering dependencies.
+   - Blast-radius highlight indicating cascading process starvation or electrical blackout effects.
+   - Chronological Finding Group timelines correlating Isolation Forest anomalies.
+   - Governed LLM triage briefs explaining root-causes in plain language.
+
+7. **Readiness and Scale Roadmap**
    - Connector readiness matrix.
    - Asset onboarding plan.
    - Data quality/gap view.

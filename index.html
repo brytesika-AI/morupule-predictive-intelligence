@@ -806,6 +806,153 @@
           grid-template-columns: 1fr;
         }
       }
+
+      /* Digital Twins Behavioral Graph Styles */
+      .graph-canvas-wrap {
+        position: relative;
+        min-height: 480px;
+        background: radial-gradient(circle at 50% 50%, #152220, #0a1110);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .graph-edge {
+        stroke-width: 2;
+        stroke-dasharray: 4 4;
+        transition: stroke-width 0.2s, stroke 0.2s, opacity 0.2s;
+        opacity: 0.85;
+      }
+      .graph-edge.material {
+        stroke: var(--accent-2);
+        stroke-dasharray: none;
+        stroke-width: 3.5;
+      }
+      .graph-edge.power {
+        stroke: #3182ce;
+      }
+      .graph-edge.safety {
+        stroke: #319795;
+      }
+      .graph-edge.dewatering {
+        stroke: #38a169;
+      }
+      .graph-node {
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      .graph-node circle {
+        stroke: #ffffff;
+        stroke-width: 1.5;
+        transition: r 0.2s, stroke-width 0.2s, filter 0.2s;
+      }
+      .graph-node:hover circle {
+        r: 18px;
+        stroke-width: 2.5;
+        filter: drop-shadow(0 0 8px currentColor);
+      }
+      .graph-node.active circle {
+        stroke: #ffffff;
+        stroke-width: 3.5;
+        filter: drop-shadow(0 0 12px currentColor);
+      }
+      .graph-node.active.critical circle {
+        animation: pulse-crit 2s infinite ease-in-out;
+      }
+      @keyframes pulse-crit {
+        0% { filter: drop-shadow(0 0 4px #b42318); }
+        50% { filter: drop-shadow(0 0 18px #b42318); }
+        100% { filter: drop-shadow(0 0 4px #b42318); }
+      }
+      .node-text {
+        font-size: 11px;
+        font-weight: 700;
+        fill: #f0f4f2;
+        pointer-events: none;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+      }
+      .graph-edge-label {
+        font-size: 9px;
+        fill: #8fa09a;
+        pointer-events: none;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      }
+      .graph-legend {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        background: rgba(10, 17, 16, 0.9);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 6px;
+        padding: 10px;
+        color: #e2ede8;
+        font-size: 11px;
+        display: grid;
+        gap: 6px;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .legend-line {
+        width: 20px;
+        height: 3px;
+        border-radius: 2px;
+      }
+      .triage-scroll {
+        max-height: 480px;
+        overflow-y: auto;
+      }
+      .timeline-container {
+        position: relative;
+        padding-left: 20px;
+        border-left: 2px solid var(--line);
+        margin: 15px 0 15px 10px;
+      }
+      .timeline-event {
+        position: relative;
+        margin-bottom: 15px;
+      }
+      .timeline-event::before {
+        content: "";
+        position: absolute;
+        left: -27px;
+        top: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--line);
+        border: 2px solid var(--panel);
+      }
+      .timeline-event.critical::before {
+        background: var(--danger);
+        box-shadow: 0 0 6px var(--danger);
+      }
+      .timeline-event.watch::before {
+        background: var(--warn);
+      }
+      .timeline-time {
+        font-size: 11px;
+        font-weight: bold;
+        color: var(--brand-blue);
+        margin-bottom: 3px;
+      }
+      .timeline-desc {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      .blast-item {
+        background: rgba(180, 35, 24, 0.05);
+        border-left: 3px solid var(--danger);
+        padding: 8px 12px;
+        border-radius: 0 6px 6px 0;
+        margin-top: 8px;
+        font-size: 13px;
+        line-height: 1.4;
+      }
     </style>
   </head>
   <body>
@@ -825,6 +972,7 @@
         <nav class="nav" aria-label="Dashboard sections">
           <button class="active" data-view="overview">Executive View</button>
           <button data-view="map">Mine Map</button>
+          <button data-view="twins">Digital Twins</button>
           <button data-view="scenarios">AI Scenarios</button>
           <button data-view="llm">Open LLM</button>
           <button data-view="assets">Asset Risk</button>
@@ -1025,6 +1173,80 @@
                 <div class="panel-head"><h2>Map-Led Decisions</h2><span class="tag watch">Operations</span></div>
                 <div class="panel-body asset-list" id="map-decision-list">
                   <div class="asset-card"><strong>Risk clustering</strong><p>Use the map filters to isolate operational areas, asset classes, and stress scenarios.</p><span class="tag good">Interactive</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view hidden" id="twins">
+            <div class="grid">
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>Behavioral Entity-Relationship Graph</h2>
+                  <span class="tag good" id="triage-status-tag">Detective Active</span>
+                </div>
+                <div class="panel-body" style="padding: 10px; background: #0c1514; border-radius: 0 0 8px 8px;">
+                  <div class="graph-canvas-wrap">
+                    <svg viewBox="0 0 700 480" id="twins-svg-canvas">
+                      <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="18" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 0 L 10 5 L 0 10 z" fill="#8fa09a" />
+                        </marker>
+                        <marker id="arrow-material" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-2)" />
+                        </marker>
+                        <marker id="arrow-power" viewBox="0 0 10 10" refX="18" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 0 L 10 5 L 0 10 z" fill="#3182ce" />
+                        </marker>
+                        <marker id="arrow-safety" viewBox="0 0 10 10" refX="18" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 0 L 10 5 L 0 10 z" fill="#319795" />
+                        </marker>
+                        <marker id="arrow-dewatering" viewBox="0 0 10 10" refX="18" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 0 L 10 5 L 0 10 z" fill="#38a169" />
+                        </marker>
+                      </defs>
+                      <g id="graph-edges-layer"></g>
+                      <g id="graph-nodes-layer"></g>
+                    </svg>
+                    <div class="graph-legend">
+                      <div class="legend-item"><span class="legend-line" style="background: var(--accent-2)"></span> <span>Material flow (feeds)</span></div>
+                      <div class="legend-item"><span class="legend-line" style="background: #3182ce"></span> <span>Electrical power (powers)</span></div>
+                      <div class="legend-item"><span class="legend-line" style="background: #319795"></span> <span>Ventilation safety (ventilates)</span></div>
+                      <div class="legend-item"><span class="legend-line" style="background: #38a169"></span> <span>Dewatering safety (drains)</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel triage-scroll">
+                <div class="panel-head">
+                  <h2 id="triage-asset-title">Select an Asset</h2>
+                  <span class="tag watch" id="triage-asset-tag">Triage Panel</span>
+                </div>
+                <div class="panel-body" id="triage-panel-body">
+                  <p class="source-note" id="triage-intro-note">Click any asset node in the behavioral graph to trace its incident timeline, dependencies, blast radius, and request AI root-cause analysis.</p>
+                  
+                  <div style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" id="triage-stats-grid" class="hidden">
+                    <div class="mini"><strong>Health Index</strong><br><span id="triage-health-val" style="font-size: 20px; font-weight: 800; color: var(--accent);">-</span></div>
+                    <div class="mini"><strong>Failure Risk</strong><br><span id="triage-risk-val" style="font-size: 20px; font-weight: 800; color: var(--danger);">-</span></div>
+                  </div>
+                  
+                  <div id="triage-blast-radius-box" class="hidden" style="margin-top: 18px;">
+                    <h3 style="margin: 0 0 8px; font-size: 14px; color: var(--ink);">Calculated Blast Radius</h3>
+                    <div id="triage-blast-list"></div>
+                  </div>
+
+                  <div id="triage-timeline-box" class="hidden" style="margin-top: 18px;">
+                    <h3 style="margin: 0 0 8px; font-size: 14px; color: var(--ink);">Finding Group Timeline</h3>
+                    <p class="source-note" style="margin-bottom: 10px;">Cohesive events clustered from Scikit-Learn Isolation Forest anomalies:</p>
+                    <div class="timeline-container" id="triage-timeline-list"></div>
+                  </div>
+
+                  <div id="triage-ai-box" class="hidden" style="margin-top: 18px; border-top: 1px solid var(--line); padding-top: 15px;">
+                    <h3 style="margin: 0 0 8px; font-size: 14px; color: var(--ink);">Detective AI Root-Cause Analysis</h3>
+                    <p class="source-note" style="margin-bottom: 10px;">Query Cloudflare Workers AI to evaluate the blast radius and timeline of this dependency graph:</p>
+                    <button class="primary-button" id="run-triage-ai" style="width: 100%;">Generate Root-Cause Brief</button>
+                    <div class="llm-output" id="triage-ai-output" style="margin-top: 10px; font-size: 13px; min-height: 100px; max-height: 250px; overflow-y: auto;">AI summary is ready to be generated.</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1454,6 +1676,9 @@
           renderMap();
           renderSemanticModel();
           updateScenario();
+          if (typeof loadBehavioralGraph === "function") {
+            loadBehavioralGraph();
+          }
         }
       }
 
@@ -1596,6 +1821,9 @@
             <td>${asset.action}</td>
           </tr>
         `).join("");
+        if (typeof renderTwinsGraph === "function") {
+          renderTwinsGraph();
+        }
       }
 
       Object.values(scenarioControls).forEach(control => {
@@ -1709,9 +1937,472 @@
         }
       });
 
+      /* Digital Twins Graph Controller */
+      const twinsCoordinates = {
+        "SUB-03": { x: 350, y: 70, name: "Substation Transformer SUB-03", cls: "Electrical" },
+        "FAN-UG-02": { x: 180, y: 160, name: "Underground Ventilation Fan 02", cls: "Fan" },
+        "PMP-SF-11": { x: 520, y: 160, name: "Surface Dewatering Pump 11", cls: "Pump" },
+        "CV-04": { x: 180, y: 280, name: "Main Trunk Conveyor CV-04", cls: "Conveyor" },
+        "LHD-07": { x: 90, y: 380, name: "Load Haul Dumper LHD-07", cls: "Mobile" },
+        "EMS-02": { x: 290, y: 200, name: "Environmental Monitor EMS-02", cls: "Electrical" },
+        "CHP-02": { x: 350, y: 280, name: "Coal Handling Plant Transfer CHP-02", cls: "Conveyor" },
+        "CR-01": { x: 520, y: 280, name: "Primary Crusher CR-01", cls: "Crusher" }
+      };
+
+      const twinsDependencies = [
+        { source: "SUB-03", target: "CV-04", type: "power", label: "POWERS" },
+        { source: "SUB-03", target: "CHP-02", type: "power", label: "POWERS" },
+        { source: "SUB-03", target: "CR-01", type: "power", label: "POWERS" },
+        { source: "SUB-03", target: "PMP-SF-11", type: "power", label: "POWERS" },
+        { source: "SUB-03", target: "FAN-UG-02", type: "power", label: "POWERS" },
+        { source: "CV-04", target: "CHP-02", type: "material", label: "FEEDS" },
+        { source: "CHP-02", target: "CR-01", type: "material", label: "FEEDS" },
+        { source: "FAN-UG-02", target: "CV-04", type: "safety", label: "VENTILATES" },
+        { source: "FAN-UG-02", target: "LHD-07", type: "safety", label: "VENTILATES" },
+        { source: "PMP-SF-11", target: "CV-04", type: "dewatering", label: "DRAINS" },
+        { source: "PMP-SF-11", target: "LHD-07", type: "dewatering", label: "DRAINS" }
+      ];
+
+      let behavioralGraph = null;
+      let selectedTwinAsset = null;
+
+      function generateSimulatedGraph() {
+        const nodes = [];
+        const edges = [];
+        
+        // Add assets
+        assets.forEach(asset => {
+          nodes.push({
+            id: asset.id,
+            type: "Asset",
+            properties: {
+              name: asset.name,
+              area: asset.area,
+              class: asset.cls,
+              health: asset.health,
+              risk: asset.risk,
+              rul: asset.rul,
+              esg: asset.esg,
+              status: asset.status,
+              action: asset.action
+            }
+          });
+        });
+        
+        // Add anomalies (matching detect_anomalies.py outputs)
+        const baseTime = Date.now();
+        const mockAnomalies = [
+          {
+            finding_id: "FIND-ANOM-001",
+            asset_id: "CV-04",
+            timestamp: new Date(baseTime - 3600000 * 4).toISOString(),
+            severity: "High",
+            details: "Vibration anomaly detected (3.82 m/s^2, bearing wear=0.45). Operating load index at 112,400.",
+            metrics: { vibration: 3.82, bearing_wear: 0.45, humidity: 72.5, load: 112400 }
+          },
+          {
+            finding_id: "FIND-ANOM-002",
+            asset_id: "CV-04",
+            timestamp: new Date(baseTime - 3600000 * 3.8).toISOString(),
+            severity: "High",
+            details: "Critical load index spike detected (125,400). Bearing wear accelerating.",
+            metrics: { vibration: 3.95, bearing_wear: 0.48, humidity: 72.8, load: 125400 }
+          },
+          {
+            finding_id: "FIND-ANOM-003",
+            asset_id: "CHP-02",
+            timestamp: new Date(baseTime - 3600000 * 3.5).toISOString(),
+            severity: "Medium",
+            details: "Process load reduction on CHP-02. Precursor: belt feed slowdown from CV-04.",
+            metrics: { vibration: 0.36, bearing_wear: 0.12, humidity: 73.2, load: 24000 }
+          },
+          {
+            finding_id: "FIND-ANOM-004",
+            asset_id: "SUB-03",
+            timestamp: new Date(baseTime - 3600000 * 2).toISOString(),
+            severity: "Medium",
+            details: "Voltage phase imbalance detected. Current sag aligns with CV-04 torque overload.",
+            metrics: { vibration: 0.55, bearing_wear: 0.1, humidity: 74.0, load: 45000 }
+          },
+          {
+            finding_id: "FIND-ANOM-005",
+            asset_id: "PMP-SF-11",
+            timestamp: new Date(baseTime - 3600000 * 5).toISOString(),
+            severity: "Medium",
+            details: "Cavitation vibration spike (1.12 m/s^2). Pump running dry or inlet blockage.",
+            metrics: { vibration: 1.12, bearing_wear: 0.28, humidity: 75.1, load: 82000 }
+          }
+        ];
+        
+        mockAnomalies.forEach(anom => {
+          nodes.push({
+            id: anom.finding_id,
+            type: "Anomaly",
+            properties: {
+              timestamp: anom.timestamp,
+              severity: anom.severity,
+              details: anom.details,
+              vibration: anom.metrics.vibration,
+              bearing_wear: anom.metrics.bearing_wear,
+              load: anom.metrics.load
+            }
+          });
+          edges.push({
+            source: anom.finding_id,
+            type: "TRIGGERED_ON",
+            target: anom.asset_id,
+            properties: { timestamp: anom.timestamp }
+          });
+        });
+        
+        // Add finding groups
+        const fg = {
+          id: "FG-001",
+          assets: ["CV-04", "CHP-02", "SUB-03"],
+          findings: ["FIND-ANOM-001", "FIND-ANOM-002", "FIND-ANOM-003", "FIND-ANOM-004"],
+          start_time: mockAnomalies[0].timestamp,
+          end_time: mockAnomalies[3].timestamp
+        };
+        
+        nodes.push({
+          id: fg.id,
+          type: "FindingGroup",
+          properties: {
+            start_time: fg.start_time,
+            end_time: fg.end_time,
+            affected_assets_count: 3,
+            findings_count: 4
+          }
+        });
+        
+        fg.findings.forEach(fid => {
+          edges.push({ source: fid, type: "PART_OF_GROUP", target: fg.id });
+        });
+        fg.assets.forEach(aid => {
+          edges.push({ source: fg.id, type: "AFFECTS_ASSET", target: aid });
+        });
+
+        const fg2 = {
+          id: "FG-002",
+          assets: ["PMP-SF-11"],
+          findings: ["FIND-ANOM-005"],
+          start_time: mockAnomalies[4].timestamp,
+          end_time: mockAnomalies[4].timestamp
+        };
+        
+        nodes.push({
+          id: fg2.id,
+          type: "FindingGroup",
+          properties: {
+            start_time: fg2.start_time,
+            end_time: fg2.end_time,
+            affected_assets_count: 1,
+            findings_count: 1
+          }
+        });
+        edges.push({ source: "FIND-ANOM-005", type: "PART_OF_GROUP", target: fg2.id });
+        edges.push({ source: fg2.id, type: "AFFECTS_ASSET", target: "PMP-SF-11" });
+        
+        return { nodes, edges, finding_groups: [fg, fg2] };
+      }
+
+      async function loadBehavioralGraph() {
+        try {
+          const response = await fetch("data/processed/behavioral_graph.json", { cache: "no-store" });
+          if (response.ok) {
+            behavioralGraph = await response.json();
+            console.log("Loaded behavioral graph successfully.");
+          } else {
+            throw new Error(`HTTP ${response.status}`);
+          }
+        } catch (error) {
+          console.warn("Could not load behavioral_graph.json, falling back to simulated data:", error.message);
+          behavioralGraph = generateSimulatedGraph();
+        } finally {
+          renderTwinsGraph();
+        }
+      }
+
+      function getBlastRadius(assetId) {
+        // Compute immediate downstream blast radius based on edge types
+        const blast = [];
+        twinsDependencies.forEach(dep => {
+          if (dep.source === assetId) {
+            let effect = "";
+            if (dep.type === "material") {
+              effect = `Feeds coal to ${dep.target}. Secondary effect: complete starvation of ${dep.target} within minutes of shutdown.`;
+            } else if (dep.type === "power") {
+              effect = `Distributes electricity to ${dep.target}. Secondary effect: complete electrical blackout of ${dep.target} if transformer trips.`;
+            } else if (dep.type === "safety") {
+              effect = `Ventilates environment for ${dep.target}. Secondary effect: safety trip due to air stagnation.`;
+            } else if (dep.type === "dewatering") {
+              effect = `Protects ${dep.target} from flooding. Secondary effect: high risk of water accumulation.`;
+            }
+            blast.push({ asset: dep.target, effect });
+          }
+        });
+        
+        // Also capture reverse dewatering/flooding risk
+        if (assetId === "PMP-SF-11") {
+          blast.push({ asset: "Underground workings", effect: "Water height rise underground, triggering evacuation." });
+        }
+        return blast;
+      }
+
+      function selectTwinAsset(id) {
+        selectedTwinAsset = id;
+        
+        const nodesLayer = document.getElementById("graph-nodes-layer");
+        const edgesLayer = document.getElementById("graph-edges-layer");
+        
+        // Highlight nodes and edges
+        const blast = getBlastRadius(id);
+        const blastAssetIds = blast.map(b => b.asset);
+        const activeIds = [id, ...blastAssetIds];
+        
+        // If electrical substation is clicked, highlight all targets
+        if (id === "SUB-03") {
+          twinsDependencies.forEach(dep => {
+            if (dep.source === "SUB-03") activeIds.push(dep.target);
+          });
+        }
+        
+        nodesLayer.querySelectorAll(".graph-node").forEach(node => {
+          const nId = node.dataset.id;
+          if (activeIds.includes(nId)) {
+            node.style.opacity = "1";
+            node.classList.toggle("active", nId === id);
+          } else {
+            node.style.opacity = "0.25";
+            node.classList.remove("active");
+          }
+        });
+        
+        edgesLayer.querySelectorAll(".graph-edge").forEach(edge => {
+          const src = edge.dataset.source;
+          const tgt = edge.dataset.target;
+          if (src === id || (id === "SUB-03" && src === "SUB-03")) {
+            edge.style.opacity = "1";
+            edge.style.strokeWidth = "4";
+          } else {
+            edge.style.opacity = "0.15";
+            edge.style.strokeWidth = "2";
+          }
+        });
+        
+        // Populate panel details
+        const assetObj = assets.find(a => a.id === id);
+        const coordObj = twinsCoordinates[id];
+        
+        document.getElementById("triage-asset-title").textContent = `${id} - ${coordObj.name}`;
+        document.getElementById("triage-asset-tag").textContent = coordObj.cls;
+        document.getElementById("triage-intro-note").classList.add("hidden");
+        document.getElementById("triage-stats-grid").classList.remove("hidden");
+        document.getElementById("triage-blast-radius-box").classList.remove("hidden");
+        document.getElementById("triage-timeline-box").classList.remove("hidden");
+        document.getElementById("triage-ai-box").classList.remove("hidden");
+        
+        // Update live metrics
+        const scenario = scenarioControls.type.value;
+        const liveRisk = applyScenarioRisk(assetObj, scenario);
+        const liveStatus = riskStatus(liveRisk);
+        
+        document.getElementById("triage-health-val").textContent = `${assetObj.health}%`;
+        document.getElementById("triage-risk-val").textContent = `${liveRisk}%`;
+        
+        // Render Blast Radius list
+        const blastList = document.getElementById("triage-blast-list");
+        if (blast.length > 0) {
+          blastList.innerHTML = blast.map(b => `
+            <div class="blast-item">
+              <strong>⚠️ Impact on ${b.asset}:</strong><br>
+              ${b.effect}
+            </div>
+          `).join("");
+        } else {
+          blastList.innerHTML = `<p class="source-note" style="margin: 0;">No active downstream blast radius computed for this component.</p>`;
+        }
+        
+        // Render timeline anomalies from the behavioral graph
+        const timelineList = document.getElementById("triage-timeline-list");
+        const timelineBox = document.getElementById("triage-timeline-box");
+        
+        // Find anomalies connected to this asset or its finding groups
+        const associatedAnomalies = [];
+        behavioralGraph.nodes.forEach(node => {
+          if (node.type === "Anomaly") {
+            // Find triggered edge to this asset
+            const triggered = behavioralGraph.edges.find(e => 
+              e.source === node.id && 
+              e.type === "TRIGGERED_ON" && 
+              e.target === id
+            );
+            if (triggered) {
+              associatedAnomalies.push(node);
+            }
+          }
+        });
+        
+        // Also pull anomalies from finding groups that touch this asset
+        behavioralGraph.finding_groups.forEach(fg => {
+          if (fg.assets.includes(id)) {
+            fg.findings.forEach(fid => {
+              const node = behavioralGraph.nodes.find(n => n.id === fid);
+              if (node && !associatedAnomalies.some(a => a.id === node.id)) {
+                associatedAnomalies.push(node);
+              }
+            });
+          }
+        });
+        
+        // Sort anomalies chronologically
+        associatedAnomalies.sort((a, b) => new Date(a.properties.timestamp) - new Date(b.properties.timestamp));
+        
+        if (associatedAnomalies.length > 0) {
+          timelineList.innerHTML = associatedAnomalies.map(anom => {
+            const timeStr = new Date(anom.properties.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            const isCrit = anom.properties.severity === "High" ? "critical" : "watch";
+            return `
+              <div class="timeline-event ${isCrit}">
+                <div class="timeline-time">${timeStr} - Severity: ${anom.properties.severity}</div>
+                <div class="timeline-desc"><b>${anom.id}</b>: ${anom.properties.details}</div>
+              </div>
+            `;
+          }).join("");
+          timelineBox.classList.remove("hidden");
+        } else {
+          // Fallback static timeline event if no active anomalies are registered in database
+          timelineList.innerHTML = `
+            <div class="timeline-event watch">
+              <div class="timeline-time">Operational Baseline</div>
+              <div class="timeline-desc">No active anomalies detected by Isolation Forest. Sensor streams fall within standard standard deviations.</div>
+            </div>
+          `;
+        }
+        
+        // Reset AI outputs
+        document.getElementById("triage-ai-output").textContent = "AI summary is ready to be generated.";
+      }
+
+      function renderTwinsGraph() {
+        const svg = document.getElementById("twins-svg-canvas");
+        const edgesLayer = document.getElementById("graph-edges-layer");
+        const nodesLayer = document.getElementById("graph-nodes-layer");
+        
+        const scenario = scenarioControls.type.value;
+        
+        // Render Edges
+        edgesLayer.innerHTML = twinsDependencies.map(dep => {
+          const src = twinsCoordinates[dep.source];
+          const tgt = twinsCoordinates[dep.target];
+          const marker = dep.type === "material" ? "arrow-material" : dep.type === "power" ? "arrow-power" : dep.type === "safety" ? "arrow-safety" : "arrow-dewatering";
+          return `
+            <line class="graph-edge ${dep.type}" 
+                  x1="${src.x}" y1="${src.y}" 
+                  x2="${tgt.x}" y2="${tgt.y}" 
+                  stroke-width="2" 
+                  marker-end="url(#${marker})"
+                  data-source="${dep.source}"
+                  data-target="${dep.target}"
+                  id="edge-${dep.source}-${dep.target}">
+            </line>
+            <text x="${(src.x + tgt.x)/2}" y="${(src.y + tgt.y)/2 - 6}" class="graph-edge-label" text-anchor="middle">${dep.label}</text>
+          `;
+        }).join("");
+        
+        // Render Nodes
+        nodesLayer.innerHTML = Object.entries(twinsCoordinates).map(([id, coord]) => {
+          const assetObj = assets.find(a => a.id === id) || { health: 70, risk: 30, status: "good" };
+          const liveRisk = applyScenarioRisk(assetObj, scenario);
+          const liveStatus = riskStatus(liveRisk);
+          const activeCls = id === selectedTwinAsset ? " active" : "";
+          const color = riskColor[liveStatus];
+          
+          return `
+            <g class="graph-node ${liveStatus}${activeCls}" data-id="${id}" tabindex="0" role="button" aria-label="${id} ${coord.name}">
+              <circle cx="${coord.x}" cy="${coord.y}" r="14" fill="${color}"></circle>
+              <text x="${coord.x}" y="${coord.y + 3}" font-size="8" fill="#ffffff" font-weight="bold" text-anchor="middle">${id.split("-")[0]}</text>
+              <text x="${coord.x}" y="${coord.y - 18}" class="node-text" text-anchor="middle">${id}</text>
+            </g>
+          `;
+        }).join("");
+        
+        // Bind events
+        nodesLayer.querySelectorAll(".graph-node").forEach(node => {
+          node.addEventListener("click", () => selectTwinAsset(node.dataset.id));
+          node.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              selectTwinAsset(node.dataset.id);
+            }
+          });
+        });
+        
+        // Restore highlights if there is a selected node
+        if (selectedTwinAsset) {
+          selectTwinAsset(selectedTwinAsset);
+        }
+      }
+
+      // Add AI handler for twins triage
+      document.getElementById("run-triage-ai").addEventListener("click", async () => {
+        if (!selectedTwinAsset) return;
+        
+        const runBtn = document.getElementById("run-triage-ai");
+        const triageOut = document.getElementById("triage-ai-output");
+        
+        try {
+          runBtn.disabled = true;
+          triageOut.textContent = "Calling Cloudflare Workers AI with incident subgraph context...";
+          
+          // Get local subgraph
+          const nodes = [];
+          const edges = [];
+          
+          const blast = getBlastRadius(selectedTwinAsset);
+          const blastAssetIds = blast.map(b => b.asset);
+          const activeIds = [selectedTwinAsset, ...blastAssetIds];
+          
+          behavioralGraph.nodes.forEach(n => {
+            if (activeIds.includes(n.id) || n.type === "Anomaly") {
+              nodes.push(n);
+            }
+          });
+          
+          behavioralGraph.edges.forEach(e => {
+            if (activeIds.includes(e.source) || activeIds.includes(e.target)) {
+              edges.push(e);
+            }
+          });
+          
+          const subgraph = { nodes, edges };
+          
+          const response = await fetch("/api/cloudflare-llm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              isDetective: true,
+              targetAsset: selectedTwinAsset,
+              graphContext: JSON.stringify(subgraph)
+            })
+          });
+          
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || `HTTP ${response.status}`);
+          }
+          triageOut.textContent = `${data.provider} (${data.model})\n\n${data.response}`;
+        } catch (error) {
+          triageOut.textContent = `Triage brief generation failed.\n\n${error.message}`;
+        } finally {
+          runBtn.disabled = false;
+        }
+      });
+
       const titles = {
         overview: ["Executive View", "Mine-wide risk, reliability, ESG, and readiness summary for leadership."],
         map: ["Mine Map", "Geospatial asset-risk intelligence for Morupule, Palapye, underground operations, and surface services."],
+        twins: ["Digital Twins (Detective Graph)", "Interactive entity-relationship graph mapping mine asset dependencies, statistical Isolation Forest anomalies, and AI root-cause briefs."],
         scenarios: ["AI Scenarios", "Filter operating conditions and let a governed GenAI advisor summarize risk, action, and business trade-offs."],
         llm: ["Cloudflare Decision AI", "Run a real Cloudflare Workers AI LLM through Vercel using the 5 Layer Decision Stack."],
         proposal: ["Proposal Fit", "Tender-aligned coverage map showing how the PoC, documents, controls, and enterprise architecture satisfy the SOW."],

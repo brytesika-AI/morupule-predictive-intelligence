@@ -1,0 +1,1071 @@
+{
+  "modelVersion": "morupule-behavioral-graph-v1",
+  "generatedBy": "scripts/ingest_findings.py",
+  "timestamp": "2026-06-04T19:16:07.838195+00:00",
+  "stats": {
+    "nodes_count": 40,
+    "edges_count": 80,
+    "finding_groups_count": 5,
+    "anomalies_count": 16
+  },
+  "nodes": [
+    {
+      "id": "Processing",
+      "type": "OperationalArea",
+      "properties": {
+        "name": "Processing"
+      }
+    },
+    {
+      "id": "Services",
+      "type": "OperationalArea",
+      "properties": {
+        "name": "Services"
+      }
+    },
+    {
+      "id": "Underground",
+      "type": "OperationalArea",
+      "properties": {
+        "name": "Underground"
+      }
+    },
+    {
+      "id": "Mobile Fleet",
+      "type": "OperationalArea",
+      "properties": {
+        "name": "Mobile Fleet"
+      }
+    },
+    {
+      "id": "Surface",
+      "type": "OperationalArea",
+      "properties": {
+        "name": "Surface"
+      }
+    },
+    {
+      "id": "Conveyor",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Conveyor"
+      }
+    },
+    {
+      "id": "Fan",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Fan"
+      }
+    },
+    {
+      "id": "Crusher",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Crusher"
+      }
+    },
+    {
+      "id": "Pump",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Pump"
+      }
+    },
+    {
+      "id": "Electrical",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Electrical"
+      }
+    },
+    {
+      "id": "Mobile",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Mobile"
+      }
+    },
+    {
+      "id": "CV-04",
+      "type": "Asset",
+      "properties": {
+        "name": "Main Trunk Conveyor CV-04",
+        "area": "Underground",
+        "class": "Conveyor",
+        "health": 12,
+        "risk": 96,
+        "rul": 3,
+        "esg": 76,
+        "status": "critical",
+        "action": "Prioritise inspection and planned intervention from real failure-risk features"
+      }
+    },
+    {
+      "id": "PMP-SF-11",
+      "type": "Asset",
+      "properties": {
+        "name": "Surface Dewatering Pump 11",
+        "area": "Surface",
+        "class": "Pump",
+        "health": 13,
+        "risk": 96,
+        "rul": 3,
+        "esg": 75,
+        "status": "critical",
+        "action": "Prioritise inspection and planned intervention from real failure-risk features"
+      }
+    },
+    {
+      "id": "LHD-07",
+      "type": "Asset",
+      "properties": {
+        "name": "Load Haul Dumper LHD-07",
+        "area": "Mobile Fleet",
+        "class": "Mobile",
+        "health": 12,
+        "risk": 96,
+        "rul": 3,
+        "esg": 74,
+        "status": "critical",
+        "action": "Prioritise inspection and planned intervention from real failure-risk features"
+      }
+    },
+    {
+      "id": "FAN-UG-02",
+      "type": "Asset",
+      "properties": {
+        "name": "Underground Ventilation Fan 02",
+        "area": "Underground",
+        "class": "Fan",
+        "health": 14,
+        "risk": 95,
+        "rul": 3,
+        "esg": 76,
+        "status": "critical",
+        "action": "Prioritise inspection and planned intervention from real failure-risk features"
+      }
+    },
+    {
+      "id": "SUB-03",
+      "type": "Asset",
+      "properties": {
+        "name": "Substation Transformer SUB-03",
+        "area": "Services",
+        "class": "Electrical",
+        "health": 55,
+        "risk": 53,
+        "rul": 27,
+        "esg": 74,
+        "status": "watch",
+        "action": "Monitor drift and prepare conditional maintenance package"
+      }
+    },
+    {
+      "id": "CR-01",
+      "type": "Asset",
+      "properties": {
+        "name": "Primary Crusher CR-01",
+        "area": "Processing",
+        "class": "Crusher",
+        "health": 56,
+        "risk": 52,
+        "rul": 28,
+        "esg": 75,
+        "status": "watch",
+        "action": "Monitor drift and prepare conditional maintenance package"
+      }
+    },
+    {
+      "id": "EMS-02",
+      "type": "Asset",
+      "properties": {
+        "name": "Environmental Monitor EMS-02",
+        "area": "Services",
+        "class": "Electrical",
+        "health": 59,
+        "risk": 50,
+        "rul": 30,
+        "esg": 75,
+        "status": "watch",
+        "action": "Monitor drift and prepare conditional maintenance package"
+      }
+    },
+    {
+      "id": "CHP-02",
+      "type": "Asset",
+      "properties": {
+        "name": "Coal Handling Plant Transfer CHP-02",
+        "area": "Processing",
+        "class": "Conveyor",
+        "health": 59,
+        "risk": 50,
+        "rul": 30,
+        "esg": 75,
+        "status": "watch",
+        "action": "Monitor drift and prepare conditional maintenance package"
+      }
+    },
+    {
+      "id": "FIND-ANOM-007",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-03T20:05:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (18.058 m/s^2, bearing wear=93.520). Operating load index at 145246.0.",
+        "vibration": 18.058,
+        "bearing_wear": 93.52,
+        "load": 145246.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-010",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-03T20:26:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (18.777 m/s^2, bearing wear=90.746). Operating load index at 1451520.0.",
+        "vibration": 18.777,
+        "bearing_wear": 90.746,
+        "load": 1451520.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-023",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-03T21:57:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (113.815 m/s^2, bearing wear=491.591). Operating load index at 604809.3.",
+        "vibration": 113.815,
+        "bearing_wear": 491.591,
+        "load": 604809.3
+      }
+    },
+    {
+      "id": "FIND-ANOM-040",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-03T23:56:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (18.028 m/s^2, bearing wear=93.636). Operating load index at 18.0.",
+        "vibration": 18.028,
+        "bearing_wear": 93.636,
+        "load": 18.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-067",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T03:05:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (98.510 m/s^2, bearing wear=493.865). Operating load index at 2347.2.",
+        "vibration": 98.51,
+        "bearing_wear": 493.865,
+        "load": 2347.2
+      }
+    },
+    {
+      "id": "FIND-ANOM-072",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T03:40:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (20.335 m/s^2, bearing wear=84.733). Operating load index at 533514.0.",
+        "vibration": 20.335,
+        "bearing_wear": 84.733,
+        "load": 533514.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-079",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T04:29:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (21.271 m/s^2, bearing wear=81.121). Operating load index at 339818.0.",
+        "vibration": 21.271,
+        "bearing_wear": 81.121,
+        "load": 339818.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-096",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T06:28:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (21.944 m/s^2, bearing wear=78.092). Operating load index at 339818.0.",
+        "vibration": 21.944,
+        "bearing_wear": 78.092,
+        "load": 339818.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-098",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T06:42:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (21.096 m/s^2, bearing wear=81.796). Operating load index at 425040.0.",
+        "vibration": 21.096,
+        "bearing_wear": 81.796,
+        "load": 425040.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-112",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T08:20:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (102.962 m/s^2, bearing wear=337.498). Operating load index at 715922.8.",
+        "vibration": 102.962,
+        "bearing_wear": 337.498,
+        "load": 715922.8
+      }
+    },
+    {
+      "id": "FIND-ANOM-129",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T10:19:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (18.327 m/s^2, bearing wear=92.482). Operating load index at 223264.0.",
+        "vibration": 18.327,
+        "bearing_wear": 92.482,
+        "load": 223264.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-145",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T12:11:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (100.803 m/s^2, bearing wear=426.736). Operating load index at 38.8.",
+        "vibration": 100.803,
+        "bearing_wear": 426.736,
+        "load": 38.8
+      }
+    },
+    {
+      "id": "FIND-ANOM-154",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T13:14:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (18.892 m/s^2, bearing wear=90.302). Operating load index at 245178.0.",
+        "vibration": 18.892,
+        "bearing_wear": 90.302,
+        "load": 245178.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-174",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T15:34:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (18.053 m/s^2, bearing wear=93.540). Operating load index at 881372.0.",
+        "vibration": 18.053,
+        "bearing_wear": 93.54,
+        "load": 881372.0
+      }
+    },
+    {
+      "id": "FIND-ANOM-189",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T17:19:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (107.253 m/s^2, bearing wear=491.023). Operating load index at 288303.3.",
+        "vibration": 107.253,
+        "bearing_wear": 491.023,
+        "load": 288303.3
+      }
+    },
+    {
+      "id": "FIND-ANOM-196",
+      "type": "Anomaly",
+      "properties": {
+        "timestamp": "2026-06-04T18:08:07.269028+00:00",
+        "severity": "High",
+        "details": "Vibration anomaly detected (21.793 m/s^2, bearing wear=77.509). Operating load index at 791254.0.",
+        "vibration": 21.793,
+        "bearing_wear": 77.509,
+        "load": 791254.0
+      }
+    },
+    {
+      "id": "FG-001",
+      "type": "FindingGroup",
+      "properties": {
+        "start_time": "2026-06-03T20:05:07.269028+00:00",
+        "end_time": "2026-06-03T23:56:07.269028+00:00",
+        "affected_assets_count": 5,
+        "findings_count": 4
+      }
+    },
+    {
+      "id": "FG-002",
+      "type": "FindingGroup",
+      "properties": {
+        "start_time": "2026-06-04T03:05:07.269028+00:00",
+        "end_time": "2026-06-04T04:29:07.269028+00:00",
+        "affected_assets_count": 5,
+        "findings_count": 3
+      }
+    },
+    {
+      "id": "FG-003",
+      "type": "FindingGroup",
+      "properties": {
+        "start_time": "2026-06-04T06:28:07.269028+00:00",
+        "end_time": "2026-06-04T06:42:07.269028+00:00",
+        "affected_assets_count": 1,
+        "findings_count": 2
+      }
+    },
+    {
+      "id": "FG-004",
+      "type": "FindingGroup",
+      "properties": {
+        "start_time": "2026-06-04T08:20:07.269028+00:00",
+        "end_time": "2026-06-04T13:14:07.269028+00:00",
+        "affected_assets_count": 6,
+        "findings_count": 4
+      }
+    },
+    {
+      "id": "FG-005",
+      "type": "FindingGroup",
+      "properties": {
+        "start_time": "2026-06-04T15:34:07.269028+00:00",
+        "end_time": "2026-06-04T18:08:07.269028+00:00",
+        "affected_assets_count": 5,
+        "findings_count": 3
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "CV-04",
+      "type": "LOCATED_IN",
+      "target": "Underground",
+      "properties": {}
+    },
+    {
+      "source": "CV-04",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Conveyor",
+      "properties": {}
+    },
+    {
+      "source": "PMP-SF-11",
+      "type": "LOCATED_IN",
+      "target": "Surface",
+      "properties": {}
+    },
+    {
+      "source": "PMP-SF-11",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Pump",
+      "properties": {}
+    },
+    {
+      "source": "LHD-07",
+      "type": "LOCATED_IN",
+      "target": "Mobile Fleet",
+      "properties": {}
+    },
+    {
+      "source": "LHD-07",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Mobile",
+      "properties": {}
+    },
+    {
+      "source": "FAN-UG-02",
+      "type": "LOCATED_IN",
+      "target": "Underground",
+      "properties": {}
+    },
+    {
+      "source": "FAN-UG-02",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Fan",
+      "properties": {}
+    },
+    {
+      "source": "SUB-03",
+      "type": "LOCATED_IN",
+      "target": "Services",
+      "properties": {}
+    },
+    {
+      "source": "SUB-03",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Electrical",
+      "properties": {}
+    },
+    {
+      "source": "CR-01",
+      "type": "LOCATED_IN",
+      "target": "Processing",
+      "properties": {}
+    },
+    {
+      "source": "CR-01",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Crusher",
+      "properties": {}
+    },
+    {
+      "source": "EMS-02",
+      "type": "LOCATED_IN",
+      "target": "Services",
+      "properties": {}
+    },
+    {
+      "source": "EMS-02",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Electrical",
+      "properties": {}
+    },
+    {
+      "source": "CHP-02",
+      "type": "LOCATED_IN",
+      "target": "Processing",
+      "properties": {}
+    },
+    {
+      "source": "CHP-02",
+      "type": "BELONGS_TO_CLASS",
+      "target": "Conveyor",
+      "properties": {}
+    },
+    {
+      "source": "CV-04",
+      "type": "FEEDS",
+      "target": "CHP-02",
+      "properties": {
+        "description": "Conveyor CV-04 feeds coal directly into transfer conveyor CHP-02"
+      }
+    },
+    {
+      "source": "CHP-02",
+      "type": "FEEDS",
+      "target": "CR-01",
+      "properties": {
+        "description": "Transfer conveyor CHP-02 feeds coal into Primary Crusher CR-01"
+      }
+    },
+    {
+      "source": "SUB-03",
+      "type": "POWERS",
+      "target": "CV-04",
+      "properties": {
+        "description": "Electrical substation SUB-03 provides primary power to Conveyor CV-04"
+      }
+    },
+    {
+      "source": "SUB-03",
+      "type": "POWERS",
+      "target": "CHP-02",
+      "properties": {
+        "description": "Electrical substation SUB-03 provides power to Conveyor CHP-02"
+      }
+    },
+    {
+      "source": "SUB-03",
+      "type": "POWERS",
+      "target": "CR-01",
+      "properties": {
+        "description": "Electrical substation SUB-03 provides power to Crusher CR-01"
+      }
+    },
+    {
+      "source": "SUB-03",
+      "type": "POWERS",
+      "target": "PMP-SF-11",
+      "properties": {
+        "description": "Electrical substation SUB-03 powers surface dewatering pump PMP-SF-11"
+      }
+    },
+    {
+      "source": "SUB-03",
+      "type": "POWERS",
+      "target": "FAN-UG-02",
+      "properties": {
+        "description": "Electrical substation SUB-03 powers underground ventilation fan FAN-UG-02"
+      }
+    },
+    {
+      "source": "FAN-UG-02",
+      "type": "VENTILATES",
+      "target": "Underground",
+      "properties": {
+        "description": "Underground ventilation fan 02 regulates air supply in the underground workings"
+      }
+    },
+    {
+      "source": "PMP-SF-11",
+      "type": "DRAINS",
+      "target": "Surface",
+      "properties": {
+        "description": "Surface dewatering pump 11 drains water out of the surface operations"
+      }
+    },
+    {
+      "source": "PMP-SF-11",
+      "type": "DRAINS",
+      "target": "Underground",
+      "properties": {
+        "description": "Surface dewatering pump 11 manages underground water seepage"
+      }
+    },
+    {
+      "source": "FIND-ANOM-007",
+      "type": "TRIGGERED_ON",
+      "target": "CR-01",
+      "properties": {
+        "timestamp": "2026-06-03T20:05:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-010",
+      "type": "TRIGGERED_ON",
+      "target": "PMP-SF-11",
+      "properties": {
+        "timestamp": "2026-06-03T20:26:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-023",
+      "type": "TRIGGERED_ON",
+      "target": "CR-01",
+      "properties": {
+        "timestamp": "2026-06-03T21:57:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-040",
+      "type": "TRIGGERED_ON",
+      "target": "CHP-02",
+      "properties": {
+        "timestamp": "2026-06-03T23:56:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-067",
+      "type": "TRIGGERED_ON",
+      "target": "PMP-SF-11",
+      "properties": {
+        "timestamp": "2026-06-04T03:05:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-072",
+      "type": "TRIGGERED_ON",
+      "target": "FAN-UG-02",
+      "properties": {
+        "timestamp": "2026-06-04T03:40:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-079",
+      "type": "TRIGGERED_ON",
+      "target": "CV-04",
+      "properties": {
+        "timestamp": "2026-06-04T04:29:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-096",
+      "type": "TRIGGERED_ON",
+      "target": "LHD-07",
+      "properties": {
+        "timestamp": "2026-06-04T06:28:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-098",
+      "type": "TRIGGERED_ON",
+      "target": "LHD-07",
+      "properties": {
+        "timestamp": "2026-06-04T06:42:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-112",
+      "type": "TRIGGERED_ON",
+      "target": "CV-04",
+      "properties": {
+        "timestamp": "2026-06-04T08:20:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-129",
+      "type": "TRIGGERED_ON",
+      "target": "CR-01",
+      "properties": {
+        "timestamp": "2026-06-04T10:19:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-145",
+      "type": "TRIGGERED_ON",
+      "target": "SUB-03",
+      "properties": {
+        "timestamp": "2026-06-04T12:11:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-154",
+      "type": "TRIGGERED_ON",
+      "target": "CV-04",
+      "properties": {
+        "timestamp": "2026-06-04T13:14:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-174",
+      "type": "TRIGGERED_ON",
+      "target": "CHP-02",
+      "properties": {
+        "timestamp": "2026-06-04T15:34:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-189",
+      "type": "TRIGGERED_ON",
+      "target": "CV-04",
+      "properties": {
+        "timestamp": "2026-06-04T17:19:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-196",
+      "type": "TRIGGERED_ON",
+      "target": "PMP-SF-11",
+      "properties": {
+        "timestamp": "2026-06-04T18:08:07.269028+00:00"
+      }
+    },
+    {
+      "source": "FIND-ANOM-007",
+      "type": "PART_OF_GROUP",
+      "target": "FG-001",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-010",
+      "type": "PART_OF_GROUP",
+      "target": "FG-001",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-023",
+      "type": "PART_OF_GROUP",
+      "target": "FG-001",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-040",
+      "type": "PART_OF_GROUP",
+      "target": "FG-001",
+      "properties": {}
+    },
+    {
+      "source": "FG-001",
+      "type": "AFFECTS_ASSET",
+      "target": "CHP-02",
+      "properties": {}
+    },
+    {
+      "source": "FG-001",
+      "type": "AFFECTS_ASSET",
+      "target": "CR-01",
+      "properties": {}
+    },
+    {
+      "source": "FG-001",
+      "type": "AFFECTS_ASSET",
+      "target": "CV-04",
+      "properties": {}
+    },
+    {
+      "source": "FG-001",
+      "type": "AFFECTS_ASSET",
+      "target": "PMP-SF-11",
+      "properties": {}
+    },
+    {
+      "source": "FG-001",
+      "type": "AFFECTS_ASSET",
+      "target": "SUB-03",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-067",
+      "type": "PART_OF_GROUP",
+      "target": "FG-002",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-072",
+      "type": "PART_OF_GROUP",
+      "target": "FG-002",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-079",
+      "type": "PART_OF_GROUP",
+      "target": "FG-002",
+      "properties": {}
+    },
+    {
+      "source": "FG-002",
+      "type": "AFFECTS_ASSET",
+      "target": "CHP-02",
+      "properties": {}
+    },
+    {
+      "source": "FG-002",
+      "type": "AFFECTS_ASSET",
+      "target": "FAN-UG-02",
+      "properties": {}
+    },
+    {
+      "source": "FG-002",
+      "type": "AFFECTS_ASSET",
+      "target": "PMP-SF-11",
+      "properties": {}
+    },
+    {
+      "source": "FG-002",
+      "type": "AFFECTS_ASSET",
+      "target": "CV-04",
+      "properties": {}
+    },
+    {
+      "source": "FG-002",
+      "type": "AFFECTS_ASSET",
+      "target": "SUB-03",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-096",
+      "type": "PART_OF_GROUP",
+      "target": "FG-003",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-098",
+      "type": "PART_OF_GROUP",
+      "target": "FG-003",
+      "properties": {}
+    },
+    {
+      "source": "FG-003",
+      "type": "AFFECTS_ASSET",
+      "target": "LHD-07",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-112",
+      "type": "PART_OF_GROUP",
+      "target": "FG-004",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-129",
+      "type": "PART_OF_GROUP",
+      "target": "FG-004",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-145",
+      "type": "PART_OF_GROUP",
+      "target": "FG-004",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-154",
+      "type": "PART_OF_GROUP",
+      "target": "FG-004",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
+      "target": "CHP-02",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
+      "target": "CR-01",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
+      "target": "FAN-UG-02",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
+      "target": "PMP-SF-11",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
+      "target": "CV-04",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
+      "target": "SUB-03",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-174",
+      "type": "PART_OF_GROUP",
+      "target": "FG-005",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-189",
+      "type": "PART_OF_GROUP",
+      "target": "FG-005",
+      "properties": {}
+    },
+    {
+      "source": "FIND-ANOM-196",
+      "type": "PART_OF_GROUP",
+      "target": "FG-005",
+      "properties": {}
+    },
+    {
+      "source": "FG-005",
+      "type": "AFFECTS_ASSET",
+      "target": "CHP-02",
+      "properties": {}
+    },
+    {
+      "source": "FG-005",
+      "type": "AFFECTS_ASSET",
+      "target": "CR-01",
+      "properties": {}
+    },
+    {
+      "source": "FG-005",
+      "type": "AFFECTS_ASSET",
+      "target": "PMP-SF-11",
+      "properties": {}
+    },
+    {
+      "source": "FG-005",
+      "type": "AFFECTS_ASSET",
+      "target": "CV-04",
+      "properties": {}
+    },
+    {
+      "source": "FG-005",
+      "type": "AFFECTS_ASSET",
+      "target": "SUB-03",
+      "properties": {}
+    }
+  ],
+  "finding_groups": [
+    {
+      "id": "FG-001",
+      "assets": [
+        "CHP-02",
+        "CR-01",
+        "CV-04",
+        "PMP-SF-11",
+        "SUB-03"
+      ],
+      "findings": [
+        "FIND-ANOM-007",
+        "FIND-ANOM-010",
+        "FIND-ANOM-023",
+        "FIND-ANOM-040"
+      ],
+      "start_time": "2026-06-03T20:05:07.269028+00:00",
+      "end_time": "2026-06-03T23:56:07.269028+00:00"
+    },
+    {
+      "id": "FG-002",
+      "assets": [
+        "CHP-02",
+        "FAN-UG-02",
+        "PMP-SF-11",
+        "CV-04",
+        "SUB-03"
+      ],
+      "findings": [
+        "FIND-ANOM-067",
+        "FIND-ANOM-072",
+        "FIND-ANOM-079"
+      ],
+      "start_time": "2026-06-04T03:05:07.269028+00:00",
+      "end_time": "2026-06-04T04:29:07.269028+00:00"
+    },
+    {
+      "id": "FG-003",
+      "assets": [
+        "LHD-07"
+      ],
+      "findings": [
+        "FIND-ANOM-096",
+        "FIND-ANOM-098"
+      ],
+      "start_time": "2026-06-04T06:28:07.269028+00:00",
+      "end_time": "2026-06-04T06:42:07.269028+00:00"
+    },
+    {
+      "id": "FG-004",
+      "assets": [
+        "CHP-02",
+        "CR-01",
+        "FAN-UG-02",
+        "PMP-SF-11",
+        "CV-04",
+        "SUB-03"
+      ],
+      "findings": [
+        "FIND-ANOM-112",
+        "FIND-ANOM-129",
+        "FIND-ANOM-145",
+        "FIND-ANOM-154"
+      ],
+      "start_time": "2026-06-04T08:20:07.269028+00:00",
+      "end_time": "2026-06-04T13:14:07.269028+00:00"
+    },
+    {
+      "id": "FG-005",
+      "assets": [
+        "CHP-02",
+        "CR-01",
+        "PMP-SF-11",
+        "CV-04",
+        "SUB-03"
+      ],
+      "findings": [
+        "FIND-ANOM-174",
+        "FIND-ANOM-189",
+        "FIND-ANOM-196"
+      ],
+      "start_time": "2026-06-04T15:34:07.269028+00:00",
+      "end_time": "2026-06-04T18:08:07.269028+00:00"
+    }
+  ]
+}

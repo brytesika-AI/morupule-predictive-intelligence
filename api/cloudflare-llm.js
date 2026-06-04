@@ -9,6 +9,24 @@ function envValue(...names) {
 }
 
 function buildDecisionPrompt(body) {
+  if (body.isDetective) {
+    const target = body.targetAsset || "CV-04";
+    const graphContext = body.graphContext || "";
+    return `You are an expert reliability and security incident responder mimicking Amazon Detective root-cause analysis for Morupule Coal Mine.
+Review the following connected operational dependency and anomaly graph context extracted from our database regarding the target indicator: ${target}.
+
+Graph Context (JSON Telemetry & Relationships):
+${graphContext}
+
+Provide a concise, professional Incident Summary for the engineering team. Include exactly these sections:
+1. Root Cause Summary: What happened (e.g. failure precursors, outliers) and which primary asset is responsible.
+2. Chronological Timeline: The order of anomalies based on timestamps and propagation.
+3. Blast Radius: Which downstream resources, processes (material feed, power, ventilation), or areas are affected.
+4. Immediate Remediation Action: The next two steps engineers must take right now.
+
+Be specific to Morupule Coal Mine. Compare the do-nothing path against the planned intervention. Do not claim this is actual MCM confidential data; say it is real public data proxy-mapped for PoC when needed.`;
+  }
+
   const assets = Array.isArray(body.assets) ? body.assets.slice(0, 6) : [];
   const stack = body.stack || {};
   const consequences = stack.consequences || body.consequences || {};

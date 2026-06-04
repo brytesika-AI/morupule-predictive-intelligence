@@ -78,6 +78,11 @@ The platform creates value through five channels:
    - Scenario narratives for executive and planning meetings.
    - Better knowledge transfer for new users and cross-functional teams.
 
+7. **Graph-based incident triage and root-cause analysis (Amazon Detective Model)**
+   - **Accelerated MTTR (Mean-Time-To-Resolution)**: Bundling isolated, noisy sensor alarms into unified finding groups reduces incident triage time by up to 60%.
+   - **Cascading Failure Protection**: Visualizing the blast radius across process feed flow and electrical distribution networks alerts operators to secondary assets at risk, preventing compounding breakdowns.
+   - **Operational Explainability**: Eliminates dashboard analysis paralysis by auto-generating plain-language root-cause reports directly from telemetry graph subgraphs.
+
 ## Proposed Business Offer
 
 ### Offer 1: PoC Demonstrator

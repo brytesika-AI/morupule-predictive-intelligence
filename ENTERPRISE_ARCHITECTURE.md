@@ -110,6 +110,7 @@ Recommended enterprise data-store pattern:
 
 - **Time-series store:** high-frequency equipment, condition, energy, and environmental signals.
 - **Relational store:** assets, work orders, users, roles, alerts, comments, audit logs, model registry, and configuration.
+- **Behavioral graph database (e.g., Neo4j or Apache Age):** representation of asset dependencies (feed chains, power lines, ventilation flow), operational sectors, and historical anomaly networks to simplify root-cause search.
 - **Object storage:** raw extracts, model artifacts, reports, exports, documents, and backups.
 - **Optional vector store:** semantic search across manuals, maintenance notes, SOPs, failure histories, and model explanations.
 
@@ -120,12 +121,18 @@ The platform should support the following model families:
 | Model family | Purpose | Example outputs |
 | --- | --- | --- |
 | Baseline model | Establish normal operating envelope by asset class | expected temperature, vibration, pressure, load, energy |
-| Anomaly model | Detect abnormal drift and deviation | anomaly score, affected tags, severity |
+| Anomaly model | Detect abnormal drift and deviation via Isolation Forest | anomaly score, outlier labels (-1), affected features |
 | Failure likelihood model | Predict failure risk over planning window | probability, risk rank, confidence |
 | Remaining useful life model | Estimate usable intervention window | estimated hours/days to action |
 | Alert rationalization | Reduce nuisance alerts | grouped alert, priority, suppression recommendation |
 | ESG baseline model | Track energy/environmental performance | energy intensity, emissions proxy, avoidable loss |
 | Consequence model | Compare intervention paths and downstream effects | do-nothing impact, planned-action impact, propagation chain, constraint-aware recommendation |
+
+#### Behavioral Graph Layer (Amazon Detective Replica)
+To move from isolated alerts to system-wide visibility, the target architecture incorporates a purpose-built behavioral graph database pattern:
+- **Graph Modeling**: Structures assets (`Asset`), operational sectors (`OperationalArea`), classes (`AssetClass`), and statistical alerts (`Anomaly`) as nodes. Edges represent physical constraints (`FEEDS`, `POWERS`, `VENTILATES`, `DRAINS`, `TRIGGERED_ON`).
+- **Finding Groups (Clustering)**: Correlates anomalies on an asset and its upstream/downstream dependents within a sliding chronological window (e.g. 2 hours) to track failure propagation.
+- **Root-Cause Analysis**: Pulls the blast-radius subgraph directly and passes the structured JSON relationship tree to a localized or private LLM to write plain-language summaries and remediation steps for the maintenance crew.
 
 ### 6. Decision Support Layer
 

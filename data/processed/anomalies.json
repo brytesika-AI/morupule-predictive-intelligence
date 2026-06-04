@@ -1,0 +1,210 @@
+[
+  {
+    "finding_id": "FIND-ANOM-007",
+    "asset_id": "CR-01",
+    "timestamp": "2026-06-03T20:05:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (18.058 m/s^2, bearing wear=93.520). Operating load index at 145246.0.",
+    "metrics": {
+      "vibration": 18.058,
+      "bearing_wear": 93.52,
+      "humidity": 73.98,
+      "load": 145246.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-010",
+    "asset_id": "PMP-SF-11",
+    "timestamp": "2026-06-03T20:26:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (18.777 m/s^2, bearing wear=90.746). Operating load index at 1451520.0.",
+    "metrics": {
+      "vibration": 18.777,
+      "bearing_wear": 90.746,
+      "humidity": 73.75,
+      "load": 1451520.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-023",
+    "asset_id": "CR-01",
+    "timestamp": "2026-06-03T21:57:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (113.815 m/s^2, bearing wear=491.591). Operating load index at 604809.3.",
+    "metrics": {
+      "vibration": 113.815,
+      "bearing_wear": 491.591,
+      "humidity": 72.65,
+      "load": 604809.3
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-040",
+    "asset_id": "CHP-02",
+    "timestamp": "2026-06-03T23:56:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (18.028 m/s^2, bearing wear=93.636). Operating load index at 18.0.",
+    "metrics": {
+      "vibration": 18.028,
+      "bearing_wear": 93.636,
+      "humidity": 73.99,
+      "load": 18.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-067",
+    "asset_id": "PMP-SF-11",
+    "timestamp": "2026-06-04T03:05:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (98.510 m/s^2, bearing wear=493.865). Operating load index at 2347.2.",
+    "metrics": {
+      "vibration": 98.51,
+      "bearing_wear": 493.865,
+      "humidity": 72.83,
+      "load": 2347.2
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-072",
+    "asset_id": "FAN-UG-02",
+    "timestamp": "2026-06-04T03:40:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (20.335 m/s^2, bearing wear=84.733). Operating load index at 533514.0.",
+    "metrics": {
+      "vibration": 20.335,
+      "bearing_wear": 84.733,
+      "humidity": 73.24,
+      "load": 533514.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-079",
+    "asset_id": "CV-04",
+    "timestamp": "2026-06-04T04:29:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (21.271 m/s^2, bearing wear=81.121). Operating load index at 339818.0.",
+    "metrics": {
+      "vibration": 21.271,
+      "bearing_wear": 81.121,
+      "humidity": 72.94,
+      "load": 339818.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-096",
+    "asset_id": "LHD-07",
+    "timestamp": "2026-06-04T06:28:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (21.944 m/s^2, bearing wear=78.092). Operating load index at 339818.0.",
+    "metrics": {
+      "vibration": 21.944,
+      "bearing_wear": 78.092,
+      "humidity": 72.68,
+      "load": 339818.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-098",
+    "asset_id": "LHD-07",
+    "timestamp": "2026-06-04T06:42:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (21.096 m/s^2, bearing wear=81.796). Operating load index at 425040.0.",
+    "metrics": {
+      "vibration": 21.096,
+      "bearing_wear": 81.796,
+      "humidity": 72.99,
+      "load": 425040.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-112",
+    "asset_id": "CV-04",
+    "timestamp": "2026-06-04T08:20:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (102.962 m/s^2, bearing wear=337.498). Operating load index at 715922.8.",
+    "metrics": {
+      "vibration": 102.962,
+      "bearing_wear": 337.498,
+      "humidity": 73.0,
+      "load": 715922.8
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-129",
+    "asset_id": "CR-01",
+    "timestamp": "2026-06-04T10:19:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (18.327 m/s^2, bearing wear=92.482). Operating load index at 223264.0.",
+    "metrics": {
+      "vibration": 18.327,
+      "bearing_wear": 92.482,
+      "humidity": 73.89,
+      "load": 223264.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-145",
+    "asset_id": "SUB-03",
+    "timestamp": "2026-06-04T12:11:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (100.803 m/s^2, bearing wear=426.736). Operating load index at 38.8.",
+    "metrics": {
+      "vibration": 100.803,
+      "bearing_wear": 426.736,
+      "humidity": 72.74,
+      "load": 38.8
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-154",
+    "asset_id": "CV-04",
+    "timestamp": "2026-06-04T13:14:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (18.892 m/s^2, bearing wear=90.302). Operating load index at 245178.0.",
+    "metrics": {
+      "vibration": 18.892,
+      "bearing_wear": 90.302,
+      "humidity": 73.71,
+      "load": 245178.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-174",
+    "asset_id": "CHP-02",
+    "timestamp": "2026-06-04T15:34:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (18.053 m/s^2, bearing wear=93.540). Operating load index at 881372.0.",
+    "metrics": {
+      "vibration": 18.053,
+      "bearing_wear": 93.54,
+      "humidity": 73.98,
+      "load": 881372.0
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-189",
+    "asset_id": "CV-04",
+    "timestamp": "2026-06-04T17:19:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (107.253 m/s^2, bearing wear=491.023). Operating load index at 288303.3.",
+    "metrics": {
+      "vibration": 107.253,
+      "bearing_wear": 491.023,
+      "humidity": 73.05,
+      "load": 288303.3
+    }
+  },
+  {
+    "finding_id": "FIND-ANOM-196",
+    "asset_id": "PMP-SF-11",
+    "timestamp": "2026-06-04T18:08:07.269028+00:00",
+    "severity": "High",
+    "details": "Vibration anomaly detected (21.793 m/s^2, bearing wear=77.509). Operating load index at 791254.0.",
+    "metrics": {
+      "vibration": 21.793,
+      "bearing_wear": 77.509,
+      "humidity": 72.64,
+      "load": 791254.0
+    }
+  }
+]
