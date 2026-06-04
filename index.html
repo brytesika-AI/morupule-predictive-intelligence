@@ -1193,10 +1193,9 @@
                     width="100%" 
                     height="100%" 
                     style="border:0; display: block;" 
-                    loading="lazy" 
                     allowfullscreen 
                     referrerpolicy="no-referrer-when-downgrade"
-                    src="https://maps.google.com/maps?q=-22.51,27.03&t=k&z=14&ie=UTF8&iwloc=&output=embed">
+                    src="https://www.google.com/maps?q=-22.51,27.03&t=k&z=14&output=embed">
                   </iframe>
                   <!-- Overlay Panel -->
                   <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(14, 22, 20, 0.96); border: 1px solid rgba(0, 138, 122, 0.4); border-radius: 6px; padding: 12px; color: #e2ede8; font-size: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
@@ -1276,14 +1275,14 @@
                   <h2>Mine Geospatial Intelligence Layer</h2>
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <div class="map-toggle-group">
-                      <button id="btn-map-schematic" class="map-toggle-btn active">Schematic</button>
-                      <button id="btn-map-satellite" class="map-toggle-btn">Satellite</button>
+                      <button id="btn-map-schematic" class="map-toggle-btn">Schematic</button>
+                      <button id="btn-map-satellite" class="map-toggle-btn active">Satellite</button>
                     </div>
-                    <span class="tag good" id="map-view-status">Schematic View</span>
+                    <span class="tag watch" id="map-view-status">Satellite View</span>
                   </div>
                 </div>
                 <div class="map-wrap">
-                  <div id="schematic-map-container">
+                  <div id="schematic-map-container" class="hidden">
                     <div class="map-controls">
                       <select id="map-area" aria-label="Map operating area">
                         <option value="all">All areas</option>
@@ -1332,15 +1331,14 @@
                     </div>
                   </div>
 
-                  <div id="satellite-map-container" class="hidden" style="position: relative; height: 460px; width: 100%;">
+                  <div id="satellite-map-container" style="position: relative; height: 460px; width: 100%;">
                     <iframe 
                       width="100%" 
-                      height="100%" 
-                      style="border: 0; display: block; min-height: 460px;" 
-                      loading="lazy" 
+                      height="460" 
+                      style="border: 0; display: block; width: 100%; height: 460px;" 
                       allowfullscreen 
                       referrerpolicy="no-referrer-when-downgrade"
-                      src="https://maps.google.com/maps?q=-22.51,27.03&t=k&z=15&ie=UTF8&iwloc=&output=embed">
+                      src="https://www.google.com/maps?q=-22.51,27.03&t=k&z=15&output=embed">
                     </iframe>
                     <!-- Overlay Panel -->
                     <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(14, 22, 20, 0.96); border: 1px solid rgba(0, 138, 122, 0.4); border-radius: 6px; padding: 12px; color: #e2ede8; font-size: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 10;">
