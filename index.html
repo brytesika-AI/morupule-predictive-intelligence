@@ -6,20 +6,21 @@
     <title>Morupule Predictive Intelligence Platform</title>
     <style>
       :root {
-        --bg: #f5f7f6;
-        --ink: #14201e;
-        --muted: #5a6864;
-        --line: #d8dfdc;
-        --panel: #ffffff;
-        --accent: #008a7a;
-        --accent-2: #c5662a;
-        --brand-blue: #234b73;
-        --brand-gold: #d39a2f;
-        --danger: #b42318;
-        --warn: #b7791f;
-        --good: #16845c;
-        --coal: #17211f;
-        --steel: #5d717a;
+        --bg: #070c0b;
+        --ink: #f0f5f3;
+        --muted: #8ca09b;
+        --line: rgba(0, 138, 122, 0.18);
+        --panel: rgba(16, 26, 24, 0.65);
+        --panel-solid: #101a18;
+        --accent: #00b49f;
+        --accent-2: #e5833c;
+        --brand-blue: #3182ce;
+        --brand-gold: #e2ad47;
+        --danger: #e53e3e;
+        --warn: #dd6b20;
+        --good: #38a169;
+        --coal: #090e0d;
+        --steel: #718096;
       }
 
       * {
@@ -127,11 +128,20 @@
         border-radius: 6px;
         text-align: left;
         cursor: pointer;
+        transition: all 0.25s ease;
+      }
+
+      .nav button:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        border-color: rgba(0, 180, 159, 0.3);
       }
 
       .nav button.active {
-        background: #f8faf9;
-        color: var(--coal);
+        background: rgba(0, 180, 159, 0.2);
+        color: #ffffff;
+        border-color: var(--accent);
+        box-shadow: 0 0 12px rgba(0, 180, 159, 0.25);
       }
 
       .sidebar-note {
@@ -149,8 +159,8 @@
 
       header {
         background:
-          linear-gradient(90deg, rgba(0, 138, 122, 0.08), rgba(211, 154, 47, 0.06)),
-          #ffffff;
+          linear-gradient(90deg, rgba(0, 138, 122, 0.12), rgba(211, 154, 47, 0.08)),
+          var(--panel-solid);
         border-bottom: 1px solid var(--line);
         padding: 22px 28px;
         display: flex;
@@ -190,9 +200,9 @@
       }
 
       .notice {
-        background: #fff8ed;
-        border: 1px solid #ecd1a3;
-        color: #5f3b04;
+        background: rgba(226, 173, 71, 0.08);
+        border: 1px solid rgba(226, 173, 71, 0.3);
+        color: #ffe09e;
         border-radius: 6px;
         padding: 13px 16px;
         line-height: 1.45;
@@ -208,6 +218,8 @@
       .panel,
       .asset-card {
         background: var(--panel);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 1px solid var(--line);
         border-radius: 8px;
       }
@@ -272,11 +284,13 @@
         position: relative;
         min-height: 390px;
         background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
-          radial-gradient(circle at 22% 30%, rgba(0, 138, 122, 0.16), transparent 26%),
-          radial-gradient(circle at 74% 68%, rgba(211, 154, 47, 0.18), transparent 24%),
-          #edf3f1;
+          linear-gradient(180deg, rgba(10, 17, 16, 0.75), rgba(7, 12, 11, 0.9)),
+          radial-gradient(circle at 22% 30%, rgba(0, 138, 122, 0.18), transparent 26%),
+          radial-gradient(circle at 74% 68%, rgba(226, 173, 71, 0.1), transparent 24%),
+          #080e0c;
         overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
       }
 
       .map-wrap-tab {
@@ -487,13 +501,13 @@
 
       .map-label {
         font-size: 13px;
-        fill: #20302d;
+        fill: #f0f5f3;
         font-weight: 700;
       }
 
       .map-muted {
         font-size: 11px;
-        fill: #61726e;
+        fill: #8ca09b;
       }
 
       .map-chip {
@@ -506,7 +520,7 @@
       }
 
       .map-chip span {
-        background: rgba(255, 255, 255, 0.86);
+        background: rgba(10, 17, 16, 0.85);
         border: 1px solid var(--line);
         border-radius: 999px;
         padding: 7px 10px;
@@ -527,10 +541,10 @@
 
       .map-controls select {
         width: 100%;
-        border: 1px solid rgba(216, 223, 220, 0.95);
+        border: 1px solid var(--line);
         border-radius: 6px;
         padding: 9px 10px;
-        background: rgba(255, 255, 255, 0.92);
+        background: rgba(10, 17, 16, 0.92);
         color: var(--ink);
       }
 
@@ -563,12 +577,14 @@
         right: 18px;
         bottom: 18px;
         width: min(320px, calc(100% - 36px));
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(10, 17, 16, 0.95);
         border: 1px solid var(--line);
         border-radius: 8px;
         padding: 14px;
-        box-shadow: 0 16px 35px rgba(20, 32, 30, 0.16);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.5);
         z-index: 2;
+        color: var(--ink);
+        backdrop-filter: blur(8px);
       }
 
       .map-popup strong {
@@ -798,10 +814,10 @@
       }
 
       .ai-response {
-        border: 1px solid #c8dcd7;
+        border: 1px solid var(--line);
         background:
-          linear-gradient(135deg, rgba(0, 138, 122, 0.08), rgba(35, 75, 115, 0.06)),
-          #fbfefd;
+          linear-gradient(135deg, rgba(0, 138, 122, 0.12), rgba(35, 75, 115, 0.08)),
+          var(--panel);
         border-radius: 8px;
         padding: 17px;
         display: grid;
@@ -838,7 +854,7 @@
         padding: 12px;
         resize: vertical;
         color: var(--ink);
-        background: #fff;
+        background: #0d1614;
       }
 
       .button-row {
@@ -862,16 +878,26 @@
       }
 
       .secondary-button {
-        background: #fff;
+        background: rgba(255, 255, 255, 0.05);
         border-color: var(--line);
         color: var(--ink);
+        transition: background 0.2s;
+      }
+      .secondary-button:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .primary-button {
+        transition: background 0.2s;
+      }
+      .primary-button:hover {
+        background: #00cca4;
       }
 
       .llm-output {
         min-height: 150px;
-        border: 1px solid #c8dcd7;
+        border: 1px solid var(--line);
         border-radius: 8px;
-        background: #fbfefd;
+        background: #0d1614;
         padding: 15px;
         color: var(--ink);
         line-height: 1.55;
@@ -893,8 +919,9 @@
       .mini {
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: #fbfcfc;
+        background: rgba(16, 26, 24, 0.8);
         padding: 15px;
+        color: var(--ink);
       }
 
       .mini h3 {
@@ -918,8 +945,9 @@
       .stack-layer {
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: #fbfcfc;
+        background: rgba(16, 26, 24, 0.8);
         padding: 12px;
+        color: var(--ink);
       }
 
       .stack-layer b {
@@ -942,9 +970,10 @@
 
       .chain-step {
         border-left: 4px solid var(--accent);
-        background: #fbfcfc;
+        background: rgba(16, 26, 24, 0.8);
         border-radius: 0 8px 8px 0;
         padding: 12px 14px;
+        color: var(--ink);
       }
 
       .chain-step b {
@@ -1199,16 +1228,9 @@
           <span>Premium PoC command layer for asset reliability, geospatial risk, ESG baselines, and maintenance decision support.</span>
         </div>
         <nav class="nav" aria-label="Dashboard sections">
-          <button class="active" data-view="overview">Executive View</button>
-          <button data-view="map">Mine Map</button>
-          <button data-view="twins">Digital Twins</button>
-          <button data-view="scenarios">AI Scenarios</button>
-          <button data-view="llm">Open LLM</button>
-          <button data-view="assets">Asset Risk</button>
-          <button data-view="analytics">ML Analytics</button>
-          <button data-view="esg">ESG Baseline</button>
-          <button data-view="roadmap">Deployment Plan</button>
-          <button data-view="proposal">Proposal Fit</button>
+          <button class="active" data-view="overview">Strategic Command Console</button>
+          <button data-view="map">Geospatial Control Tower</button>
+          <button data-view="twins">Diagnostic Triage Lab</button>
         </nav>
         <div class="sidebar-note">
           Public proxy data is used for this PoC. Production integration would require MCM-approved access to OT/IT systems.
@@ -1233,6 +1255,7 @@
             Loading real public-data semantic model. The dashboard is designed to prove analytics, workflow, governance, and visual decision support before any confidential MCM data is connected.
           </div>
 
+          <!-- LENS 1: STRATEGIC COMMAND CONSOLE -->
           <div class="view" id="overview">
             <div class="panel">
               <div class="panel-head"><h2>Interactive Control Tower</h2><span class="tag good">Live filters</span></div>
@@ -1277,6 +1300,7 @@
               </div>
             </div>
 
+            <!-- Consolidated Strategic KPIs & ESG Indicators -->
             <div class="metrics">
               <div class="metric"><span>Assets Monitored</span><strong id="metric-assets">48</strong><small id="metric-assets-note">Fixed, mobile, services</small></div>
               <div class="metric"><span>Critical Risk Assets</span><strong id="metric-critical">7</strong><small>Risk-adjusted by selected scenario</small></div>
@@ -1285,7 +1309,7 @@
             </div>
 
             <div class="hero-grid">
-              <!-- 1. Live Satellite Geographic Context (Now at the top left) -->
+              <!-- 1. Live Satellite Geographic Context -->
               <div class="panel">
                 <div class="panel-head">
                   <h2>Satellite Geographic Context</h2>
@@ -1330,21 +1354,11 @@
                   </table>
                 </div>
               </div>
-              <div class="panel">
-                <div class="panel-head"><h2>Executive Signals</h2><span class="tag watch">Pilot</span></div>
-                <div class="panel-body">
-                  <div class="signal"><span>Pipeline reliability</span><div class="bar"><span style="width: 94%"></span></div><b>94%</b></div>
-                  <div class="signal"><span>Alert precision</span><div class="bar"><span class="warn" style="width: 72%"></span></div><b>72%</b></div>
-                  <div class="signal"><span>Asset coverage</span><div class="bar"><span style="width: 64%"></span></div><b>64%</b></div>
-                  <div class="signal"><span>Data quality</span><div class="bar"><span class="warn" style="width: 81%"></span></div><b>81%</b></div>
-                  <div class="signal"><span>Adoption readiness</span><div class="bar"><span style="width: 88%"></span></div><b>88%</b></div>
-                </div>
-              </div>
             </div>
 
-            <!-- Accenture Upgrade - Executive Geographic, Scenario, and IoT Panels -->
+            <!-- Grid 2: Geospatial Risk Context + Scenario Sliders -->
             <div class="grid" style="margin-top: 18px; grid-template-columns: 1.1fr 0.9fr; gap: 18px;">
-              <!-- 1. Regional Vector Map (Moved down) -->
+              <!-- 1. Regional Vector Map -->
               <div class="panel">
                 <div class="panel-head"><h2>Geospatial Risk Context</h2><span class="tag watch">Palapye Corridor</span></div>
                 <div class="map-wrap">
@@ -1355,17 +1369,17 @@
                       </filter>
                     </defs>
                     <rect x="0" y="0" width="620" height="420" fill="transparent"/>
-                    <path d="M172 54 L393 42 L472 112 L458 226 L498 318 L420 378 L286 360 L188 392 L115 310 L132 202 L96 118 Z" fill="#dbe8e3" stroke="#8aa29c" stroke-width="3" filter="url(#shadow)"/>
-                    <path d="M126 300 C190 276 246 238 314 206 C380 176 426 140 466 104" fill="none" stroke="#d39a2f" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 10"/>
-                    <path d="M170 318 C225 284 306 250 380 226 C432 208 468 178 494 142" fill="none" stroke="#234b73" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="378" cy="210" r="58" fill="rgba(0,138,122,0.12)" stroke="#008a7a" stroke-width="2"/>
-                    <circle cx="378" cy="210" r="12" fill="#008a7a"/>
-                    <circle cx="378" cy="210" r="22" fill="none" stroke="#008a7a" stroke-width="3" opacity="0.45"/>
-                    <circle cx="342" cy="184" r="9" fill="#b42318"/>
-                    <circle cx="410" cy="226" r="9" fill="#b7791f"/>
-                    <circle cx="388" cy="172" r="8" fill="#b42318"/>
-                    <circle cx="440" cy="250" r="8" fill="#16845c"/>
-                    <circle cx="320" cy="242" r="8" fill="#b7791f"/>
+                    <path d="M172 54 L393 42 L472 112 L458 226 L498 318 L420 378 L286 360 L188 392 L115 310 L132 202 L96 118 Z" fill="#12201d" stroke="rgba(0,138,122,0.3)" stroke-width="3" filter="url(#shadow)"/>
+                    <path d="M126 300 C190 276 246 238 314 206 C380 176 426 140 466 104" fill="none" stroke="#e2ad47" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 10"/>
+                    <path d="M170 318 C225 284 306 250 380 226 C432 208 468 178 494 142" fill="none" stroke="#3182ce" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="378" cy="210" r="58" fill="rgba(0,138,122,0.12)" stroke="#00b49f" stroke-width="2"/>
+                    <circle cx="378" cy="210" r="12" fill="#00b49f"/>
+                    <circle cx="378" cy="210" r="22" fill="none" stroke="#00b49f" stroke-width="3" opacity="0.45"/>
+                    <circle cx="342" cy="184" r="9" fill="#e53e3e"/>
+                    <circle cx="410" cy="226" r="9" fill="#dd6b20"/>
+                    <circle cx="388" cy="172" r="8" fill="#e53e3e"/>
+                    <circle cx="440" cy="250" r="8" fill="#38a169"/>
+                    <circle cx="320" cy="242" r="8" fill="#dd6b20"/>
                     <text x="210" y="90" class="map-label">Botswana</text>
                     <text x="394" y="205" class="map-label">Morupule Coal Mine</text>
                     <text x="398" y="222" class="map-muted">7 km NW of Palapye</text>
@@ -1408,14 +1422,130 @@
                   </div>
 
                   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; border-top: 1px solid var(--line); padding-top: 15px;">
-                    <div class="mini" style="background: rgba(0, 138, 122, 0.02); border: 1px solid var(--line); padding: 12px; border-radius: 6px;">
+                    <div class="mini" style="background: rgba(0, 180, 159, 0.04); border: 1px solid var(--line); padding: 12px; border-radius: 6px;">
                       <span style="font-size: 11px; color: var(--muted); display: block; font-weight: 700; text-transform: uppercase;">Predicted OEE</span>
                       <strong style="display: block; font-size: 20px; color: var(--good); margin-top: 4px;" id="planner-oee-out">84.2%</strong>
                     </div>
-                    <div class="mini" style="background: rgba(35, 75, 115, 0.02); border: 1px solid var(--line); padding: 12px; border-radius: 6px;">
+                    <div class="mini" style="background: rgba(49, 130, 206, 0.04); border: 1px solid var(--line); padding: 12px; border-radius: 6px;">
                       <span style="font-size: 11px; color: var(--muted); display: block; font-weight: 700; text-transform: uppercase;">Est. Yield</span>
                       <strong style="display: block; font-size: 20px; color: var(--brand-blue); margin-top: 4px;" id="planner-yield-out">$4.25M</strong>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Consolidated AI What-If Scenarios & GenAI Decision Advisor Panel -->
+            <div style="margin-top: 18px; display: grid; grid-template-columns: 1fr;" id="command-scenario-advisor-panel">
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>GenAI Scenario Planning Advisor & Simulation Console</h2>
+                  <span class="tag good">Cooperative AI</span>
+                </div>
+                <div class="panel-body">
+                  <div class="scenario-layout">
+                    <div class="control-stack" style="background: rgba(0,0,0,0.15); padding: 15px; border-radius: 6px; border: 1px solid var(--line);">
+                      <h3 style="margin: 0 0 10px 0; font-size: 14px; text-transform: uppercase; color: var(--accent);">Advisor Filters</h3>
+                      <div class="control" style="margin-bottom: 10px;">
+                        <label for="scenario-type">Operating Scenario</label>
+                        <select id="scenario-type">
+                          <option value="baseline">Baseline reliability plan</option>
+                          <option value="highload">High production pressure</option>
+                          <option value="energy">Energy cost escalation</option>
+                          <option value="shutdown">Planned shutdown optimization</option>
+                          <option value="weather">Hot weather stress</option>
+                        </select>
+                      </div>
+                      <div class="control" style="margin-bottom: 10px;">
+                        <label for="area-filter">Operating Area</label>
+                        <select id="area-filter">
+                          <option value="all">All areas</option>
+                          <option value="Underground">Underground</option>
+                          <option value="Surface">Surface</option>
+                          <option value="Mobile Fleet">Mobile fleet</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Services">Services</option>
+                        </select>
+                      </div>
+                      <div class="control" style="margin-bottom: 10px;">
+                        <label for="class-filter">Asset Class</label>
+                        <select id="class-filter">
+                          <option value="all">All classes</option>
+                          <option value="Conveyor">Conveyors</option>
+                          <option value="Pump">Pumps</option>
+                          <option value="Fan">Ventilation fans</option>
+                          <option value="Mobile">Mobile fleet</option>
+                          <option value="Crusher">Crushers</option>
+                          <option value="Electrical">Electrical services</option>
+                        </select>
+                      </div>
+                      <div class="control" style="margin-bottom: 10px;">
+                        <label for="load-range">Production/load pressure</label>
+                        <div class="range-row"><input id="load-range" type="range" min="70" max="125" value="96" /><output id="load-value">96%</output></div>
+                      </div>
+                      <div class="control" style="margin-bottom: 10px;">
+                        <label for="budget-range">Maintenance budget availability</label>
+                        <div class="range-row"><input id="budget-range" type="range" min="55" max="125" value="84" /><output id="budget-value">84%</output></div>
+                      </div>
+                      <div class="control" style="margin-bottom: 10px;">
+                        <label for="energy-range">Energy price pressure</label>
+                        <div class="range-row"><input id="energy-range" type="range" min="80" max="160" value="112" /><output id="energy-value">112%</output></div>
+                      </div>
+                      <div class="control">
+                        <label for="sensitivity-range">Alert sensitivity</label>
+                        <div class="range-row"><input id="sensitivity-range" type="range" min="50" max="95" value="72" /><output id="sensitivity-value">72%</output></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="scenario-results">
+                        <div class="metric"><span>Filtered Assets</span><strong id="filtered-assets">6</strong><small>In selected scope</small></div>
+                        <div class="metric"><span>Critical Actions</span><strong id="critical-actions">2</strong><small>Need planning review</small></div>
+                        <div class="metric"><span>Downtime Exposure</span><strong id="downtime-exposure">31h</strong><small>Scenario-adjusted</small></div>
+                        <div class="metric"><span>Energy Exposure</span><strong id="energy-exposure">9.8%</strong><small>Avoidable loss proxy</small></div>
+                      </div>
+                      <div class="ai-response" style="margin-top: 16px;">
+                        <h3 style="color: var(--accent);">Generated scenario brief</h3>
+                        <p id="ai-brief"></p>
+                        <p id="ai-actions"></p>
+                        <p style="font-size: 11px; opacity: 0.85;"><b>Governance guardrail:</b> GenAI should recommend, explain, summarize, and draft work-order notes. It should not directly control equipment or create work orders without approved human review.</p>
+                      </div>
+                      <div class="consequence-chain" id="consequence-chain"></div>
+                      <table style="margin-top: 16px;">
+                        <thead><tr><th>Priority</th><th>Asset</th><th>Scenario effect</th><th>Suggested decision</th></tr></thead>
+                        <tbody id="scenario-table"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Consolidated ESG Baseline Panel -->
+            <div style="margin-top: 18px; display: grid; gap: 18px;" id="command-esg-panel">
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>Environmental, Social, and Governance (ESG) Baselines & Opportunities</h2>
+                  <span class="tag watch">ESG Metric System</span>
+                </div>
+                <div class="panel-body">
+                  <div class="metrics" style="margin-bottom: 18px;">
+                    <div class="metric"><span>Energy Intensity Baseline</span><strong>18.4</strong><small>kWh per proxy tonne</small></div>
+                    <div class="metric"><span>Avoidable Energy Loss</span><strong>9.8%</strong><small>From drift and inefficient operation</small></div>
+                    <div class="metric"><span>Emissions Proxy</span><strong>42.1</strong><small>tCO2e indexed estimate</small></div>
+                    <div class="metric"><span>Improvement Items</span><strong>14</strong><small>Ranked by value and risk</small></div>
+                  </div>
+                  <div class="mini">
+                    <h3 style="margin-bottom: 12px; color: var(--accent);">Improvement Opportunity Tracker</h3>
+                    <table>
+                      <thead><tr><th>Opportunity</th><th>Linked Asset</th><th>Impact</th><th>Next Step</th></tr></thead>
+                      <tbody>
+                        <tr><td>Reduce conveyor idling during shift change</td><td>CV-04</td><td>Energy and maintenance cost</td><td>Operations rule review</td></tr>
+                        <tr><td>Fan load optimization during low activity window</td><td>FAN-UG-02</td><td>Energy intensity</td><td>Validate ventilation constraints</td></tr>
+                        <tr><td>Pump vibration and pressure imbalance</td><td>PMP-SF-11</td><td>Failure risk and energy loss</td><td>Inspect bearings and alignment</td></tr>
+                        <tr><td>Loader overheating pattern</td><td>LHD-07</td><td>Downtime and emissions proxy</td><td>Cooling system inspection</td></tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -1441,115 +1571,152 @@
             </div>
           </div>
 
+
+          <!-- LENS 2: GEOSPATIAL CONTROL TOWER -->
           <div class="view hidden" id="map">
-            <div class="grid">
-              <div class="panel">
-                <div class="panel-head">
-                  <h2>Mine Geospatial Intelligence Layer</h2>
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <div class="map-toggle-group">
-                      <button id="btn-map-split" class="map-toggle-btn active">Split View</button>
-                      <button id="btn-map-schematic" class="map-toggle-btn">Schematic</button>
-                      <button id="btn-map-satellite" class="map-toggle-btn">Satellite</button>
-                    </div>
-                    <span class="tag good" id="map-view-status">Split View</span>
+            <div class="panel" style="margin-bottom: 18px;">
+              <div class="panel-head">
+                <h2>Mine Geospatial Intelligence Layer</h2>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div class="map-toggle-group">
+                    <button id="btn-map-split" class="map-toggle-btn active">Split View</button>
+                    <button id="btn-map-schematic" class="map-toggle-btn">Schematic</button>
+                    <button id="btn-map-satellite" class="map-toggle-btn">Satellite</button>
+                  </div>
+                  <span class="tag good" id="map-view-status">Split View</span>
+                </div>
+              </div>
+              <div class="map-wrap-tab layout-split" id="map-grid-wrapper">
+                <!-- Unified Map Controls (Floating) -->
+                <div class="map-controls">
+                  <select id="map-area" aria-label="Map operating area">
+                    <option value="all">All areas</option>
+                    <option value="Underground">Underground</option>
+                    <option value="Surface">Surface</option>
+                    <option value="Mobile Fleet">Mobile fleet</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Services">Services</option>
+                  </select>
+                  <select id="map-class" aria-label="Map asset class">
+                    <option value="all">All classes</option>
+                    <option value="Conveyor">Conveyors</option>
+                    <option value="Pump">Pumps</option>
+                    <option value="Fan">Ventilation fans</option>
+                    <option value="Mobile">Mobile fleet</option>
+                    <option value="Crusher">Crushers</option>
+                    <option value="Electrical">Electrical services</option>
+                  </select>
+                  <select id="map-scenario" aria-label="Map asset scenario filter">
+                    <option value="baseline">Baseline</option>
+                    <option value="highload">High production</option>
+                    <option value="energy">Energy escalation</option>
+                    <option value="shutdown">Shutdown planning</option>
+                    <option value="weather">Hot weather</option>
+                  </select>
+                </div>
+
+                <!-- Pane 1: Schematic Vector Map -->
+                <div id="schematic-map-container" class="map-pane">
+                  <svg viewBox="0 0 700 460" role="img" aria-label="Morupule mine asset risk zones map">
+                    <rect width="700" height="460" fill="#0c1513"/>
+                    <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="12" stroke-linecap="round" opacity="0.1"/>
+                    <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12"/>
+                    <rect x="92" y="110" width="220" height="150" rx="8" fill="#152421" stroke="rgba(0,138,122,0.25)"/>
+                    <rect x="370" y="92" width="214" height="134" rx="8" fill="#182724" stroke="rgba(0,138,122,0.25)"/>
+                    <rect x="338" y="280" width="242" height="96" rx="8" fill="#162723" stroke="rgba(0,138,122,0.25)"/>
+                    <path d="M170 236 L254 302 L412 326" fill="none" stroke="#3182ce" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M210 178 L312 178 L438 158" fill="none" stroke="#00b49f" stroke-width="5" stroke-linecap="round"/>
+                    <g id="map-marker-layer"></g>
+                    <text x="112" y="140" class="map-label">Underground Operations</text>
+                    <text x="394" y="120" class="map-label">Ventilation and Services</text>
+                    <text x="358" y="306" class="map-label">Surface Plant and Dewatering</text>
+                    <text x="48" y="352" class="map-muted">Mine road / logistics corridor</text>
+                    <text x="340" y="248" class="map-muted">Telemetry links to predictive platform</text>
+                  </svg>
+                  <div class="map-popup" id="map-popup">
+                    <strong>Select a map asset</strong>
+                    <p>Click any marker to inspect risk, remaining useful life, ESG exposure, and recommended maintenance action.</p>
                   </div>
                 </div>
-                <div class="map-wrap-tab layout-split" id="map-grid-wrapper">
-                  <!-- Unified Map Controls (Floating) -->
-                  <div class="map-controls">
-                    <select id="map-area" aria-label="Map operating area">
-                      <option value="all">All areas</option>
-                      <option value="Underground">Underground</option>
-                      <option value="Surface">Surface</option>
-                      <option value="Mobile Fleet">Mobile fleet</option>
-                      <option value="Processing">Processing</option>
-                      <option value="Services">Services</option>
-                    </select>
-                    <select id="map-class" aria-label="Map asset class">
-                      <option value="all">All classes</option>
-                      <option value="Conveyor">Conveyors</option>
-                      <option value="Pump">Pumps</option>
-                      <option value="Fan">Ventilation fans</option>
-                      <option value="Mobile">Mobile fleet</option>
-                      <option value="Crusher">Crushers</option>
-                      <option value="Electrical">Electrical services</option>
-                    </select>
-                    <select id="map-scenario" aria-label="Map operating scenario">
-                      <option value="baseline">Baseline</option>
-                      <option value="highload">High production</option>
-                      <option value="energy">Energy escalation</option>
-                      <option value="shutdown">Shutdown planning</option>
-                      <option value="weather">Hot weather</option>
-                    </select>
-                  </div>
 
-                  <!-- Pane 1: Schematic Vector Map -->
-                  <div id="schematic-map-container" class="map-pane">
-                    <svg viewBox="0 0 700 460" role="img" aria-label="Morupule mine asset risk zones map">
-                      <rect width="700" height="460" fill="#eef4f2"/>
-                      <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="12" stroke-linecap="round" opacity="0.2"/>
-                      <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12"/>
-                      <rect x="92" y="110" width="220" height="150" rx="8" fill="#dcebe6" stroke="#9eb8b0"/>
-                      <rect x="370" y="92" width="214" height="134" rx="8" fill="#e9ede8" stroke="#9eb8b0"/>
-                      <rect x="338" y="280" width="242" height="96" rx="8" fill="#e8efe8" stroke="#9eb8b0"/>
-                      <path d="M170 236 L254 302 L412 326" fill="none" stroke="#234b73" stroke-width="5" stroke-linecap="round"/>
-                      <path d="M210 178 L312 178 L438 158" fill="none" stroke="#008a7a" stroke-width="5" stroke-linecap="round"/>
-                      <g id="map-marker-layer"></g>
-                      <text x="112" y="140" class="map-label">Underground Operations</text>
-                      <text x="394" y="120" class="map-label">Ventilation and Services</text>
-                      <text x="358" y="306" class="map-label">Surface Plant and Dewatering</text>
-                      <text x="48" y="352" class="map-muted">Mine road / logistics corridor</text>
-                      <text x="340" y="248" class="map-muted">Telemetry links to predictive platform</text>
-                    </svg>
-                    <div class="map-popup" id="map-popup">
-                      <strong>Select a map asset</strong>
-                      <p>Click any marker to inspect risk, remaining useful life, ESG exposure, and recommended maintenance action.</p>
+                <!-- Pane 2: Satellite Mapping Context -->
+                <div id="satellite-map-container" class="map-pane">
+                  <div class="map-fallback-hud">
+                    <div class="hud-grid-lines"></div>
+                    <div class="hud-target-ring"></div>
+                    <div class="hud-readout">
+                      <span class="hud-coordinate">22.5120° S, 27.0270° E</span>
+                      <span class="hud-title">MORUPULE GEOSPATIAL TELEMETRY FEED</span>
+                      <span class="hud-desc">Physical GPS mapping layer telemetry online. If live satellite feed fails to stream due to network firewalls or sandboxing policies, local vector schematics remain active.</span>
                     </div>
                   </div>
-
-                  <!-- Pane 2: Satellite Mapping Context with Fallback HUD -->
-                  <div id="satellite-map-container" class="map-pane">
-                    <div class="map-fallback-hud">
-                      <div class="hud-grid-lines"></div>
-                      <div class="hud-target-ring"></div>
-                      <div class="hud-readout">
-                        <span class="hud-coordinate">22.5120° S, 27.0270° E</span>
-                        <span class="hud-title">MORUPULE GEOSPATIAL TELEMETRY FEED</span>
-                        <span class="hud-desc">Physical GPS mapping layer telemetry online. If live satellite feed fails to stream due to network firewalls or sandboxing policies, local vector schematics remain active.</span>
-                      </div>
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    style="border: 0; display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;" 
+                    allowfullscreen 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps?q=-22.51,27.03&t=k&z=15&output=embed">
+                  </iframe>
+                  <!-- Overlay Panel -->
+                  <div class="satellite-overlay">
+                    <div class="satellite-overlay-title">
+                      <span class="pulse-dot" style="margin-right: 6px; width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; display: inline-block;"></span>
+                      Live Satellite Tracking - MCM
                     </div>
-                    <iframe 
-                      width="100%" 
-                      height="100%" 
-                      style="border: 0; display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;" 
-                      allowfullscreen 
-                      referrerpolicy="no-referrer-when-downgrade"
-                      src="https://www.google.com/maps?q=-22.51,27.03&t=k&z=15&output=embed">
-                    </iframe>
-                    <!-- Overlay Panel -->
-                    <div class="satellite-overlay">
-                      <div class="satellite-overlay-title">
-                        <span class="pulse-dot" style="margin-right: 6px; width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; display: inline-block;"></span>
-                        Live Satellite Tracking - MCM
-                      </div>
-                      <div style="margin-bottom: 4px;">📍 <b>Coordinates:</b> 22.5120° S, 27.0270° E</div>
-                      <div>🛰️ <b>Status:</b> High-resolution imagery streaming nominal</div>
-                    </div>
+                    <div style="margin-bottom: 4px;">📍 <b>Coordinates:</b> 22.5120° S, 27.0270° E</div>
+                    <div>🛰️ <b>Status:</b> High-resolution imagery streaming nominal</div>
                   </div>
                 </div>
               </div>
+            </div>
+
+            <!-- Geospatial Register & ERP Actions Grid -->
+            <div class="grid" style="margin-bottom: 18px;">
               <div class="panel">
-                <div class="panel-head"><h2>Map-Led Decisions</h2><span class="tag watch">Operations</span></div>
-                <div class="panel-body asset-list" id="map-decision-list">
-                  <div class="asset-card"><strong>Risk clustering</strong><p>Use the map filters to isolate operational areas, asset classes, and stress scenarios.</p><span class="tag good">Interactive</span></div>
+                <div class="panel-head"><h2>Asset Health & Risk Register</h2><span class="tag good">Fixed & Mobile</span></div>
+                <div class="panel-body" style="overflow-x: auto;">
+                  <table>
+                    <thead><tr><th>Asset</th><th>Class</th><th>RUL</th><th>Health</th><th>Status</th></tr></thead>
+                    <tbody id="asset-table"></tbody>
+                  </table>
                 </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>Decision Support Dispatch</h2><span class="tag watch">ERP Work Orders</span></div>
+                <div class="panel-body asset-list" id="decision-list">
+                  <!-- JS builds list -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Consolidated Tender Checklist -->
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Proposal Requirement Coverage & Compliance Matrix</h2>
+                <span class="tag good">SOW Tender Aligned</span>
+              </div>
+              <div class="panel-body" style="overflow-x: auto;">
+                <div class="coverage-grid" style="margin-bottom: 18px;">
+                  <div class="metric"><span>SOW Coverage</span><strong>13/13</strong><small>Mapped to proposal artifacts</small></div>
+                  <div class="metric"><span>Dashboards</span><strong>5</strong><small>Reliability, Ops, ESG, Exec, IT/OT</small></div>
+                  <div class="metric"><span>Integrations</span><strong>7</strong><small>SCADA, ERP, MIS, meters, ESG, IoT</small></div>
+                  <div class="metric"><span>Governance</span><strong>9</strong><small>Security, audit, model controls</small></div>
+                  <div class="metric"><span>Handover Pack</span><strong>8</strong><small>SAT, UAT, training, support</small></div>
+                </div>
+                <table>
+                  <thead><tr><th>SOW / Proposal Area</th><th>How The Platform Covers It</th><th>Demo Evidence</th><th>Status</th></tr></thead>
+                  <tbody id="proposal-table"></tbody>
+                </table>
               </div>
             </div>
           </div>
 
+
+          <!-- LENS 3: DIAGNOSTIC TRIAGE LAB -->
           <div class="view hidden" id="twins">
-            <div class="grid">
+            <!-- Graph & Triage Drawer Grid -->
+            <div class="grid" style="margin-bottom: 18px;">
               <div class="panel">
                 <div class="panel-head">
                   <h2>Behavioral Entity-Relationship Graph</h2>
@@ -1620,96 +1787,14 @@
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="view hidden" id="scenarios">
-            <div class="scenario-layout">
+            <!-- Cloudflare Workers AI Prompt Console -->
+            <div class="grid" style="margin-bottom: 18px;">
               <div class="panel">
-                <div class="panel-head"><h2>Scenario Filters</h2><span class="tag good">What-if</span></div>
-                <div class="panel-body control-stack">
-                  <div class="control">
-                    <label for="scenario-type">Scenario</label>
-                    <select id="scenario-type">
-                      <option value="baseline">Baseline reliability plan</option>
-                      <option value="highload">High production pressure</option>
-                      <option value="energy">Energy cost escalation</option>
-                      <option value="shutdown">Planned shutdown optimization</option>
-                      <option value="weather">Hot weather stress</option>
-                    </select>
-                  </div>
-                  <div class="control">
-                    <label for="area-filter">Operating Area</label>
-                    <select id="area-filter">
-                      <option value="all">All areas</option>
-                      <option value="Underground">Underground</option>
-                      <option value="Surface">Surface</option>
-                      <option value="Mobile Fleet">Mobile fleet</option>
-                      <option value="Processing">Processing</option>
-                      <option value="Services">Services</option>
-                    </select>
-                  </div>
-                  <div class="control">
-                    <label for="class-filter">Asset Class</label>
-                    <select id="class-filter">
-                      <option value="all">All classes</option>
-                      <option value="Conveyor">Conveyors</option>
-                      <option value="Pump">Pumps</option>
-                      <option value="Fan">Ventilation fans</option>
-                      <option value="Mobile">Mobile fleet</option>
-                      <option value="Crusher">Crushers</option>
-                      <option value="Electrical">Electrical services</option>
-                    </select>
-                  </div>
-                  <div class="control">
-                    <label for="load-range">Production/load pressure</label>
-                    <div class="range-row"><input id="load-range" type="range" min="70" max="125" value="96" /><output id="load-value">96%</output></div>
-                  </div>
-                  <div class="control">
-                    <label for="budget-range">Maintenance budget availability</label>
-                    <div class="range-row"><input id="budget-range" type="range" min="55" max="125" value="84" /><output id="budget-value">84%</output></div>
-                  </div>
-                  <div class="control">
-                    <label for="energy-range">Energy price pressure</label>
-                    <div class="range-row"><input id="energy-range" type="range" min="80" max="160" value="112" /><output id="energy-value">112%</output></div>
-                  </div>
-                  <div class="control">
-                    <label for="sensitivity-range">Alert sensitivity</label>
-                    <div class="range-row"><input id="sensitivity-range" type="range" min="50" max="95" value="72" /><output id="sensitivity-value">72%</output></div>
-                  </div>
-                </div>
-              </div>
-              <div class="panel">
-                <div class="panel-head"><h2>GenAI Decision Advisor</h2><span class="tag watch">Human-in-the-loop</span></div>
-                <div class="panel-body">
-                  <div class="scenario-results">
-                    <div class="metric"><span>Filtered Assets</span><strong id="filtered-assets">6</strong><small>In selected scope</small></div>
-                    <div class="metric"><span>Critical Actions</span><strong id="critical-actions">2</strong><small>Need planning review</small></div>
-                    <div class="metric"><span>Downtime Exposure</span><strong id="downtime-exposure">31h</strong><small>Scenario-adjusted</small></div>
-                    <div class="metric"><span>Energy Exposure</span><strong id="energy-exposure">9.8%</strong><small>Avoidable loss proxy</small></div>
-                  </div>
-                  <div class="ai-response" style="margin-top: 16px;">
-                    <h3>Generated scenario brief</h3>
-                    <p id="ai-brief"></p>
-                    <p id="ai-actions"></p>
-                    <p><b>Governance guardrail:</b> GenAI should recommend, explain, summarize, and draft work-order notes. It should not directly control equipment or create work orders without approved human review.</p>
-                  </div>
-                  <div class="consequence-chain" id="consequence-chain"></div>
-                  <table style="margin-top: 16px;">
-                    <thead><tr><th>Priority</th><th>Asset</th><th>Scenario effect</th><th>Suggested decision</th></tr></thead>
-                    <tbody id="scenario-table"></tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="view hidden" id="llm">
-            <div class="grid">
-              <div class="panel">
-                <div class="panel-head"><h2>Cloudflare Decision AI</h2><span class="tag good">Workers AI</span></div>
+                <div class="panel-head"><h2>Cloudflare Decision AI Console</h2><span class="tag good">Workers AI</span></div>
                 <div class="panel-body llm-console">
                   <p class="source-note">
-                    This view calls a real Cloudflare Workers AI LLM through a Vercel serverless route. The API key stays in Vercel environment variables; the browser only sends selected asset facts, scenario context, and the 5 Layer Decision Stack.
+                    This console calls a real Cloudflare Workers AI LLM through a secure Vercel serverless route. The browser transfers the active semantic states, loaded scenarios, and the 5 Layer Decision Stack for optimization.
                   </p>
                   <div class="stack-grid">
                     <div class="stack-layer"><b>State</b><span>Asset health, risk, area, class, RUL, ESG signal.</span></div>
@@ -1727,7 +1812,7 @@
                 </div>
               </div>
               <div class="panel">
-                <div class="panel-head"><h2>Decision Stack Pattern</h2><span class="tag watch">Governed</span></div>
+                <div class="panel-head"><h2>Decision Stack Protocol</h2><span class="tag watch">Governed AI</span></div>
                 <div class="panel-body asset-list">
                   <div class="asset-card"><strong>State to decision</strong><p>The LLM receives current asset state from the semantic model, not loose dashboard text.</p><span class="tag good">Structured</span></div>
                   <div class="asset-card"><strong>Consequence reasoning</strong><p>Time, causality, intervention options, do-nothing paths, and optimization are included so the model explains downstream effects, not just the alert.</p><span class="tag watch">Decision-ready</span></div>
@@ -1735,120 +1820,64 @@
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="view hidden" id="proposal">
-            <div class="coverage-grid">
-              <div class="metric"><span>SOW Coverage</span><strong>13/13</strong><small>Mapped to proposal artifacts</small></div>
-              <div class="metric"><span>Dashboards</span><strong>5</strong><small>Reliability, Ops, ESG, Exec, IT/OT</small></div>
-              <div class="metric"><span>Integrations</span><strong>7</strong><small>SCADA, ERP, MIS, meters, ESG, IoT</small></div>
-              <div class="metric"><span>Governance</span><strong>9</strong><small>Security, audit, model controls</small></div>
-              <div class="metric"><span>Handover Pack</span><strong>8</strong><small>SAT, UAT, training, support</small></div>
-            </div>
-            <div class="panel">
-              <div class="panel-head"><h2>Proposal Requirement Coverage</h2><span class="tag good">Tender aligned</span></div>
-              <div class="panel-body">
-                <table>
-                  <thead><tr><th>SOW / Proposal Area</th><th>How The Platform Covers It</th><th>Demo Evidence</th><th>Status</th></tr></thead>
-                  <tbody id="proposal-table"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div class="view hidden" id="assets">
-            <div class="grid">
-              <div class="panel">
-                <div class="panel-head"><h2>Asset Health Register</h2><span class="tag good">Multi-Asset</span></div>
-                <div class="panel-body">
-                  <table>
-                    <thead><tr><th>Asset</th><th>Class</th><th>RUL</th><th>Health</th><th>Status</th></tr></thead>
-                    <tbody id="asset-table"></tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="panel">
-                <div class="panel-head"><h2>Decision Support</h2><span class="tag watch">ERP Ready</span></div>
-                <div class="panel-body asset-list" id="decision-list"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="view hidden" id="analytics">
-            <div class="cards">
+            <!-- Anomaly Explainability & ML Model Registry -->
+            <div class="cards" style="margin-bottom: 18px;">
               <div class="mini"><h3>Baseline Analytics</h3><p>Normal operating envelopes are created per asset class using temperature, vibration, load, pressure, utilization, and energy signatures.</p></div>
               <div class="mini"><h3>Anomaly Detection</h3><p>Hybrid rules and ML detect abnormal drift, trend deviation, and repeated operating patterns associated with failure precursors.</p></div>
               <div class="mini"><h3>Model Governance</h3><p>Each model has documented training data, validation metrics, version history, drift monitoring, retraining cadence, and explainability notes.</p></div>
             </div>
+
+            <div class="grid" style="margin-bottom: 18px;">
               <div class="panel">
-                <div class="panel-head"><h2>Model Pack</h2><span class="tag good">Proposal Artifact</span></div>
-                <div class="panel-body">
+                <div class="panel-head"><h2>ML Model Explainability Registry</h2><span class="tag good">Proposal Artifact</span></div>
+                <div class="panel-body" style="overflow-x: auto;">
                   <table>
                     <thead><tr><th>Model</th><th>Purpose</th><th>PoC Data</th><th>Production Source</th></tr></thead>
-                  <tbody>
-                    <tr><td>Failure likelihood</td><td>Rank assets by failure risk</td><td>Public sensor classification data</td><td>ERP failure history, historian tags</td></tr>
-                    <tr><td>Remaining useful life</td><td>Estimate intervention window</td><td>NASA C-MAPSS degradation proxy</td><td>Asset operating cycles and condition monitoring</td></tr>
-                    <tr><td>Energy baseline</td><td>Detect avoidable energy loss</td><td>Proxy energy profiles</td><td>Power meters and production context</td></tr>
-                    <tr><td>Alert rationalization</td><td>Reduce nuisance alerts</td><td>Derived event history</td><td>SCADA alarms, maintenance outcomes</td></tr>
-                  </tbody>
-                </table>
+                    <tbody>
+                      <tr><td>Failure likelihood</td><td>Rank assets by failure risk</td><td>Public sensor classification data</td><td>ERP failure history, historian tags</td></tr>
+                      <tr><td>Remaining useful life</td><td>Estimate intervention window</td><td>NASA C-MAPSS degradation proxy</td><td>Asset operating cycles and condition monitoring</td></tr>
+                      <tr><td>Energy baseline</td><td>Detect avoidable energy loss</td><td>Proxy energy profiles</td><td>Power meters and production context</td></tr>
+                      <tr><td>Alert rationalization</td><td>Reduce nuisance alerts</td><td>Derived event history</td><td>SCADA alarms, maintenance outcomes</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h2>Semantic Data Model Mapping</h2><span class="tag good">Real public data</span></div>
+                <div class="panel-body" style="overflow-x: auto;">
+                  <table>
+                    <thead><tr><th>Dataset</th><th>Publisher</th><th>Rows Used</th><th>Role In Dashboard</th></tr></thead>
+                    <tbody id="source-table"></tbody>
+                  </table>
+                  <p class="source-note" id="transformation-note" style="margin-top: 12px;"></p>
+                </div>
               </div>
             </div>
-            <div class="panel">
-              <div class="panel-head"><h2>Semantic Data Model</h2><span class="tag good">Real public data</span></div>
-              <div class="panel-body">
-                <table>
-                  <thead><tr><th>Dataset</th><th>Publisher</th><th>Rows Used</th><th>Role In Dashboard</th></tr></thead>
-                  <tbody id="source-table"></tbody>
-                </table>
-                <p class="source-note" id="transformation-note" style="margin-top: 12px;"></p>
-              </div>
-            </div>
-          </div>
 
-          <div class="view hidden" id="esg">
-            <div class="metrics">
-              <div class="metric"><span>Energy Intensity Baseline</span><strong>18.4</strong><small>kWh per proxy tonne</small></div>
-              <div class="metric"><span>Avoidable Energy Loss</span><strong>9.8%</strong><small>From drift and inefficient operation</small></div>
-              <div class="metric"><span>Emissions Proxy</span><strong>42.1</strong><small>tCO2e indexed estimate</small></div>
-              <div class="metric"><span>Improvement Items</span><strong>14</strong><small>Ranked by value and risk</small></div>
-            </div>
+            <!-- Commercial Delivery Roadmap & Licensing models -->
             <div class="panel">
-              <div class="panel-head"><h2>Improvement Opportunity Tracker</h2><span class="tag watch">ESG</span></div>
+              <div class="panel-head"><h2>Enterprise Deployment Plan & Scale Model</h2><span class="tag good">Piloting Roadmap</span></div>
               <div class="panel-body">
-                <table>
-                  <thead><tr><th>Opportunity</th><th>Linked Asset</th><th>Impact</th><th>Next Step</th></tr></thead>
-                  <tbody>
-                    <tr><td>Reduce conveyor idling during shift change</td><td>CV-04</td><td>Energy and maintenance cost</td><td>Operations rule review</td></tr>
-                    <tr><td>Fan load optimization during low activity window</td><td>FAN-UG-02</td><td>Energy intensity</td><td>Validate ventilation constraints</td></tr>
-                    <tr><td>Pump vibration and pressure imbalance</td><td>PMP-SF-11</td><td>Failure risk and energy loss</td><td>Inspect bearings and alignment</td></tr>
-                    <tr><td>Loader overheating pattern</td><td>LHD-07</td><td>Downtime and emissions proxy</td><td>Cooling system inspection</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div class="view hidden" id="roadmap">
-            <div class="roadmap">
-              <div class="step"><b>0. PoC</b><span>Live public-data demo, model pack, proposal story, and GitHub/Vercel deployment.</span></div>
-              <div class="step"><b>1. Discovery</b><span>Asset register, data source register, network readiness, pilot asset selection.</span></div>
-              <div class="step"><b>2. Design</b><span>Integration architecture, cyber controls, database design, SAT/UAT criteria.</span></div>
-              <div class="step"><b>3. Pilot Build</b><span>Connector setup, dashboards, baselines, anomaly detection, RUL models.</span></div>
-              <div class="step"><b>4. Handover</b><span>Commissioning, training, documentation, gap report, expansion roadmap.</span></div>
-            </div>
-            <div class="panel">
-              <div class="panel-head"><h2>Commercial Scale Model</h2><span class="tag good">Mandatory</span></div>
-              <div class="panel-body">
-                <table>
-                  <thead><tr><th>Basis</th><th>How It Scales</th><th>Proposal Treatment</th></tr></thead>
-                  <tbody>
-                    <tr><td>Asset count</td><td>Fixed/mobile assets onboarded</td><td>Tiered bands for pilot, department, full-mine</td></tr>
-                    <tr><td>Tag count</td><td>Historian/sensor data points</td><td>Transparent cost curve by data-point volume</td></tr>
-                    <tr><td>Usage</td><td>Compute, storage, API throughput</td><td>Measured monthly with agreed guardrails</td></tr>
-                    <tr><td>User seats</td><td>Admin, analyst, viewer roles</td><td>Role-based access and expansion pricing</td></tr>
-                  </tbody>
-                </table>
+                <div class="roadmap" style="margin-bottom: 18px;">
+                  <div class="step"><b>0. PoC</b><span>Live public-data demo, model pack, proposal story, and GitHub/Vercel deployment.</span></div>
+                  <div class="step"><b>1. Discovery</b><span>Asset register, data source register, network readiness, pilot asset selection.</span></div>
+                  <div class="step"><b>2. Design</b><span>Integration architecture, cyber controls, database design, SAT/UAT criteria.</span></div>
+                  <div class="step"><b>3. Pilot Build</b><span>Connector setup, dashboards, baselines, anomaly detection, RUL models.</span></div>
+                  <div class="step"><b>4. Handover</b><span>Commissioning, training, documentation, gap report, expansion roadmap.</span></div>
+                </div>
+                <div class="mini">
+                  <h3 style="margin-bottom: 12px; color: var(--accent);">Commercial Scale Framework</h3>
+                  <table>
+                    <thead><tr><th>Basis</th><th>How It Scales</th><th>Proposal Treatment</th></tr></thead>
+                    <tbody>
+                      <tr><td>Asset count</td><td>Fixed/mobile assets onboarded</td><td>Tiered bands for pilot, department, full-mine</td></tr>
+                      <tr><td>Tag count</td><td>Historian/sensor data points</td><td>Transparent cost curve by data-point volume</td></tr>
+                      <tr><td>Usage</td><td>Compute, storage, API throughput</td><td>Measured monthly with agreed guardrails</td></tr>
+                      <tr><td>User seats</td><td>Admin, analyst, viewer roles</td><td>Role-based access and expansion pricing</td></tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -2944,16 +2973,9 @@
       }
 
       const titles = {
-        overview: ["Executive View", "Mine-wide risk, reliability, ESG, and readiness summary for leadership."],
-        map: ["Mine Map", "Geospatial asset-risk intelligence for Morupule, Palapye, underground operations, and surface services."],
-        twins: ["Digital Twins (Detective Graph)", "Interactive entity-relationship graph mapping mine asset dependencies, statistical Isolation Forest anomalies, and AI root-cause briefs."],
-        scenarios: ["AI Scenarios", "Filter operating conditions and let a governed GenAI advisor summarize risk, action, and business trade-offs."],
-        llm: ["Cloudflare Decision AI", "Run a real Cloudflare Workers AI LLM through Vercel using the 5 Layer Decision Stack."],
-        proposal: ["Proposal Fit", "Tender-aligned coverage map showing how the PoC, documents, controls, and enterprise architecture satisfy the SOW."],
-        assets: ["Asset Risk", "Asset health, remaining useful life, and maintenance decision support."],
-        analytics: ["ML Analytics", "Model pack, anomaly detection, governance, drift monitoring, and explainability."],
-        esg: ["ESG Baseline", "Energy, emissions proxy, utility baselines, and improvement opportunity tracking."],
-        roadmap: ["Deployment Plan", "PoC-to-enterprise rollout aligned to MCM deliverables and tender scoring."]
+        overview: ["Strategic Command Console", "Executive summary of mine-wide OEE, yields, warnings, ESG baseline, and scenario simulations."],
+        map: ["Geospatial Control Tower", "High-fidelity satellite mapping, logical schematics, asset registers, and SOW tender compliance tracking."],
+        twins: ["Diagnostic Triage Lab", "Behavioral dependency graphs, Isolation Forest anomaly logs, Cloudflare Decision AI, and deployment roadmap."]
       };
 
       document.querySelectorAll(".nav button").forEach(button => {
