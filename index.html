@@ -279,6 +279,43 @@
         overflow: hidden;
       }
 
+      #schematic-map-container {
+        display: contents;
+      }
+
+      #schematic-map-container.hidden {
+        display: none;
+      }
+
+      .map-toggle-group {
+        display: flex;
+        background: rgba(0, 138, 122, 0.08);
+        padding: 3px;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 138, 122, 0.15);
+      }
+
+      .map-toggle-btn {
+        background: transparent;
+        color: var(--muted);
+        border: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .map-toggle-btn:hover {
+        color: var(--accent);
+      }
+
+      .map-toggle-btn.active {
+        background: var(--accent);
+        color: #ffffff;
+      }
+
       .map-wrap svg {
         width: 100%;
         height: 100%;
@@ -1235,53 +1272,85 @@
           <div class="view hidden" id="map">
             <div class="grid">
               <div class="panel">
-                <div class="panel-head"><h2>Mine Geospatial Intelligence Layer</h2><span class="tag good">Map View</span></div>
-                <div class="map-wrap">
-                  <div class="map-controls">
-                    <select id="map-area" aria-label="Map operating area">
-                      <option value="all">All areas</option>
-                      <option value="Underground">Underground</option>
-                      <option value="Surface">Surface</option>
-                      <option value="Mobile Fleet">Mobile fleet</option>
-                      <option value="Processing">Processing</option>
-                      <option value="Services">Services</option>
-                    </select>
-                    <select id="map-class" aria-label="Map asset class">
-                      <option value="all">All classes</option>
-                      <option value="Conveyor">Conveyors</option>
-                      <option value="Pump">Pumps</option>
-                      <option value="Fan">Ventilation fans</option>
-                      <option value="Mobile">Mobile fleet</option>
-                      <option value="Crusher">Crushers</option>
-                      <option value="Electrical">Electrical services</option>
-                    </select>
-                    <select id="map-scenario" aria-label="Map operating scenario">
-                      <option value="baseline">Baseline</option>
-                      <option value="highload">High production</option>
-                      <option value="energy">Energy escalation</option>
-                      <option value="shutdown">Shutdown planning</option>
-                      <option value="weather">Hot weather</option>
-                    </select>
+                <div class="panel-head">
+                  <h2>Mine Geospatial Intelligence Layer</h2>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="map-toggle-group">
+                      <button id="btn-map-schematic" class="map-toggle-btn active">Schematic</button>
+                      <button id="btn-map-satellite" class="map-toggle-btn">Satellite</button>
+                    </div>
+                    <span class="tag good" id="map-view-status">Schematic View</span>
                   </div>
-                  <svg viewBox="0 0 700 460" role="img" aria-label="Morupule mine asset risk zones map">
-                    <rect width="700" height="460" fill="#eef4f2"/>
-                    <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="12" stroke-linecap="round" opacity="0.2"/>
-                    <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12"/>
-                    <rect x="92" y="110" width="220" height="150" rx="8" fill="#dcebe6" stroke="#9eb8b0"/>
-                    <rect x="370" y="92" width="214" height="134" rx="8" fill="#e9ede8" stroke="#9eb8b0"/>
-                    <rect x="338" y="280" width="242" height="96" rx="8" fill="#e8efe8" stroke="#9eb8b0"/>
-                    <path d="M170 236 L254 302 L412 326" fill="none" stroke="#234b73" stroke-width="5" stroke-linecap="round"/>
-                    <path d="M210 178 L312 178 L438 158" fill="none" stroke="#008a7a" stroke-width="5" stroke-linecap="round"/>
-                    <g id="map-marker-layer"></g>
-                    <text x="112" y="140" class="map-label">Underground Operations</text>
-                    <text x="394" y="120" class="map-label">Ventilation and Services</text>
-                    <text x="358" y="306" class="map-label">Surface Plant and Dewatering</text>
-                    <text x="48" y="352" class="map-muted">Mine road / logistics corridor</text>
-                    <text x="340" y="248" class="map-muted">Telemetry links to predictive platform</text>
-                  </svg>
-                  <div class="map-popup" id="map-popup">
-                    <strong>Select a map asset</strong>
-                    <p>Click any marker to inspect risk, remaining useful life, ESG exposure, and recommended maintenance action.</p>
+                </div>
+                <div class="map-wrap">
+                  <div id="schematic-map-container">
+                    <div class="map-controls">
+                      <select id="map-area" aria-label="Map operating area">
+                        <option value="all">All areas</option>
+                        <option value="Underground">Underground</option>
+                        <option value="Surface">Surface</option>
+                        <option value="Mobile Fleet">Mobile fleet</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Services">Services</option>
+                      </select>
+                      <select id="map-class" aria-label="Map asset class">
+                        <option value="all">All classes</option>
+                        <option value="Conveyor">Conveyors</option>
+                        <option value="Pump">Pumps</option>
+                        <option value="Fan">Ventilation fans</option>
+                        <option value="Mobile">Mobile fleet</option>
+                        <option value="Crusher">Crushers</option>
+                        <option value="Electrical">Electrical services</option>
+                      </select>
+                      <select id="map-scenario" aria-label="Map operating scenario">
+                        <option value="baseline">Baseline</option>
+                        <option value="highload">High production</option>
+                        <option value="energy">Energy escalation</option>
+                        <option value="shutdown">Shutdown planning</option>
+                        <option value="weather">Hot weather</option>
+                      </select>
+                    </div>
+                    <svg viewBox="0 0 700 460" role="img" aria-label="Morupule mine asset risk zones map">
+                      <rect width="700" height="460" fill="#eef4f2"/>
+                      <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="12" stroke-linecap="round" opacity="0.2"/>
+                      <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12"/>
+                      <rect x="92" y="110" width="220" height="150" rx="8" fill="#dcebe6" stroke="#9eb8b0"/>
+                      <rect x="370" y="92" width="214" height="134" rx="8" fill="#e9ede8" stroke="#9eb8b0"/>
+                      <rect x="338" y="280" width="242" height="96" rx="8" fill="#e8efe8" stroke="#9eb8b0"/>
+                      <path d="M170 236 L254 302 L412 326" fill="none" stroke="#234b73" stroke-width="5" stroke-linecap="round"/>
+                      <path d="M210 178 L312 178 L438 158" fill="none" stroke="#008a7a" stroke-width="5" stroke-linecap="round"/>
+                      <g id="map-marker-layer"></g>
+                      <text x="112" y="140" class="map-label">Underground Operations</text>
+                      <text x="394" y="120" class="map-label">Ventilation and Services</text>
+                      <text x="358" y="306" class="map-label">Surface Plant and Dewatering</text>
+                      <text x="48" y="352" class="map-muted">Mine road / logistics corridor</text>
+                      <text x="340" y="248" class="map-muted">Telemetry links to predictive platform</text>
+                    </svg>
+                    <div class="map-popup" id="map-popup">
+                      <strong>Select a map asset</strong>
+                      <p>Click any marker to inspect risk, remaining useful life, ESG exposure, and recommended maintenance action.</p>
+                    </div>
+                  </div>
+
+                  <div id="satellite-map-container" class="hidden" style="position: relative; height: 460px; width: 100%;">
+                    <iframe 
+                      width="100%" 
+                      height="100%" 
+                      style="border: 0; display: block; min-height: 460px;" 
+                      loading="lazy" 
+                      allowfullscreen 
+                      referrerpolicy="no-referrer-when-downgrade"
+                      src="https://maps.google.com/maps?q=-22.51,27.03&t=k&z=15&ie=UTF8&iwloc=&output=embed">
+                    </iframe>
+                    <!-- Overlay Panel -->
+                    <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(14, 22, 20, 0.96); border: 1px solid rgba(0, 138, 122, 0.4); border-radius: 6px; padding: 12px; color: #e2ede8; font-size: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 10;">
+                      <div style="display: flex; align-items: center; margin-bottom: 6px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">
+                        <span class="pulse-dot" style="margin-right: 6px; width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; display: inline-block;"></span>
+                        Live Satellite Tracking - Morupule Coal Mine
+                      </div>
+                      <div style="margin-bottom: 4px;">📍 <b>Geographic Coordinates:</b> 22.5120° S, 27.0270° E (Botswana)</div>
+                      <div>🛰️ <b>Status:</b> High-resolution imagery streaming nominal</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2650,6 +2719,33 @@
           capexInput.addEventListener("input", calculateExecutiveScenario);
           feedInput.addEventListener("input", calculateExecutiveScenario);
           calculateExecutiveScenario(); // initial calculation
+        }
+
+        // Map schematic / satellite toggling logic
+        const btnSchematic = document.getElementById("btn-map-schematic");
+        const btnSatellite = document.getElementById("btn-map-satellite");
+        const schematicContainer = document.getElementById("schematic-map-container");
+        const satelliteContainer = document.getElementById("satellite-map-container");
+        const mapStatus = document.getElementById("map-view-status");
+
+        if (btnSchematic && btnSatellite && schematicContainer && satelliteContainer && mapStatus) {
+          btnSchematic.addEventListener("click", () => {
+            btnSchematic.classList.add("active");
+            btnSatellite.classList.remove("active");
+            schematicContainer.classList.remove("hidden");
+            satelliteContainer.classList.add("hidden");
+            mapStatus.textContent = "Schematic View";
+            mapStatus.className = "tag good";
+          });
+
+          btnSatellite.addEventListener("click", () => {
+            btnSatellite.classList.add("active");
+            btnSchematic.classList.remove("active");
+            schematicContainer.classList.add("hidden");
+            satelliteContainer.classList.remove("hidden");
+            mapStatus.textContent = "Satellite View";
+            mapStatus.className = "tag watch";
+          });
         }
       }
 
