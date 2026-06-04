@@ -270,21 +270,165 @@
 
       .map-wrap {
         position: relative;
-        min-height: 390px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
-          radial-gradient(circle at 22% 30%, rgba(0, 138, 122, 0.16), transparent 26%),
-          radial-gradient(circle at 74% 68%, rgba(211, 154, 47, 0.18), transparent 24%),
-          #edf3f1;
+        min-height: 480px;
+        background: #edf3f1;
+        overflow: hidden;
+        display: grid;
+        gap: 14px;
+        padding: 14px;
+        padding-top: 60px;
+        transition: all 0.3s ease;
+      }
+
+      .map-wrap.layout-split {
+        grid-template-columns: 1fr 1.1fr;
+      }
+
+      .map-wrap.layout-satellite {
+        grid-template-columns: 1fr;
+      }
+      .map-wrap.layout-satellite #schematic-map-container {
+        display: none !important;
+      }
+
+      .map-wrap.layout-schematic {
+        grid-template-columns: 1fr;
+      }
+      .map-wrap.layout-schematic #satellite-map-container {
+        display: none !important;
+      }
+
+      .map-pane {
+        position: relative;
+        height: 100%;
+        min-height: 400px;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 138, 122, 0.15);
+        background: #ffffff;
         overflow: hidden;
       }
 
-      #schematic-map-container {
-        display: contents;
+      .map-fallback-hud {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, #142421 0%, #0a1110 100%);
+        color: #eaf0ed;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        z-index: 1;
+      }
+
+      .hud-grid-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          linear-gradient(rgba(0, 138, 122, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 138, 122, 0.08) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      .hud-target-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 180px;
+        height: 180px;
+        border: 1.5px dashed rgba(0, 138, 122, 0.35);
+        border-radius: 50%;
+        animation: rotateRing 20s linear infinite;
+      }
+
+      .hud-target-ring::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--accent);
+      }
+
+      @keyframes rotateRing {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+
+      .hud-readout {
+        position: relative;
+        z-index: 2;
+        background: rgba(10, 17, 16, 0.85);
+        border: 1px solid rgba(0, 138, 122, 0.3);
+        border-radius: 6px;
+        padding: 15px;
+        font-family: monospace;
+        backdrop-filter: blur(4px);
+      }
+
+      .hud-coordinate {
+        display: block;
+        color: var(--accent-2);
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .hud-title {
+        display: block;
+        font-weight: 800;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+
+      .hud-desc {
+        display: block;
+        font-size: 10px;
+        line-height: 1.4;
+        color: #a3b8b2;
+      }
+
+      .satellite-overlay {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        background: rgba(14, 22, 20, 0.96);
+        border: 1px solid rgba(0, 138, 122, 0.4);
+        border-radius: 6px;
+        padding: 12px;
+        color: #e2ede8;
+        font-size: 11px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        backdrop-filter: blur(4px);
+        z-index: 10;
+      }
+
+      .satellite-overlay-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
       }
 
       #schematic-map-container.hidden {
-        display: none;
+        display: none !important;
       }
 
       .map-toggle-group {
@@ -318,8 +462,8 @@
 
       .map-wrap svg {
         width: 100%;
-        height: 100%;
-        min-height: 390px;
+        height: auto;
+        max-height: 400px;
         display: block;
       }
 
@@ -1275,40 +1419,44 @@
                   <h2>Mine Geospatial Intelligence Layer</h2>
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <div class="map-toggle-group">
+                      <button id="btn-map-split" class="map-toggle-btn active">Split View</button>
                       <button id="btn-map-schematic" class="map-toggle-btn">Schematic</button>
-                      <button id="btn-map-satellite" class="map-toggle-btn active">Satellite</button>
+                      <button id="btn-map-satellite" class="map-toggle-btn">Satellite</button>
                     </div>
-                    <span class="tag watch" id="map-view-status">Satellite View</span>
+                    <span class="tag good" id="map-view-status">Split View</span>
                   </div>
                 </div>
-                <div class="map-wrap">
-                  <div id="schematic-map-container" class="hidden">
-                    <div class="map-controls">
-                      <select id="map-area" aria-label="Map operating area">
-                        <option value="all">All areas</option>
-                        <option value="Underground">Underground</option>
-                        <option value="Surface">Surface</option>
-                        <option value="Mobile Fleet">Mobile fleet</option>
-                        <option value="Processing">Processing</option>
-                        <option value="Services">Services</option>
-                      </select>
-                      <select id="map-class" aria-label="Map asset class">
-                        <option value="all">All classes</option>
-                        <option value="Conveyor">Conveyors</option>
-                        <option value="Pump">Pumps</option>
-                        <option value="Fan">Ventilation fans</option>
-                        <option value="Mobile">Mobile fleet</option>
-                        <option value="Crusher">Crushers</option>
-                        <option value="Electrical">Electrical services</option>
-                      </select>
-                      <select id="map-scenario" aria-label="Map operating scenario">
-                        <option value="baseline">Baseline</option>
-                        <option value="highload">High production</option>
-                        <option value="energy">Energy escalation</option>
-                        <option value="shutdown">Shutdown planning</option>
-                        <option value="weather">Hot weather</option>
-                      </select>
-                    </div>
+                <div class="map-wrap layout-split" id="map-grid-wrapper">
+                  <!-- Unified Map Controls (Floating) -->
+                  <div class="map-controls">
+                    <select id="map-area" aria-label="Map operating area">
+                      <option value="all">All areas</option>
+                      <option value="Underground">Underground</option>
+                      <option value="Surface">Surface</option>
+                      <option value="Mobile Fleet">Mobile fleet</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Services">Services</option>
+                    </select>
+                    <select id="map-class" aria-label="Map asset class">
+                      <option value="all">All classes</option>
+                      <option value="Conveyor">Conveyors</option>
+                      <option value="Pump">Pumps</option>
+                      <option value="Fan">Ventilation fans</option>
+                      <option value="Mobile">Mobile fleet</option>
+                      <option value="Crusher">Crushers</option>
+                      <option value="Electrical">Electrical services</option>
+                    </select>
+                    <select id="map-scenario" aria-label="Map operating scenario">
+                      <option value="baseline">Baseline</option>
+                      <option value="highload">High production</option>
+                      <option value="energy">Energy escalation</option>
+                      <option value="shutdown">Shutdown planning</option>
+                      <option value="weather">Hot weather</option>
+                    </select>
+                  </div>
+
+                  <!-- Pane 1: Schematic Vector Map -->
+                  <div id="schematic-map-container" class="map-pane">
                     <svg viewBox="0 0 700 460" role="img" aria-label="Morupule mine asset risk zones map">
                       <rect width="700" height="460" fill="#eef4f2"/>
                       <path d="M40 320 C120 292 190 280 260 246 C340 206 410 188 498 170 C572 154 622 126 668 86" fill="none" stroke="#c5662a" stroke-width="12" stroke-linecap="round" opacity="0.2"/>
@@ -1331,22 +1479,32 @@
                     </div>
                   </div>
 
-                  <div id="satellite-map-container" style="position: relative; height: 460px; width: 100%;">
+                  <!-- Pane 2: Satellite Mapping Context with Fallback HUD -->
+                  <div id="satellite-map-container" class="map-pane">
+                    <div class="map-fallback-hud">
+                      <div class="hud-grid-lines"></div>
+                      <div class="hud-target-ring"></div>
+                      <div class="hud-readout">
+                        <span class="hud-coordinate">22.5120° S, 27.0270° E</span>
+                        <span class="hud-title">MORUPULE GEOSPATIAL TELEMETRY FEED</span>
+                        <span class="hud-desc">Physical GPS mapping layer telemetry online. If live satellite feed fails to stream due to network firewalls or sandboxing policies, local vector schematics remain active.</span>
+                      </div>
+                    </div>
                     <iframe 
                       width="100%" 
-                      height="460" 
-                      style="border: 0; display: block; width: 100%; height: 460px;" 
+                      height="100%" 
+                      style="border: 0; display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;" 
                       allowfullscreen 
                       referrerpolicy="no-referrer-when-downgrade"
                       src="https://www.google.com/maps?q=-22.51,27.03&t=k&z=15&output=embed">
                     </iframe>
                     <!-- Overlay Panel -->
-                    <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(14, 22, 20, 0.96); border: 1px solid rgba(0, 138, 122, 0.4); border-radius: 6px; padding: 12px; color: #e2ede8; font-size: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 10;">
-                      <div style="display: flex; align-items: center; margin-bottom: 6px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">
+                    <div class="satellite-overlay">
+                      <div class="satellite-overlay-title">
                         <span class="pulse-dot" style="margin-right: 6px; width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; display: inline-block;"></span>
-                        Live Satellite Tracking - Morupule Coal Mine
+                        Live Satellite Tracking - MCM
                       </div>
-                      <div style="margin-bottom: 4px;">📍 <b>Geographic Coordinates:</b> 22.5120° S, 27.0270° E (Botswana)</div>
+                      <div style="margin-bottom: 4px;">📍 <b>Coordinates:</b> 22.5120° S, 27.0270° E</div>
                       <div>🛰️ <b>Status:</b> High-resolution imagery streaming nominal</div>
                     </div>
                   </div>
@@ -2719,28 +2877,37 @@
           calculateExecutiveScenario(); // initial calculation
         }
 
-        // Map schematic / satellite toggling logic
+        // Map layout toggling logic
+        const btnSplit = document.getElementById("btn-map-split");
         const btnSchematic = document.getElementById("btn-map-schematic");
         const btnSatellite = document.getElementById("btn-map-satellite");
-        const schematicContainer = document.getElementById("schematic-map-container");
-        const satelliteContainer = document.getElementById("satellite-map-container");
+        const mapWrapper = document.getElementById("map-grid-wrapper");
         const mapStatus = document.getElementById("map-view-status");
 
-        if (btnSchematic && btnSatellite && schematicContainer && satelliteContainer && mapStatus) {
+        if (btnSplit && btnSchematic && btnSatellite && mapWrapper && mapStatus) {
+          btnSplit.addEventListener("click", () => {
+            btnSplit.classList.add("active");
+            btnSchematic.classList.remove("active");
+            btnSatellite.classList.remove("active");
+            mapWrapper.className = "map-wrap layout-split";
+            mapStatus.textContent = "Split View";
+            mapStatus.className = "tag good";
+          });
+
           btnSchematic.addEventListener("click", () => {
             btnSchematic.classList.add("active");
+            btnSplit.classList.remove("active");
             btnSatellite.classList.remove("active");
-            schematicContainer.classList.remove("hidden");
-            satelliteContainer.classList.add("hidden");
+            mapWrapper.className = "map-wrap layout-schematic";
             mapStatus.textContent = "Schematic View";
             mapStatus.className = "tag good";
           });
 
           btnSatellite.addEventListener("click", () => {
             btnSatellite.classList.add("active");
+            btnSplit.classList.remove("active");
             btnSchematic.classList.remove("active");
-            schematicContainer.classList.add("hidden");
-            satelliteContainer.classList.remove("hidden");
+            mapWrapper.className = "map-wrap layout-satellite";
             mapStatus.textContent = "Satellite View";
             mapStatus.className = "tag watch";
           });
