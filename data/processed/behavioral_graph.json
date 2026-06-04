@@ -1,7 +1,7 @@
 {
   "modelVersion": "morupule-behavioral-graph-v1",
   "generatedBy": "scripts/ingest_findings.py",
-  "timestamp": "2026-06-04T19:16:07.838195+00:00",
+  "timestamp": "2026-06-04T20:56:33.775020+00:00",
   "stats": {
     "nodes_count": 40,
     "edges_count": 80,
@@ -10,24 +10,10 @@
   },
   "nodes": [
     {
-      "id": "Processing",
+      "id": "Surface",
       "type": "OperationalArea",
       "properties": {
-        "name": "Processing"
-      }
-    },
-    {
-      "id": "Services",
-      "type": "OperationalArea",
-      "properties": {
-        "name": "Services"
-      }
-    },
-    {
-      "id": "Underground",
-      "type": "OperationalArea",
-      "properties": {
-        "name": "Underground"
+        "name": "Surface"
       }
     },
     {
@@ -38,31 +24,24 @@
       }
     },
     {
-      "id": "Surface",
+      "id": "Services",
       "type": "OperationalArea",
       "properties": {
-        "name": "Surface"
+        "name": "Services"
       }
     },
     {
-      "id": "Conveyor",
-      "type": "AssetClass",
+      "id": "Processing",
+      "type": "OperationalArea",
       "properties": {
-        "name": "Conveyor"
+        "name": "Processing"
       }
     },
     {
-      "id": "Fan",
-      "type": "AssetClass",
+      "id": "Underground",
+      "type": "OperationalArea",
       "properties": {
-        "name": "Fan"
-      }
-    },
-    {
-      "id": "Crusher",
-      "type": "AssetClass",
-      "properties": {
-        "name": "Crusher"
+        "name": "Underground"
       }
     },
     {
@@ -80,10 +59,31 @@
       }
     },
     {
+      "id": "Conveyor",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Conveyor"
+      }
+    },
+    {
       "id": "Mobile",
       "type": "AssetClass",
       "properties": {
         "name": "Mobile"
+      }
+    },
+    {
+      "id": "Crusher",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Crusher"
+      }
+    },
+    {
+      "id": "Fan",
+      "type": "AssetClass",
+      "properties": {
+        "name": "Fan"
       }
     },
     {
@@ -210,7 +210,7 @@
       "id": "FIND-ANOM-007",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-03T20:05:07.269028+00:00",
+        "timestamp": "2026-06-03T21:45:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (18.058 m/s^2, bearing wear=93.520). Operating load index at 145246.0.",
         "vibration": 18.058,
@@ -222,7 +222,7 @@
       "id": "FIND-ANOM-010",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-03T20:26:07.269028+00:00",
+        "timestamp": "2026-06-03T22:06:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (18.777 m/s^2, bearing wear=90.746). Operating load index at 1451520.0.",
         "vibration": 18.777,
@@ -234,7 +234,7 @@
       "id": "FIND-ANOM-023",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-03T21:57:07.269028+00:00",
+        "timestamp": "2026-06-03T23:37:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (113.815 m/s^2, bearing wear=491.591). Operating load index at 604809.3.",
         "vibration": 113.815,
@@ -246,7 +246,7 @@
       "id": "FIND-ANOM-040",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-03T23:56:07.269028+00:00",
+        "timestamp": "2026-06-04T01:36:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (18.028 m/s^2, bearing wear=93.636). Operating load index at 18.0.",
         "vibration": 18.028,
@@ -258,7 +258,7 @@
       "id": "FIND-ANOM-067",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T03:05:07.269028+00:00",
+        "timestamp": "2026-06-04T04:45:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (98.510 m/s^2, bearing wear=493.865). Operating load index at 2347.2.",
         "vibration": 98.51,
@@ -270,7 +270,7 @@
       "id": "FIND-ANOM-072",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T03:40:07.269028+00:00",
+        "timestamp": "2026-06-04T05:20:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (20.335 m/s^2, bearing wear=84.733). Operating load index at 533514.0.",
         "vibration": 20.335,
@@ -282,7 +282,7 @@
       "id": "FIND-ANOM-079",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T04:29:07.269028+00:00",
+        "timestamp": "2026-06-04T06:09:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (21.271 m/s^2, bearing wear=81.121). Operating load index at 339818.0.",
         "vibration": 21.271,
@@ -294,7 +294,7 @@
       "id": "FIND-ANOM-096",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T06:28:07.269028+00:00",
+        "timestamp": "2026-06-04T08:08:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (21.944 m/s^2, bearing wear=78.092). Operating load index at 339818.0.",
         "vibration": 21.944,
@@ -306,7 +306,7 @@
       "id": "FIND-ANOM-098",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T06:42:07.269028+00:00",
+        "timestamp": "2026-06-04T08:22:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (21.096 m/s^2, bearing wear=81.796). Operating load index at 425040.0.",
         "vibration": 21.096,
@@ -318,7 +318,7 @@
       "id": "FIND-ANOM-112",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T08:20:07.269028+00:00",
+        "timestamp": "2026-06-04T10:00:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (102.962 m/s^2, bearing wear=337.498). Operating load index at 715922.8.",
         "vibration": 102.962,
@@ -330,7 +330,7 @@
       "id": "FIND-ANOM-129",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T10:19:07.269028+00:00",
+        "timestamp": "2026-06-04T11:59:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (18.327 m/s^2, bearing wear=92.482). Operating load index at 223264.0.",
         "vibration": 18.327,
@@ -342,7 +342,7 @@
       "id": "FIND-ANOM-145",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T12:11:07.269028+00:00",
+        "timestamp": "2026-06-04T13:51:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (100.803 m/s^2, bearing wear=426.736). Operating load index at 38.8.",
         "vibration": 100.803,
@@ -354,7 +354,7 @@
       "id": "FIND-ANOM-154",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T13:14:07.269028+00:00",
+        "timestamp": "2026-06-04T14:54:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (18.892 m/s^2, bearing wear=90.302). Operating load index at 245178.0.",
         "vibration": 18.892,
@@ -366,7 +366,7 @@
       "id": "FIND-ANOM-174",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T15:34:07.269028+00:00",
+        "timestamp": "2026-06-04T17:14:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (18.053 m/s^2, bearing wear=93.540). Operating load index at 881372.0.",
         "vibration": 18.053,
@@ -378,7 +378,7 @@
       "id": "FIND-ANOM-189",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T17:19:07.269028+00:00",
+        "timestamp": "2026-06-04T18:59:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (107.253 m/s^2, bearing wear=491.023). Operating load index at 288303.3.",
         "vibration": 107.253,
@@ -390,7 +390,7 @@
       "id": "FIND-ANOM-196",
       "type": "Anomaly",
       "properties": {
-        "timestamp": "2026-06-04T18:08:07.269028+00:00",
+        "timestamp": "2026-06-04T19:48:19.262700+00:00",
         "severity": "High",
         "details": "Vibration anomaly detected (21.793 m/s^2, bearing wear=77.509). Operating load index at 791254.0.",
         "vibration": 21.793,
@@ -402,8 +402,8 @@
       "id": "FG-001",
       "type": "FindingGroup",
       "properties": {
-        "start_time": "2026-06-03T20:05:07.269028+00:00",
-        "end_time": "2026-06-03T23:56:07.269028+00:00",
+        "start_time": "2026-06-03T21:45:19.262700+00:00",
+        "end_time": "2026-06-04T01:36:19.262700+00:00",
         "affected_assets_count": 5,
         "findings_count": 4
       }
@@ -412,8 +412,8 @@
       "id": "FG-002",
       "type": "FindingGroup",
       "properties": {
-        "start_time": "2026-06-04T03:05:07.269028+00:00",
-        "end_time": "2026-06-04T04:29:07.269028+00:00",
+        "start_time": "2026-06-04T04:45:19.262700+00:00",
+        "end_time": "2026-06-04T06:09:19.262700+00:00",
         "affected_assets_count": 5,
         "findings_count": 3
       }
@@ -422,8 +422,8 @@
       "id": "FG-003",
       "type": "FindingGroup",
       "properties": {
-        "start_time": "2026-06-04T06:28:07.269028+00:00",
-        "end_time": "2026-06-04T06:42:07.269028+00:00",
+        "start_time": "2026-06-04T08:08:19.262700+00:00",
+        "end_time": "2026-06-04T08:22:19.262700+00:00",
         "affected_assets_count": 1,
         "findings_count": 2
       }
@@ -432,8 +432,8 @@
       "id": "FG-004",
       "type": "FindingGroup",
       "properties": {
-        "start_time": "2026-06-04T08:20:07.269028+00:00",
-        "end_time": "2026-06-04T13:14:07.269028+00:00",
+        "start_time": "2026-06-04T10:00:19.262700+00:00",
+        "end_time": "2026-06-04T14:54:19.262700+00:00",
         "affected_assets_count": 6,
         "findings_count": 4
       }
@@ -442,8 +442,8 @@
       "id": "FG-005",
       "type": "FindingGroup",
       "properties": {
-        "start_time": "2026-06-04T15:34:07.269028+00:00",
-        "end_time": "2026-06-04T18:08:07.269028+00:00",
+        "start_time": "2026-06-04T17:14:19.262700+00:00",
+        "end_time": "2026-06-04T19:48:19.262700+00:00",
         "affected_assets_count": 5,
         "findings_count": 3
       }
@@ -631,7 +631,7 @@
       "type": "TRIGGERED_ON",
       "target": "CR-01",
       "properties": {
-        "timestamp": "2026-06-03T20:05:07.269028+00:00"
+        "timestamp": "2026-06-03T21:45:19.262700+00:00"
       }
     },
     {
@@ -639,7 +639,7 @@
       "type": "TRIGGERED_ON",
       "target": "PMP-SF-11",
       "properties": {
-        "timestamp": "2026-06-03T20:26:07.269028+00:00"
+        "timestamp": "2026-06-03T22:06:19.262700+00:00"
       }
     },
     {
@@ -647,7 +647,7 @@
       "type": "TRIGGERED_ON",
       "target": "CR-01",
       "properties": {
-        "timestamp": "2026-06-03T21:57:07.269028+00:00"
+        "timestamp": "2026-06-03T23:37:19.262700+00:00"
       }
     },
     {
@@ -655,7 +655,7 @@
       "type": "TRIGGERED_ON",
       "target": "CHP-02",
       "properties": {
-        "timestamp": "2026-06-03T23:56:07.269028+00:00"
+        "timestamp": "2026-06-04T01:36:19.262700+00:00"
       }
     },
     {
@@ -663,7 +663,7 @@
       "type": "TRIGGERED_ON",
       "target": "PMP-SF-11",
       "properties": {
-        "timestamp": "2026-06-04T03:05:07.269028+00:00"
+        "timestamp": "2026-06-04T04:45:19.262700+00:00"
       }
     },
     {
@@ -671,7 +671,7 @@
       "type": "TRIGGERED_ON",
       "target": "FAN-UG-02",
       "properties": {
-        "timestamp": "2026-06-04T03:40:07.269028+00:00"
+        "timestamp": "2026-06-04T05:20:19.262700+00:00"
       }
     },
     {
@@ -679,7 +679,7 @@
       "type": "TRIGGERED_ON",
       "target": "CV-04",
       "properties": {
-        "timestamp": "2026-06-04T04:29:07.269028+00:00"
+        "timestamp": "2026-06-04T06:09:19.262700+00:00"
       }
     },
     {
@@ -687,7 +687,7 @@
       "type": "TRIGGERED_ON",
       "target": "LHD-07",
       "properties": {
-        "timestamp": "2026-06-04T06:28:07.269028+00:00"
+        "timestamp": "2026-06-04T08:08:19.262700+00:00"
       }
     },
     {
@@ -695,7 +695,7 @@
       "type": "TRIGGERED_ON",
       "target": "LHD-07",
       "properties": {
-        "timestamp": "2026-06-04T06:42:07.269028+00:00"
+        "timestamp": "2026-06-04T08:22:19.262700+00:00"
       }
     },
     {
@@ -703,7 +703,7 @@
       "type": "TRIGGERED_ON",
       "target": "CV-04",
       "properties": {
-        "timestamp": "2026-06-04T08:20:07.269028+00:00"
+        "timestamp": "2026-06-04T10:00:19.262700+00:00"
       }
     },
     {
@@ -711,7 +711,7 @@
       "type": "TRIGGERED_ON",
       "target": "CR-01",
       "properties": {
-        "timestamp": "2026-06-04T10:19:07.269028+00:00"
+        "timestamp": "2026-06-04T11:59:19.262700+00:00"
       }
     },
     {
@@ -719,7 +719,7 @@
       "type": "TRIGGERED_ON",
       "target": "SUB-03",
       "properties": {
-        "timestamp": "2026-06-04T12:11:07.269028+00:00"
+        "timestamp": "2026-06-04T13:51:19.262700+00:00"
       }
     },
     {
@@ -727,7 +727,7 @@
       "type": "TRIGGERED_ON",
       "target": "CV-04",
       "properties": {
-        "timestamp": "2026-06-04T13:14:07.269028+00:00"
+        "timestamp": "2026-06-04T14:54:19.262700+00:00"
       }
     },
     {
@@ -735,7 +735,7 @@
       "type": "TRIGGERED_ON",
       "target": "CHP-02",
       "properties": {
-        "timestamp": "2026-06-04T15:34:07.269028+00:00"
+        "timestamp": "2026-06-04T17:14:19.262700+00:00"
       }
     },
     {
@@ -743,7 +743,7 @@
       "type": "TRIGGERED_ON",
       "target": "CV-04",
       "properties": {
-        "timestamp": "2026-06-04T17:19:07.269028+00:00"
+        "timestamp": "2026-06-04T18:59:19.262700+00:00"
       }
     },
     {
@@ -751,7 +751,7 @@
       "type": "TRIGGERED_ON",
       "target": "PMP-SF-11",
       "properties": {
-        "timestamp": "2026-06-04T18:08:07.269028+00:00"
+        "timestamp": "2026-06-04T19:48:19.262700+00:00"
       }
     },
     {
@@ -781,6 +781,18 @@
     {
       "source": "FG-001",
       "type": "AFFECTS_ASSET",
+      "target": "SUB-03",
+      "properties": {}
+    },
+    {
+      "source": "FG-001",
+      "type": "AFFECTS_ASSET",
+      "target": "PMP-SF-11",
+      "properties": {}
+    },
+    {
+      "source": "FG-001",
+      "type": "AFFECTS_ASSET",
       "target": "CHP-02",
       "properties": {}
     },
@@ -794,18 +806,6 @@
       "source": "FG-001",
       "type": "AFFECTS_ASSET",
       "target": "CV-04",
-      "properties": {}
-    },
-    {
-      "source": "FG-001",
-      "type": "AFFECTS_ASSET",
-      "target": "PMP-SF-11",
-      "properties": {}
-    },
-    {
-      "source": "FG-001",
-      "type": "AFFECTS_ASSET",
-      "target": "SUB-03",
       "properties": {}
     },
     {
@@ -829,13 +829,7 @@
     {
       "source": "FG-002",
       "type": "AFFECTS_ASSET",
-      "target": "CHP-02",
-      "properties": {}
-    },
-    {
-      "source": "FG-002",
-      "type": "AFFECTS_ASSET",
-      "target": "FAN-UG-02",
+      "target": "SUB-03",
       "properties": {}
     },
     {
@@ -847,13 +841,19 @@
     {
       "source": "FG-002",
       "type": "AFFECTS_ASSET",
+      "target": "CHP-02",
+      "properties": {}
+    },
+    {
+      "source": "FG-002",
+      "type": "AFFECTS_ASSET",
       "target": "CV-04",
       "properties": {}
     },
     {
       "source": "FG-002",
       "type": "AFFECTS_ASSET",
-      "target": "SUB-03",
+      "target": "FAN-UG-02",
       "properties": {}
     },
     {
@@ -901,6 +901,18 @@
     {
       "source": "FG-004",
       "type": "AFFECTS_ASSET",
+      "target": "SUB-03",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
+      "target": "PMP-SF-11",
+      "properties": {}
+    },
+    {
+      "source": "FG-004",
+      "type": "AFFECTS_ASSET",
       "target": "CHP-02",
       "properties": {}
     },
@@ -913,25 +925,13 @@
     {
       "source": "FG-004",
       "type": "AFFECTS_ASSET",
-      "target": "FAN-UG-02",
-      "properties": {}
-    },
-    {
-      "source": "FG-004",
-      "type": "AFFECTS_ASSET",
-      "target": "PMP-SF-11",
-      "properties": {}
-    },
-    {
-      "source": "FG-004",
-      "type": "AFFECTS_ASSET",
       "target": "CV-04",
       "properties": {}
     },
     {
       "source": "FG-004",
       "type": "AFFECTS_ASSET",
-      "target": "SUB-03",
+      "target": "FAN-UG-02",
       "properties": {}
     },
     {
@@ -955,6 +955,18 @@
     {
       "source": "FG-005",
       "type": "AFFECTS_ASSET",
+      "target": "SUB-03",
+      "properties": {}
+    },
+    {
+      "source": "FG-005",
+      "type": "AFFECTS_ASSET",
+      "target": "PMP-SF-11",
+      "properties": {}
+    },
+    {
+      "source": "FG-005",
+      "type": "AFFECTS_ASSET",
       "target": "CHP-02",
       "properties": {}
     },
@@ -967,19 +979,7 @@
     {
       "source": "FG-005",
       "type": "AFFECTS_ASSET",
-      "target": "PMP-SF-11",
-      "properties": {}
-    },
-    {
-      "source": "FG-005",
-      "type": "AFFECTS_ASSET",
       "target": "CV-04",
-      "properties": {}
-    },
-    {
-      "source": "FG-005",
-      "type": "AFFECTS_ASSET",
-      "target": "SUB-03",
       "properties": {}
     }
   ],
@@ -987,11 +987,11 @@
     {
       "id": "FG-001",
       "assets": [
+        "SUB-03",
+        "PMP-SF-11",
         "CHP-02",
         "CR-01",
-        "CV-04",
-        "PMP-SF-11",
-        "SUB-03"
+        "CV-04"
       ],
       "findings": [
         "FIND-ANOM-007",
@@ -999,25 +999,25 @@
         "FIND-ANOM-023",
         "FIND-ANOM-040"
       ],
-      "start_time": "2026-06-03T20:05:07.269028+00:00",
-      "end_time": "2026-06-03T23:56:07.269028+00:00"
+      "start_time": "2026-06-03T21:45:19.262700+00:00",
+      "end_time": "2026-06-04T01:36:19.262700+00:00"
     },
     {
       "id": "FG-002",
       "assets": [
-        "CHP-02",
-        "FAN-UG-02",
+        "SUB-03",
         "PMP-SF-11",
+        "CHP-02",
         "CV-04",
-        "SUB-03"
+        "FAN-UG-02"
       ],
       "findings": [
         "FIND-ANOM-067",
         "FIND-ANOM-072",
         "FIND-ANOM-079"
       ],
-      "start_time": "2026-06-04T03:05:07.269028+00:00",
-      "end_time": "2026-06-04T04:29:07.269028+00:00"
+      "start_time": "2026-06-04T04:45:19.262700+00:00",
+      "end_time": "2026-06-04T06:09:19.262700+00:00"
     },
     {
       "id": "FG-003",
@@ -1028,18 +1028,18 @@
         "FIND-ANOM-096",
         "FIND-ANOM-098"
       ],
-      "start_time": "2026-06-04T06:28:07.269028+00:00",
-      "end_time": "2026-06-04T06:42:07.269028+00:00"
+      "start_time": "2026-06-04T08:08:19.262700+00:00",
+      "end_time": "2026-06-04T08:22:19.262700+00:00"
     },
     {
       "id": "FG-004",
       "assets": [
+        "SUB-03",
+        "PMP-SF-11",
         "CHP-02",
         "CR-01",
-        "FAN-UG-02",
-        "PMP-SF-11",
         "CV-04",
-        "SUB-03"
+        "FAN-UG-02"
       ],
       "findings": [
         "FIND-ANOM-112",
@@ -1047,25 +1047,25 @@
         "FIND-ANOM-145",
         "FIND-ANOM-154"
       ],
-      "start_time": "2026-06-04T08:20:07.269028+00:00",
-      "end_time": "2026-06-04T13:14:07.269028+00:00"
+      "start_time": "2026-06-04T10:00:19.262700+00:00",
+      "end_time": "2026-06-04T14:54:19.262700+00:00"
     },
     {
       "id": "FG-005",
       "assets": [
+        "SUB-03",
+        "PMP-SF-11",
         "CHP-02",
         "CR-01",
-        "PMP-SF-11",
-        "CV-04",
-        "SUB-03"
+        "CV-04"
       ],
       "findings": [
         "FIND-ANOM-174",
         "FIND-ANOM-189",
         "FIND-ANOM-196"
       ],
-      "start_time": "2026-06-04T15:34:07.269028+00:00",
-      "end_time": "2026-06-04T18:08:07.269028+00:00"
+      "start_time": "2026-06-04T17:14:19.262700+00:00",
+      "end_time": "2026-06-04T19:48:19.262700+00:00"
     }
   ]
 }
